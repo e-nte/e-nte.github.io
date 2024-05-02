@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <link rel="stylesheet" href="muistyle.css">
+        <script type="importmap">
+            {
+            "imports": {
+                "@material/web/": "https://esm.run/@material/web/"
+            }
+            }
+        </script>
+        <script type="module">
+            import '@material/web/all.js';
+            import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+        
+            document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+        </script>
+
+        <script>
+            function includeHTML() {
+            var z, i, elmnt, file, xhttp;
+            /*loop through a collection of all HTML elements:*/
+            z = document.getElementsByTagName("*");
+            for (i = 0; i < z.length; i++) {
+                elmnt = z[i];
+                /*search for elements with a certain atrribute:*/
+                file = elmnt.getAttribute("w3-include-html");
+                if (file) {
+                /*make an HTTP request using the attribute value as the file name:*/
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                    /*remove the attribute, and call this function once more:*/
+                    elmnt.removeAttribute("w3-include-html");
+                    includeHTML();
+                    }
+                }      
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                /*exit the function:*/
+                return;
+                }
+            }
+            };
+        </script>
+
+    </head>
+
+
+    <body>        
+        <!-- <div w3-include-js="topbar.js"></div> -->
+        <div w3-include-html="topbar.html"></div>
+        <div class="main-content">
+       
+            <!-- modify this form HTML and place wherever you want your form -->
+            <form id="my-form" action="https://formspree.io/f/mzbnopzw" method="POST">
+                <label>Email:</label>
+                <input type="email" name="email" />
+                <label>Message:</label>
+                <input type="text" name="message" />
+                <button id="my-form-button">Submit</button>
+                <p id="my-form-status"></p>
+            </form>
+            <!-- Place this script at the end of the body tag -->
+            <script>
+                var form = document.getElementById("my-form");
+                
+                async function handleSubmit(event) {
+                    event.preventDefault();
+                    var status = document.getElementById("my-form-status");
+                    var data = new FormData(event.target);
+                    fetch(event.target.action, {
+                    method: form.method,
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                    }).then(response => {
+                    if (response.ok) {
+                        status.innerHTML = "Thanks for your submission!";
+                        form.reset()
+                    } else {
+                        response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+                        } else {
+                            status.innerHTML = "Oops! There was a problem submitting your form"
+                        }
+                        })
+                    }
+                    }).catch(error => {
+                    status.innerHTML = "Oops! There was a problem submitting your form"
+                    });
+                }
+                form.addEventListener("submit", handleSubmit)
+            </script>
+
+        </div>
+        <div w3-include-html="bottombar.html"></div>
+    
+        
+        <script>
+            includeHTML();
+        </script>
+        
+    </body>
+</html>
