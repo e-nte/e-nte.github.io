@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <link rel="stylesheet" href="muistyle.css">
+        <script type="importmap">
+            {
+            "imports": {
+                "@material/web/": "https://esm.run/@material/web/"
+            }
+            }
+        </script>
+        <script type="module">
+            import '@material/web/all.js';
+            import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+        
+            document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+        </script>
+
+        <script>
+            function includeHTML() {
+            var z, i, elmnt, file, xhttp;
+            /*loop through a collection of all HTML elements:*/
+            z = document.getElementsByTagName("*");
+            for (i = 0; i < z.length; i++) {
+                elmnt = z[i];
+                /*search for elements with a certain atrribute:*/
+                file = elmnt.getAttribute("w3-include-html");
+                if (file) {
+                /*make an HTTP request using the attribute value as the file name:*/
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                    /*remove the attribute, and call this function once more:*/
+                    elmnt.removeAttribute("w3-include-html");
+                    includeHTML();
+                    }
+                }      
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                /*exit the function:*/
+                return;
+                }
+            }
+            };
+        </script>
+         <script src="https://www.gstatic.com/charts/loader.js"></script> 
+         
+
+        <script>
+            function includeJS() {
+            var z, i, elmnt, file, xhttp;
+            /*loop through a collection of all HTML elements:*/
+            z = document.getElementsByTagName("*");
+            for (i = 0; i < z.length; i++) {
+                elmnt = z[i];
+                /*search for elements with a certain atrribute:*/
+                file = elmnt.getAttribute("w3-include-js");
+                if (file) {
+                /*make an HTTP request using the attribute value as the file name:*/
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                    /*remove the attribute, and call this function once more:*/
+                    elmnt.removeAttribute("w3-include-js");
+                    includeJS();
+                    }
+                }      
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                /*exit the function:*/
+                return;
+                }
+            }
+            };
+        </script>
+    </head>
+
+
+    <body>
+        <div>
+            <!-- Note the position: relative style -->
+            <!-- <span style="position: relative">
+                <md-filled-button id="usage-anchor">Set with idref</md-filled-button>
+                <md-menu id="usage-menu" anchor="usage-anchor">
+                <md-menu-item>
+                    <div slot="headline">Apple</div>
+                </md-menu-item>
+                <md-menu-item>
+                    <div slot="headline">Banana</div>
+                </md-menu-item>
+                <md-menu-item>
+                    <div slot="headline">Cucumber</div>
+                </md-menu-item>
+                </md-menu>
+            </span> -->
+            
+            <script type="module">                
+                // This activates js for top menu
+                const anchorEl1 = document.body.querySelector('#usage-anchor1');
+                const anchorEl2 = document.body.querySelector('#usage-anchor2');
+                const menuEl1 = document.body.querySelector('#usage-menu1');
+                const menuEl2 = document.body.querySelector('#usage-menu2');
+            
+                anchorEl1.addEventListener('click', () => { menuEl1.open = !menuEl1.open; });
+                anchorEl2.addEventListener('click', () => { menuEl2.open = !menuEl2.open; });
+            </script>
+        </div>
+        
+        <!-- <div w3-include-js="topbar.js"></div> -->
+        <div w3-include-html="topbar.html"></div>
+        <div class="main-content"></div>
+        <div w3-include-html="bottombar.html"></div>
+        Hello world!!
+
+        <h1 class="md-typescale-display-medium">Hello Material!</h1>
+        <form>
+            <p class="md-typescale-body-medium">Check out these controls in a form!</p>
+            <md-checkbox></md-checkbox>
+            <div>
+            <md-radio name="group"></md-radio>
+            <md-radio name="group"></md-radio>
+            <md-radio name="group"></md-radio>
+            </div>
+            <md-outlined-text-field label="Favorite color" value="Purple"></md-outlined-text-field>
+            <md-outlined-button type="reset">Reset</md-outlined-button>
+        </form>
+
+        <div id="myChart" style="max-width:700px; height:400px"></div> 
+
+        <style>
+            form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            }
+        </style>
+
+         <script>
+            google.charts.load('current',{packages:['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Your Function
+            function drawChart() {
+
+                // Set Data
+                const data = google.visualization.arrayToDataTable([
+                ['Contry', 'Mhl'],
+                ['Italy', 55],
+                ['France', 49],
+                ['Spain', 44],
+                ['USA', 24],
+                ['Argentina', 15]
+                ]);
+
+                // Set Options
+                const options = {
+                title: 'World Wide Wine Production'
+                };
+
+                // Draw
+                const chart = new google.visualization.BarChart(document.getElementById('myChart'));
+                chart.draw(data, options);
+
+            }
+        </script> 
+
+        <script>
+            includeHTML();
+        </script>
+        
+        <script>
+            includeJS();
+        </script>
+    </body>
+</html>
