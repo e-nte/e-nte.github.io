@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <link rel="stylesheet" href="muistyle.css">
+        <script type="importmap">
+            {
+            "imports": {
+                "@material/web/": "https://esm.run/@material/web/"
+            }
+            }
+        </script>
+        <script type="module">
+            import '@material/web/all.js';
+            import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+        
+            document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+        </script>
+
+        <script>
+            function includeHTML() {
+            var z, i, elmnt, file, xhttp;
+            /*loop through a collection of all HTML elements:*/
+            z = document.getElementsByTagName("*");
+            for (i = 0; i < z.length; i++) {
+                elmnt = z[i];
+                /*search for elements with a certain atrribute:*/
+                file = elmnt.getAttribute("w3-include-html");
+                if (file) {
+                /*make an HTTP request using the attribute value as the file name:*/
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                    if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+                    if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+                    /*remove the attribute, and call this function once more:*/
+                    elmnt.removeAttribute("w3-include-html");
+                    includeHTML();
+                    }
+                }      
+                xhttp.open("GET", file, true);
+                xhttp.send();
+                /*exit the function:*/
+                return;
+                }
+            }
+            };
+        </script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script> 
+         
+    </head>
+
+
+    <body class="skillsp">
+        <div w3-include-html="topbar.html"></div>
+
+        <div class="main-content">
+            <label>*all values are in percentages (%)*</label><br />
+            <div class="chartsContainer">
+            <div id="ChartDescription" class="gChart" style="min-width:400px;max-width:400px; height:400px">Next charts are used to visually represent skills..</div> 
+            <div id="softSkillsChart" class="gChart" style="min-width:400px;max-width:400px; height:400px"></div> 
+            <div id="officeSkillsChart" class="gChart" style="min-width:400px;max-width:400px; height:400px"></div> 
+            <div id="technicalSkillsChart" class="gChart" style="min-width:400px;max-width:400px; height:400px"></div> 
+            <div id="technologicalStacksChart" class="gChart" style="min-width:400px;max-width:400px; height:400px"></div> 
+            <div id="programmingLanguagesChart" class="gChart" style="min-width:400px;max-width:400px; height:400px"></div> 
+            </div>
+        </div>
+        
+        <div w3-include-html="bottombar.html"></div>
+
+        
+        <script>
+            includeHTML();
+        </script>
+        
+        <script>
+            google.charts.load('current',{packages:['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Your Function
+            function drawChart() {
+
+                // Set Data
+                const dataSoftSkills = google.visualization.arrayToDataTable([
+                ['Soft Skills', 'SoftSkill'],
+                ['Team Collaboration', 90],
+                ['Communication (Interdepartmental and Client-facing)', 95],
+                ['Problem-solving', 85],
+                ['Adaptability', 90],
+                ['Attention to Detail', 95],
+                ['Time Management', 90],
+                ['Leadership', 80],
+                ['Client Relationship Management', 95]
+                ]);
+                // Set Data
+                const dataOfficeSkills = google.visualization.arrayToDataTable([
+                ['Contry', 'Mhl'],
+                ['Requirement Analysis', 90],
+                ['Solution Proposal', 85],
+                ['Technical Documentation', 95],
+                ['Integration Management (Testing to Production Environments)', 90],
+                ['Project Management (POC Development, Testing)', 85],
+                ['Data Analysis (Manual and Automated)', 90]
+                ]);
+                // Set Data
+                const dataTechnicalSkills = google.visualization.arrayToDataTable([
+                ['Contry', 'Mhl'],
+                ['Salesforce Development (Apex, Triggers, Lightning Web Components)', 95],
+                ['Data Operations (Import, Export, Cleaning, Fixing, Migrations)', 90],
+                ['Excel and CSV Operations', 85],
+                ['REST and POST Requests', 90],
+                ['SeleniumJS Automated Testing Framework', 80]
+                ]);
+                // Set Data
+                const dataTechnologicalStacks = google.visualization.arrayToDataTable([
+                ['Contry', 'Mhl'],
+                ['Salesforce (Service Cloud, Marketing Cloud, Experience Cloud)', 95],
+                ['WordPress (including theme and plugin customizations)', 90],
+                ['Magento', 85],
+                ['AWS (Hosting, Database, Identity Access Management)', 85],
+                ['Angular 7', 80],
+                ['Bootstrap', 80]
+                ]);
+                // Set Data
+                const dataProgrammingLanguages = google.visualization.arrayToDataTable([
+                ['Contry', 'Mhl'],
+                ['Apex', 95],
+                ['PHP', 85],
+                ['JavaScript (including Node.js)', 90],
+                ['HTML', 90],
+                ['CSS', 90]
+                ]);
+
+                // Set Options
+                const optionsSS = {
+                title: 'Soft Skills',
+                colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
+                hAxis: {
+                    minValue: 70,
+                    maxValue: 100,
+                    ticks: [ 70, 80, 90 , 100]
+                }
+
+
+                };
+                // Set Options
+                const optionsOS = {
+                title: 'Office Skills',
+                colors: ['#e6693e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
+                hAxis: {
+                    minValue: 70,
+                    maxValue: 100,
+                    ticks: [ 70, 80, 90 , 100]
+                }
+                };
+                // Set Options
+                const optionsTSk = {
+                title: 'Technological Skills',
+                colors: ['#ec8f6e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
+                hAxis: {
+                    minValue: 70,
+                    maxValue: 100,
+                    ticks: [ 70, 80, 90 , 100]
+                }
+                };
+                // Set Options
+                const optionsTSt = {
+                title: 'Technological Stacks',
+                colors: ['#f3b49f', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
+                hAxis: {
+                    minValue: 70,
+                    maxValue: 100,
+                    ticks: [ 70, 80, 90 , 100]
+                }
+                };
+                // Set Options
+                const optionsPL = {
+                title: 'Programming Languages',
+                colors: ['#f6c7b6', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
+                hAxis: {
+                    minValue: 70,
+                    maxValue: 100,
+                    ticks: [ 70, 80, 90 , 100]
+                }
+                };
+
+                // Draw
+                const chartSS = new google.visualization.BarChart(document.getElementById('softSkillsChart'));
+                chartSS.draw(dataSoftSkills, optionsSS);
+                // Draw
+                const chartOS = new google.visualization.BarChart(document.getElementById('officeSkillsChart'));
+                chartOS.draw(dataOfficeSkills, optionsOS);
+                // Draw
+                const chartTSk = new google.visualization.BarChart(document.getElementById('technicalSkillsChart'));
+                chartTSk.draw(dataTechnicalSkills, optionsTSk);
+                // Draw
+                const chartTSt = new google.visualization.BarChart(document.getElementById('technologicalStacksChart'));
+                chartTSt.draw(dataTechnologicalStacks, optionsTSt);
+                // Draw
+                const chartPL = new google.visualization.BarChart(document.getElementById('programmingLanguagesChart'));
+                chartPL.draw(dataProgrammingLanguages, optionsPL);
+
+            }
+        </script> 
+    </body>
+</html>
