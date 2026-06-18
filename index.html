@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Salesforce Developer & Architect Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Menu Navigator -->
+    <header class="navbar">
+        <div class="logo">Engineered::SF</div>
+        <nav>
+            <a href="#home" class="nav-link active" data-target="home">Home & Experience</a>
+            <a href="#projects" class="nav-link" data-target="projects">Dynamic Features</a>
+            <a href="#certs" class="nav-link" data-target="certs">14x Credentials</a>
+            <a href="https://linkedin.com/in/YOUR-PROFILE" target="_blank" class="linkedin-link" rel="noopener noreferrer">LinkedIn ↗</a>
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">🌙</button>
+        </nav>
+    </header>
+
+    <!-- Main Viewports -->
+    <main class="content-wrapper">
+        
+        <!-- HOME SECTION (Ultra-Minimalist Executive Pitch) -->
+        <section id="home" class="view-section active">
+            <div class="minimal-hero">
+                <h1>Autonomous <span class="highlight">Developer & Architect</span></h1>
+                <p class="tagline">Engineering at the intersection of enterprise scale, secure infrastructure, and the Salesforce ecosystem.</p>
+                
+                <p class="abstract-pitch">
+                    I build resilient programmatic architectures. Across 7+ years of delivery, I have focused on solving high-volume data bottlenecks, writing performant, bulkified Apex/LWC runtimes, and securing multi-cloud transaction lines. 
+                    <br><br>
+                    I let my implementations speak for themselves.
+                </p>
+
+                <div class="cta-wrapper">
+                    <a href="#projects" class="btn-primary" onclick="navigateTo('projects')">Explore Platform Architecture ➔</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- PROJECTS SECTION (Target for future Salesforce integration) -->
+        <section id="projects" class="view-section">
+            <h2>Dynamic Platform Integrations</h2>
+            <p class="section-intro">This view serves as a live integration sandbox. In the next phase, these cards will be dynamically provisioned directly via unauthenticated custom REST APIs served straight from a Salesforce Developer Org data tier.</p>
+            <div class="grid" id="projects-grid">
+                <div class="card">
+                    <h3>Headless CMS Project Engine</h3>
+                    <p>Designed to pull custom portfolio object records dynamically out of Salesforce. Highlights clean separation of concerns between front-end UI and core CRM architecture.</p>
+                    <div class="tech-stack">
+                        <span class="tag tag-gold">Vanilla JS</span>
+                        <span class="tag tag-rose">Apex REST</span>
+                        <span class="tag tag-green">JSON Serialization</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CERTIFICATIONS SECTION -->
+        <section id="certs" class="view-section">
+            <h2>Official Credentials</h2>
+            <p class="section-intro">Comprehensive verification of 14 elite Salesforce credentials spanning system architecture, lifecycle governance, secure data visibility, and core platform engineering metrics.</p>
+            
+            <div class="grid">
+                <div class="card cert-card"><span class="badge system-arch">System Elite</span><h3>Salesforce Certified System Architect</h3><p>Validates expertise in designing secure, scalable cloud topographies, identity management, integration architectures, and cross-platform governance.</p></div>
+                <div class="card cert-card"><span class="badge app-arch">Application Elite</span><h3>Salesforce Certified Application Architect</h3><p>Validates advanced knowledge in data modeling, complex sharing configuration matrices, role hierarchies, and declarative platform scalability bounds.</p></div>
+                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Lifecycle and Development Architect</h3><p>Validates mastery over SDLC governance, environment management strategies, branching models, metadata management, and automated release deployment tracks.</p></div>
+                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Platform Sharing and Visibility Architect</h3><p>Validates the capability to construct secure data sharing models that adhere to strict compliance policies across large-scale enterprise record volumes.</p></div>
+                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Platform Data Architect</h3><p>Validates skills in data modeling, managing Big Data, optimizing SOQL execution speeds, design patterns for data replication, and bulk enterprise loading.</p></div>
+                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Platform Integration Architect</h3><p>Validates design patterns for secure API handshakes, asynchronous processing streams, choice matrices between REST/SOAP, and middleware patterns.</p></div>
+                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Identity & Access Management Architect</h3><p>Validates deep configuration expertise in Single Sign-On (SSO), SAML, OAuth flows, external identity provisioning, and multi-factor domain security.</p></div>
+                <div class="card cert-card"><span class="badge dev-tier">Developer</span><h3>Salesforce Certified Platform Developer I</h3><p>Validates programmatic capability including Apex OOP syntax, bulkified trigger handlers, programmatic SOQL/SOSL execution, and custom LWC controllers.</p></div>
+                <div class="card cert-card"><span class="badge dev-tier">Developer</span><h3>Salesforce Certified App Builder</h3><p>Validates custom application construction configurations using standard declarations, flow automation logic, page layouts, and custom metadata deployment parameters.</p></div>
+                <div class="card cert-card"><span class="badge consult-tier">Consultant</span><h3>Salesforce Certified Experience Cloud Consultant</h3><p>Validates capabilities across secure digital portal communities, custom audience branding properties, access management, and asset deployment layouts.</p></div>
+                <div class="card cert-card"><span class="badge consult-tier">Consultant</span><h3>Salesforce Certified Service Cloud Consultant</h3><p>Validates configuration design parameters for Contact Center solutions including Omni-Channel, Case Lifecycles, SLA Milestones, and Embedded Support systems.</p></div>
+                <div class="card cert-card"><span class="badge consult-tier">Consultant</span><h3>Salesforce Certified Marketing Cloud Engagement Admin</h3><p>Validates administration competencies surrounding data models, journey mechanics, configuration automation settings, and cross-cloud synchronization integrations.</p></div>
+                <div class="card cert-card"><span class="badge ai-tier">AI Agent</span><h3>Salesforce Certified Agentforce Specialist</h3><p>Validates technical proficiency in designing Autonomous AI Agents, configuring topics, action flows, grounding data schemas, and prompt engineering parameters.</p></div>
+                <div class="card cert-card"><span class="badge consult-tier">Consultant</span><h3>Salesforce Certified Administrator</h3><p>Verifies deep, foundational configuration familiarity across core object relations, global security bounds, user profiles, and operational standard tools.</p></div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
