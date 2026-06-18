@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Senior Salesforce Developer & Architect Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <!-- Menu Navigator -->
@@ -15,28 +17,33 @@
             <a href="#home" class="nav-link active" data-target="home">Home & Experience</a>
             <a href="#projects" class="nav-link" data-target="projects">Dynamic Features</a>
             <a href="#certs" class="nav-link" data-target="certs">14x Credentials</a>
-            <a href="https://www.linkedin.com/in/evangelos-nt/" target="_blank" class="linkedin-link" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a href="https://www.linkedin.com/in/evangelos-nt/" target="_blank" class="linkedin-link"
+                rel="noopener noreferrer">LinkedIn ↗</a>
             <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">🌙</button>
         </nav>
     </header>
 
     <!-- Main Viewports -->
     <main class="content-wrapper">
-        
+
         <!-- HOME SECTION (Ultra-Minimalist Executive Pitch) -->
         <section id="home" class="view-section active">
             <div class="minimal-hero">
                 <h1>Autonomous <span class="highlight">Developer & Architect</span></h1>
-                <p class="tagline">Engineering at the intersection of enterprise scale, secure infrastructure, and the Salesforce ecosystem.</p>
-                
+                <p class="tagline">Engineering at the intersection of enterprise scale, secure infrastructure, and the
+                    Salesforce ecosystem.</p>
+
                 <p class="abstract-pitch">
-                    I build resilient programmatic architectures. Across 7+ years of delivery, I have focused on solving high-volume data bottlenecks, writing performant, bulkified Apex/LWC runtimes, and securing multi-cloud transaction lines. 
+                    I build resilient programmatic architectures. Across 7+ years of delivery, I have focused on solving
+                    high-volume data bottlenecks, writing performant, bulkified Apex/LWC runtimes, and securing
+                    multi-cloud transaction lines.
                     <br><br>
                     I let my implementations speak for themselves.
                 </p>
 
                 <div class="cta-wrapper">
-                    <a href="#projects" class="btn-primary" onclick="navigateTo('projects')">Explore Platform Architecture ➔</a>
+                    <a href="#projects" class="btn-primary" onclick="navigateTo('projects')">Explore Platform
+                        Architecture ➔</a>
                 </div>
             </div>
         </section>
@@ -44,11 +51,14 @@
         <!-- PROJECTS SECTION (Target for future Salesforce integration) -->
         <section id="projects" class="view-section">
             <h2>Dynamic Platform Integrations</h2>
-            <p class="section-intro">This view serves as a live integration sandbox. In the next phase, these cards will be dynamically provisioned directly via unauthenticated custom REST APIs served straight from a Salesforce Developer Org data tier.</p>
+            <p class="section-intro">This view serves as a live integration sandbox. In the next phase, these cards will
+                be dynamically provisioned directly via unauthenticated custom REST APIs served straight from a
+                Salesforce Developer Org data tier.</p>
             <div class="grid" id="projects-grid">
                 <div class="card">
                     <h3>Headless CMS Project Engine</h3>
-                    <p>Designed to pull custom portfolio object records dynamically out of Salesforce. Highlights clean separation of concerns between front-end UI and core CRM architecture.</p>
+                    <p>Designed to pull custom portfolio object records dynamically out of Salesforce. Highlights clean
+                        separation of concerns between front-end UI and core CRM architecture.</p>
                     <div class="tech-stack">
                         <span class="tag tag-gold">Vanilla JS</span>
                         <span class="tag tag-rose">Apex REST</span>
@@ -58,31 +68,235 @@
             </div>
         </section>
 
-        <!-- CERTIFICATIONS SECTION -->
+        <!-- CERTIFICATIONS SECTION (Condensed List Matrix - Full 14x Credentials) -->
         <section id="certs" class="view-section">
-            <h2>Official Credentials</h2>
-            <p class="section-intro">Comprehensive verification of 14 elite Salesforce credentials spanning system architecture, lifecycle governance, secure data visibility, and core platform engineering metrics.</p>
-            
-            <div class="grid">
-                <div class="card cert-card"><span class="badge system-arch">System Elite</span><h3>Salesforce Certified System Architect</h3><p>Validates expertise in designing secure, scalable cloud topographies, identity management, integration architectures, and cross-platform governance.</p></div>
-                <div class="card cert-card"><span class="badge app-arch">Application Elite</span><h3>Salesforce Certified Application Architect</h3><p>Validates advanced knowledge in data modeling, complex sharing configuration matrices, role hierarchies, and declarative platform scalability bounds.</p></div>
-                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Lifecycle and Development Architect</h3><p>Validates mastery over SDLC governance, environment management strategies, branching models, metadata management, and automated release deployment tracks.</p></div>
-                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Platform Sharing and Visibility Architect</h3><p>Validates the capability to construct secure data sharing models that adhere to strict compliance policies across large-scale enterprise record volumes.</p></div>
-                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Platform Data Architect</h3><p>Validates skills in data modeling, managing Big Data, optimizing SOQL execution speeds, design patterns for data replication, and bulk enterprise loading.</p></div>
-                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Platform Integration Architect</h3><p>Validates design patterns for secure API handshakes, asynchronous processing streams, choice matrices between REST/SOAP, and middleware patterns.</p></div>
-                <div class="card cert-card"><span class="badge arch-tier">Architect</span><h3>Salesforce Certified Identity & Access Management Architect</h3><p>Validates deep configuration expertise in Single Sign-On (SSO), SAML, OAuth flows, external identity provisioning, and multi-factor domain security.</p></div>
-                <div class="card cert-card"><span class="badge dev-tier">Developer</span><h3>Salesforce Certified Platform Developer I</h3><p>Validates programmatic capability including Apex OOP syntax, bulkified trigger handlers, programmatic SOQL/SOSL execution, and custom LWC controllers.</p></div>
-                <div class="card cert-card"><span class="badge dev-tier">Developer</span><h3>Salesforce Certified App Builder</h3><p>Validates custom application construction configurations using standard declarations, flow automation logic, page layouts, and custom metadata deployment parameters.</p></div>
-                <div class="card cert-card"><span class="badge consult-tier">Consultant</span><h3>Salesforce Certified Experience Cloud Consultant</h3><p>Validates capabilities across secure digital portal communities, custom audience branding properties, access management, and asset deployment layouts.</p></div>
-                <div class="card cert-card"><span class="badge consult-tier">Consultant</span><h3>Salesforce Certified Service Cloud Consultant</h3><p>Validates configuration design parameters for Contact Center solutions including Omni-Channel, Case Lifecycles, SLA Milestones, and Embedded Support systems.</p></div>
-                <div class="card cert-card"><span class="badge consult-tier">Consultant</span><h3>Salesforce Certified Marketing Cloud Engagement Admin</h3><p>Validates administration competencies surrounding data models, journey mechanics, configuration automation settings, and cross-cloud synchronization integrations.</p></div>
-                <div class="card cert-card"><span class="badge ai-tier">AI Agent</span><h3>Salesforce Certified Agentforce Specialist</h3><p>Validates technical proficiency in designing Autonomous AI Agents, configuring topics, action flows, grounding data schemas, and prompt engineering parameters.</p></div>
-                <div class="card cert-card"><span class="badge consult-tier">Consultant</span><h3>Salesforce Certified Administrator</h3><p>Verifies deep, foundational configuration familiarity across core object relations, global security bounds, user profiles, and operational standard tools.</p></div>
+            <div class="certs-container">
+                <h2 class="section-title">Verified Credentials</h2>
+                <p class="section-subtitle">14x Certified Salesforce Engineer & Architect Matrix</p>
+
+                <div class="cert-matrix">
+
+                    <!-- Tier 1: Pyramid Pillars -->
+                    <div class="cert-row architect-tier">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Application Architect</h3>
+                            <span class="cert-code">System Milestone</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill core-pill">Data Architecture</span>
+                            <span class="pill core-pill">Sharing & Visibility</span>
+                            <span class="pill core-pill">Scale Strategy</span>
+                        </div>
+                        <p class="cert-description">
+                            Automatically awarded credential validating absolute domain mastery across data modeling,
+                            complex programmatic security patterns, sharing mechanics, and scalable configurations.
+                        </p>
+                    </div>
+
+                    <div class="cert-row architect-tier">
+                        <div class="cert-header">
+                            <h3 class="cert-title">System Architect</h3>
+                            <span class="cert-code">System Milestone</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill core-pill">Integration Patterns</span>
+                            <span class="pill core-pill">DevOps Lifecycle</span>
+                            <span class="pill core-pill">Identity & IAM</span>
+                        </div>
+                        <p class="cert-description">
+                            Automatically awarded credential proving strategic technical leadership across off-platform
+                            integrations, security handshakes, governance, and robust deployment pipelines.
+                        </p>
+                    </div>
+
+                    <!-- Tier 2: Component Architect Certs -->
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Integration Architect</h3>
+                            <span class="cert-code">SF-INT-ARCH</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">REST/SOAP Endpoints</span>
+                            <span class="pill">Event-Driven (Pub/Sub)</span>
+                            <span class="pill">Middleware Systems</span>
+                        </div>
+                        <p class="cert-description">Designing secure system-to-system connections, orchestrating
+                            streaming event patterns, and building resilient API wrappers.</p>
+                    </div>
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Data Architect</h3>
+                            <span class="cert-code">SF-DATA-ARCH</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">LDV Strategy</span>
+                            <span class="pill">Data Governance</span>
+                            <span class="pill">MDM & ETL</span>
+                        </div>
+                        <p class="cert-description">Managing Large Data Volumes (LDV), resolving skin-deep database
+                            storage bottlenecks, and configuring multi-system object mappings.</p>
+                    </div>
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Sharing and Visibility Architect</h3>
+                            <span class="cert-code">SF-SEC-ARCH</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">Implicit/Explicit Sharing</span>
+                            <span class="pill">Programmatic Security</span>
+                            <span class="pill">OWDs & Matrices</span>
+                        </div>
+                        <p class="cert-description">Securing sensitive business assets with custom sharing computation
+                            models, dynamic field permissions, and territory structures.</p>
+                    </div>
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Identity and Access Management Architect</h3>
+                            <span class="cert-code">SF-IAM-ARCH</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">SAML 2.0 / OAuth</span>
+                            <span class="pill">SSO Configurations</span>
+                            <span class="pill">Connected Apps</span>
+                        </div>
+                        <p class="cert-description">Implementing single sign-on parameters, protecting external
+                            connection routes, and handling multi-factor verification frameworks.</p>
+                    </div>
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Development Lifecycle and Deployment Architect</h3>
+                            <span class="cert-code">SF-DEV-ARCH</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">CI/CD Pipelines</span>
+                            <span class="pill">SFDX / Git</span>
+                            <span class="pill">Branching Workflows</span>
+                        </div>
+                        <p class="cert-description">Optimizing release engineering strategies, managing sandbox
+                            sandboxing sandboxes, and establishing source-driven code validation tools.</p>
+                    </div>
+
+                    <!-- Tier 3: Programmatic & Core Dev -->
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Platform Developer I</h3>
+                            <span class="cert-code">SF-PDI</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">Apex Triggers</span>
+                            <span class="pill">SOQL / SOSL</span>
+                            <span class="pill">LWC Basics</span>
+                        </div>
+                        <p class="cert-description">Core programmatic development implementing optimized custom business
+                            logic, automated process layers, and interface controllers.</p>
+                    </div>
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Platform App Builder</h3>
+                            <span class="cert-code">SF-APP-BUILDER</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">Declarative Flows</span>
+                            <span class="pill">Custom Objects</span>
+                            <span class="pill">App Configurations</span>
+                        </div>
+                        <p class="cert-description">Designing relational database structures, building multi-tier record
+                            automations, and customizing lightning experience pages.</p>
+                    </div>
+
+                    <!-- Tier 4: Functional & Consulting Extensions -->
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Experience Cloud Consultant</h3>
+                            <span class="cert-code">SF-EXP-CONS</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">Digital Experience Gateways</span>
+                            <span class="pill">Guest User Profiles</span>
+                            <span class="pill">Headless Architecture</span>
+                        </div>
+                        <p class="cert-description">Configuring secure public-facing portal interfaces, custom web
+                            routing structures, and decoupled integration frontends.</p>
+                    </div>
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Service Cloud Consultant</h3>
+                            <span class="cert-code">SF-SVC-CONS</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">Omni-Channel Routing</span>
+                            <span class="pill">Case Topography</span>
+                            <span class="pill">Knowledge Base Architecture</span>
+                        </div>
+                        <p class="cert-description">Deploying enterprise customer contact centers, automated ticket
+                            resolution threads, and real-time support engine frameworks.</p>
+                    </div>
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Agentforce Specialist</h3>
+                            <span class="cert-code">SF-AGENTFORCE</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">Autonomous Agents</span>
+                            <span class="pill">Trust Layer & RAG</span>
+                            <span class="pill">Prompt Engineering</span>
+                        </div>
+                        <p class="cert-description">
+                            Validates expertise in configuring autonomous AI agents, designing semantic guardrails
+                            within the Einstein Trust Layer, and mapping Retrieval-Augmented Generation (RAG) datasets.
+                        </p>
+                    </div>
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Marketing Cloud Administrator</h3>
+                            <span class="cert-code">SF-MC-ADM</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">Data Extensions</span>
+                            <span class="pill">Cross-Cloud Connect</span>
+                            <span class="pill">Subscriber Lifecycle</span>
+                        </div>
+                        <p class="cert-description">
+                            Focuses on managing cross-cloud relational structures, troubleshooting multi-org tracking
+                            pixels, configuring business units, and establishing tenant-level data security.
+                        </p>
+                    </div>
+
+                    <div class="cert-row">
+                        <div class="cert-header">
+                            <h3 class="cert-title">Administrator</h3>
+                            <span class="cert-code">SF-ADM-201</span>
+                        </div>
+                        <div class="cert-tags">
+                            <span class="pill">Platform Management</span>
+                            <span class="pill">User Control Modifiers</span>
+                            <span class="pill">Standard Security</span>
+                        </div>
+                        <p class="cert-description">Foundational system configuration, standard business workflow setup,
+                            data hygiene protocols, and security baseline controls.</p>
+                    </div>
+
+                </div>
             </div>
         </section>
 
     </main>
 
+    <!-- Visual Footer -->
+    <footer class="site-footer">
+        <p>&copy; 2026 Ntermaris Evangelos. All rights reserved. Powered by Salesforce Architecture.</p>
+    </footer>
+
     <script src="app.js"></script>
 </body>
+
 </html>
