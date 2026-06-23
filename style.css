@@ -551,6 +551,7 @@ body.light-theme .cert-card {
 /* Minimalist Range Slider */
 input[type=range] {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   background: transparent;
 }
