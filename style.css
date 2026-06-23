@@ -460,3 +460,387 @@ body.light-theme .cert-card {
   .job-header .date { margin-top: 5px; }
 }
 
+/* --- 1. NEW THEME PHASES --- */
+/* Phase 1: Dawn / Morning */
+/* body.theme-dawn {
+  --bg-deep: #2A2438; 
+  --bg-surface: #352F44;
+  --navbar-bg: rgba(42, 36, 56, 0.95);
+  --navbar-border: rgba(229, 233, 240, 0.15);
+  --text-main: #EFEFEF;
+  --text-muted: #B8B2C1;
+} */
+
+/* Phase 3: Dusk / Evening */
+/* body.theme-dusk {
+  --bg-deep: #232B32; 
+  --bg-surface: #2C363F;
+  --navbar-bg: rgba(35, 43, 50, 0.95);
+  --navbar-border: rgba(229, 233, 240, 0.1);
+  --text-main: #E2E8F0;
+  --text-muted: #94A3B8;
+} */
+
+/* Phase 2 (Light) is handled by your existing body.light-theme */
+
+/* --- 2. THEME PANEL UI --- */
+.theme-menu-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.theme-panel {
+  position: absolute;
+  top: 130%;
+  right: 0;
+  width: 220px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--navbar-border);
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  
+  /* Hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s ease-in-out;
+  z-index: 1001;
+}
+
+.theme-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.theme-panel-header {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--navbar-border);
+  padding-bottom: 8px;
+}
+
+.auto-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-indicator {
+  font-size: 1.2rem;
+  min-width: 25px;
+  text-align: center;
+}
+
+/* Minimalist Range Slider */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--accent-rose);
+  cursor: pointer;
+  margin-top: -6px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: var(--navbar-border);
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   1. RECYCLED THEME PHASES (Strict Token Adherence)
+   ========================================================================== */
+
+/* Phase 1: Dawn / Morning */
+body.theme-dawn {
+  --bg-deep: #2D1C27;                      /* Recycled from Dark: --bg-surface */
+  --bg-surface: #1A202C;                   /* Recycled from Light: --text-main */
+  --navbar-bg: rgba(45, 28, 39, 0.95);     /* Exact RGB of #2D1C27 */
+  --navbar-border: rgba(229, 233, 240, 0.1); 
+  --text-main: #F7FAFC;                    /* Recycled from Light: --bg-deep */
+  --text-muted: #A0AEC0;                   /* Recycled from Dark: --text-muted */
+}
+
+/* Phase 3: Dusk / Evening */
+body.theme-dusk {
+  --bg-deep: #4A5568;                      /* Recycled from Light: --text-muted */
+  --bg-surface: #1A202C;                   /* Recycled from Light: --text-main */
+  --navbar-bg: rgba(74, 85, 104, 0.95);    /* Exact RGB of #4A5568 */
+  --navbar-border: rgba(26, 32, 44, 0.15); 
+  --text-main: #FFFFFF;                    /* Recycled from Light: --bg-surface */
+  --text-muted: #E5E9F0;                   /* Recycled from Dark: --text-main */
+}
+
+/* (Phase 0 Dark and Phase 2 Light remain driven by your existing base tokens) */
+
+
+/* ==========================================================================
+   2. CUSTOM "IOS-STYLE" UI TOGGLE SWITCH 
+   ========================================================================== */
+
+.custom-toggle {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+}
+
+.custom-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--navbar-border);
+  transition: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--text-main);
+  transition: 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Hooking into your existing Green token for the 'Active' state */
+input:checked + .toggle-slider {
+  background-color: var(--accent-green);
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(18px);
+  background-color: #FFFFFF;
+}
+
+/* Focus outline for Accessibility */
+input:focus-visible + .toggle-slider {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   TRAILHEAD VERIFICATION GATEWAY BANNER
+   ========================================================================== */
+
+.verify-gateway-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--navbar-border);
+  border-left: 4px solid var(--accent-rose);
+  border-radius: 8px;
+  padding: 32px;
+  margin: 25px 0 45px 0;
+  
+  /* THE 2:4 RATIO GRID */
+  display: grid;
+  grid-template-columns: 2fr 1fr; 
+  gap: 36px;
+  align-items: center; /* Vertically centers the shorter GIF alongside the taller text */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gateway-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.live-pulse-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-green);
+  border-radius: 50%;
+  animation: beaconPulse 1.5s infinite;
+}
+
+@keyframes beaconPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 168, 115, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 168, 115, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 168, 115, 0); }
+}
+
+.gateway-info h3 {
+  font-size: 1.3rem;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.gateway-info p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.trailhead-handle {
+  background-color: rgba(244, 162, 97, 0.15);
+  color: var(--accent-gold);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.btn-verify-action {
+  background-color: var(--accent-rose);
+  color: #FFFFFF;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-verify-action:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+}
+
+/* Media Window Holding the GIF */
+.gateway-media-window {
+  width: 100%;
+  aspect-ratio: 16 / 10; /* Completely replaces the hardcoded '170px' height */
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px dashed var(--navbar-border);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+
+.instruction-gif {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Fallback pure-CSS animation */
+.css-gif-simulation {
+  width: 100%;
+  height: 100%;
+  display: none; /* hidden unless the real gif fails */
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background-color: #1C121A;
+}
+
+.sim-browser {
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--navbar-border);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  background-color: #2D1C27;
+  overflow: hidden;
+}
+
+.sim-bar {
+  height: 16px;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  gap: 4px;
+}
+.sim-bar span { width: 5px; height: 5px; border-radius: 50%; background-color: #ff5f56; }
+.sim-bar span:nth-child(2) { background-color: #ffbd2e; }
+.sim-bar span:nth-child(3) { background-color: #27c93f; }
+.sim-bar small { color: var(--text-muted); font-size: 0.55rem; font-family: monospace; margin-left: 6px; }
+
+.sim-viewport {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.sim-cert-count {
+  background-color: rgba(52, 168, 115, 0.15);
+  border: 1px solid var(--accent-green);
+  color: var(--accent-green);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.sim-cursor {
+  position: absolute;
+  font-size: 1.1rem;
+  animation: mockClicking 3.5s infinite ease-in-out;
+}
+
+@keyframes mockClicking {
+  0% { top: 80%; left: 80%; opacity: 0; }
+  15% { opacity: 1; }
+  35% { top: 40%; left: 55%; transform: scale(1); }
+  42% { transform: scale(0.8); } /* Mouse down */
+  48% { transform: scale(1); }   /* Mouse up */
+  75% { top: 80%; left: 20%; opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (max-width: 800px) {
+  .verify-gateway-card { grid-template-columns: 1fr; gap: 20px; padding: 20px; }
+  .gateway-media-window { height: 190px; }
+}
+/* Safety Net for Mobile screens */
+@media (max-width: 850px) {
+  .verify-gateway-card { 
+    grid-template-columns: 1fr; /* Stacks GIF on top of text on phones */
+    gap: 24px; 
+    padding: 24px; 
+  }
+}

@@ -19,7 +19,27 @@
             <a href="#certs" class="nav-link" data-target="certs">14x Credentials</a>
             <a href="https://www.linkedin.com/in/evangelos-nt/" target="_blank" class="linkedin-link"
                 rel="noopener noreferrer">LinkedIn ↗</a>
-            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">🌙</button>
+            <!-- <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">🌙</button> -->
+             <div class="theme-menu-wrapper">
+                <button id="theme-settings-btn" class="theme-btn" aria-label="Theme Settings">⚙️</button>
+            
+                <div id="theme-panel" class="theme-panel">
+                    <div class="theme-panel-header">Environment Settings</div>
+                    
+                    <div class="auto-toggle-row">
+                        <span>Auto-Sync Theme</span>
+                        <label class="custom-toggle" aria-label="Toggle Auto Theme">
+                            <input type="checkbox" id="theme-auto">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="slider-row">
+                        <span id="theme-icon-display" class="theme-indicator">🌙</span>
+                        <input type="range" id="theme-slider" min="0" max="3" step="1" value="0">
+                    </div>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -70,11 +90,44 @@
 
         <!-- CERTIFICATIONS SECTION (Condensed List Matrix - Full 14x Credentials) -->
         <section id="certs" class="view-section">
-            <div class="certs-container">
-                <h2 class="section-title">Verified Credentials</h2>
-                <p class="section-subtitle">14x Certified Salesforce Engineer & Architect Matrix</p>
+                    <div class="certs-container">
+                        <h2 class="section-title">Verified Credentials</h2>
+                        <p class="section-subtitle">14x Certified Salesforce Engineer & Architect Matrix</p>
 
-                <div class="cert-matrix">
+                        <!-- NEW: TRAILHEAD LIVE VERIFICATION GATEWAY -->
+                        <div class="verify-gateway-card">
+    
+                            <div class="gateway-media-window">
+                                <img src="verify-professional.gif" alt="Trailhead verification instruction demo" class="instruction-gif" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                
+                                <div class="css-gif-simulation">
+                                    <div class="sim-browser">
+                                        <div class="sim-bar"><span></span><span></span><span></span><small>trailblazer.me/id/ntermarise</small></div>
+                                        <div class="sim-viewport">
+                                            <div class="sim-cert-count">14x Certifications</div>
+                                            <div class="sim-cursor">👆</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gateway-info">
+                                <div class="live-pulse-badge">
+                                    <span class="pulse-dot"></span> LIVE TRAILHEAD CHECK
+                                </div>
+                                <h3>Don't take my word for it. Verify it.</h3>
+                                <p>Salesforce architects are built on zero-trust validation. Click the gateway below, look up my official Trailhead CERTIFICATIONS.</p>
+                                <div>
+                                    <a href="https://trailhead.salesforce.com/en/credentials/verification/" target="_blank" rel="noopener noreferrer" class="btn-verify-action">
+                                        Launch Official Portal ➔
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- END GATEWAY -->
+
+                    <div class="cert-matrix">
 
                     <!-- Tier 1: Pyramid Pillars -->
                     <div class="cert-row architect-tier">
