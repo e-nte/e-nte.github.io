@@ -1,8 +1,78 @@
+const SF_API_URL = 'https://sf-arch-and-dev-ed.develop.my.site.com/services/apexrest/portfolio/projects'; 
+
 document.addEventListener('DOMContentLoaded', () => {
     initSPARouter();
-    //initThemeToggle();
     initThemeManager();
+    fetchSalesforceProjects();
 });
+
+/* --- 1. AGNOSTIC SALESFORCE DATA LAYER --- */
+function fetchSalesforceProjects() {
+    const grid = document.getElementById('projects-grid');
+    grid.innerHTML = '<div class="sf-loader">Querying Salesforce Data Tier...</div>';
+
+    fetch(SF_API_URL, { headers: { 'Accept': 'application/json' } })
+    .then(res => res.json())
+    .then(data => renderProjects(data))
+    .catch(err => {
+        console.error('SF Gateway Error:', err);
+        grid.innerHTML = `<p class="error-text">⚠️ Failed to establish secure REST handshake with Salesforce.</p>`;
+    });
+}
+
+function renderProjects(projects) {
+    const grid = document.getElementById('projects-grid');
+    grid.innerHTML = ''; 
+
+    projects.forEach(proj => {
+        const card = document.createElement('div');
+        card.className = 'card project-card';
+        const tagsHtml = proj.tags.map(t => `<span class="tag tag-green">${t}</span>`).join('');
+
+        card.innerHTML = `
+            <div class="card-header">
+                <h3>${proj.name}</h3>
+                <span class="badge dev-tier">Live REST API</span>
+            </div>
+            <p class="project-summary">${proj.summary}</p>
+            
+            <div class="dynamic-canvas">
+                ${proj.rawHtml || ''}
+            </div>
+
+            <div class="tech-stack">${tagsHtml}</div>
+        `;
+        
+        grid.appendChild(card);
+        
+        // 2. THE PLUG-AND-PLAY EXECUTION ENGINE
+        // Safely extract and execute any javascript passed from the Salesforce record
+        executeInjectedScripts(card);
+    });
+}
+
+function executeInjectedScripts(containerElement) {
+    // Find any script tags that came over in the rawHtml payload
+    const scripts = containerElement.querySelectorAll('script');
+    
+    scripts.forEach(oldScript => {
+        // To force execution, we must create a brand new script element
+        const newScript = document.createElement('script');
+        
+        // Copy the code from the Salesforce payload into the new executable tag
+        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+        
+        // Replace the dead script with the live one (executes immediately)
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+}
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     initSPARouter();
+//     //initThemeToggle();
+//     initThemeManager();
+// });
 
 function initSPARouter() {
     const topNavLinks = document.querySelectorAll('.navbar nav .nav-link');
@@ -64,31 +134,31 @@ function initSPARouter() {
     });
 }
 
-function initThemeToggle() {
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('theme');
+// function initThemeToggle() {
+//     const themeToggleBtn = document.getElementById('theme-toggle');
+//     const currentTheme = localStorage.getItem('theme');
 
-    // 1. Render system states based on persistent storage variables
-    if (currentTheme === 'light') {
-        document.body.classList.add('light-theme');
-        themeToggleBtn.textContent = '☀️';
-    }
+//     // 1. Render system states based on persistent storage variables
+//     if (currentTheme === 'light') {
+//         document.body.classList.add('light-theme');
+//         themeToggleBtn.textContent = '☀️';
+//     }
 
-    // 2. Listen for change parameters to trigger paint modifications
-    themeToggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('light-theme');
+//     // 2. Listen for change parameters to trigger paint modifications
+//     themeToggleBtn.addEventListener('click', () => {
+//         document.body.classList.toggle('light-theme');
         
-        let theme = 'dark';
-        if (document.body.classList.contains('light-theme')) {
-            theme = 'light';
-            themeToggleBtn.textContent = '☀️';
-        } else {
-            themeToggleBtn.textContent = '🌙';
-        }
+//         let theme = 'dark';
+//         if (document.body.classList.contains('light-theme')) {
+//             theme = 'light';
+//             themeToggleBtn.textContent = '☀️';
+//         } else {
+//             themeToggleBtn.textContent = '🌙';
+//         }
         
-        localStorage.setItem('theme', theme);
-    });
-}
+//         localStorage.setItem('theme', theme);
+//     });
+// }
 
 function initThemeManager() {
     const settingsBtn = document.getElementById('theme-settings-btn');
