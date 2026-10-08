@@ -29,6 +29,9 @@ function renderProjects(projects) {
         card.className = 'card project-card';
         const tagsHtml = proj.tags.map(t => `<span class="tag tag-green">${t}</span>`).join('');
 
+        // Use Payload_Algorithm__c (algorithmData) first since Long Text Area preserves <script> tags
+        const widgetPayload = proj.algorithmData || proj.rawHtml || '';
+
         card.innerHTML = `
             <div class="card-header">
                 <h3>${proj.name}</h3>
@@ -37,7 +40,7 @@ function renderProjects(projects) {
             <p class="project-summary">${proj.summary}</p>
             
             <div class="dynamic-canvas">
-                ${proj.rawHtml || ''}
+                ${widgetPayload}
             </div>
 
             <div class="tech-stack">${tagsHtml}</div>
@@ -45,8 +48,7 @@ function renderProjects(projects) {
         
         grid.appendChild(card);
         
-        // 2. THE PLUG-AND-PLAY EXECUTION ENGINE
-        // Safely extract and execute any javascript passed from the Salesforce record
+        // Execute the script block extracted from Long Text Area
         executeInjectedScripts(card);
     });
 }
