@@ -70,12 +70,6 @@ function executeInjectedScripts(containerElement) {
     });
 }
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     initSPARouter();
-//     //initThemeToggle();
-//     initThemeManager();
-// });
-
 let isSfDataLoaded = false; // Flag to prevent duplicate API fetches
 
 function initSPARouter() {
@@ -102,7 +96,7 @@ function initSPARouter() {
 
 
             // LAZY LOAD: Fetch Salesforce data ONLY when entering Dynamic Features
-            if (targetId === 'dynamic-features' && !isSfDataLoaded) {
+            if ((targetId === 'projects' || targetId === 'dynamic-features') && !isSfDataLoaded) {
                 fetchSalesforceProjects();
                 isSfDataLoaded = true; // Mark as fetched
             }
