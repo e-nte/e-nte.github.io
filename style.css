@@ -701,6 +701,77 @@ input:focus-visible + .toggle-slider {
   animation: beaconPulse 1.5s infinite;
 }
 
+/* ==========================================================================
+   BADGES GRID SECTION
+   ========================================================================== */
+
+.badges-container {
+  margin: 30px 0 40px 0;
+  padding: 24px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--navbar-border);
+  border-radius: 8px;
+}
+
+.badges-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-gold);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+  gap: 20px 16px;
+  align-items: start;
+  justify-items: center;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+
+.badge-item:hover {
+  transform: translateY(-4px);
+}
+
+.badge-icon {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+}
+
+/* Fallback circular badge icon placeholder when the image file is missing */
+.badge-icon-placeholder {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(244, 162, 97, 0.1);
+  border: 1px dashed var(--accent-gold);
+  color: var(--accent-gold);
+  display: none; /* Toggled on via onerror handler */
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.badge-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
 @keyframes beaconPulse {
   0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 168, 115, 0.7); }
   70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 168, 115, 0); }
@@ -844,4 +915,76 @@ input:focus-visible + .toggle-slider {
     gap: 24px; 
     padding: 24px; 
   }
+}
+
+/* Scroll alignment offset for fixed headers */
+.cert-row {
+  scroll-margin-top: 100px;
+}
+
+/* Flash highlight class applied via JavaScript */
+.cert-card.highlight-pulse {
+  animation: certHighlight 2s ease-out;
+}
+
+@keyframes certHighlight {
+  0% {
+    outline: 2px solid var(--accent-gold);
+    box-shadow: 0 0 18px rgba(244, 162, 97, 0.45);
+  }
+  100% {
+    outline: 2px solid transparent;
+    box-shadow: none;
+  }
+}
+
+/**/
+/* Standalone External Page Layout */
+.standalone-page {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 100px auto ;
+}
+
+.back-navigation {
+  margin-bottom: 24px;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-gold);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.2s ease;
+}
+
+.btn-back:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.insight-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--navbar-border);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.badge-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }

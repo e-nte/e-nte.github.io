@@ -12,37 +12,9 @@
 <body>
 
     <!-- Menu Navigator -->
-    <header class="navbar">
-        <div class="logo">Engineered::SF</div>
-        <nav>
-            <a href="#home" class="nav-link active" data-target="home">Home & Experience</a>
-            <a href="#projects" class="nav-link" data-target="projects">Dynamic Features</a>
-            <a href="#certs" class="nav-link" data-target="certs">14x Credentials</a>
-            <a href="https://www.linkedin.com/in/evangelos-nt/" target="_blank" class="linkedin-link"
-                rel="noopener noreferrer">LinkedIn ↗</a>
-            <!-- <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">🌙</button> -->
-             <div class="theme-menu-wrapper">
-                <button id="theme-settings-btn" class="theme-btn" aria-label="Theme Settings">⚙️</button>
-            
-                <div id="theme-panel" class="theme-panel">
-                    <div class="theme-panel-header">Environment Settings</div>
-                    
-                    <div class="auto-toggle-row">
-                        <span>Auto-Sync Theme</span>
-                        <label class="custom-toggle" aria-label="Toggle Auto Theme">
-                            <input type="checkbox" id="theme-auto">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                    
-                    <div class="slider-row">
-                        <span id="theme-icon-display" class="theme-indicator">🌙</span>
-                        <input type="range" id="theme-slider" min="0" max="3" step="1" value="0">
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
+
+    <!-- Dynamic Header Placeholder -->
+    <header id="site-header" class="navbar"></header>
 
     <!-- Main Viewports -->
     <main class="content-wrapper">
@@ -127,11 +99,103 @@
 
                         </div>
                         <!-- END GATEWAY -->
+                        <!-- BADGES SECTION -->
+                        <div class="badges-container">
+                            <h3 class="badges-title">Certification Badges</h3>
+                            <div class="badges-grid">
+
+                                <a data-jump="cert-app-architect" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-app-architect.png" alt="Application Architect" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">AA</div>
+                                    <span class="badge-label">Application Architect</span>
+                                </a>
+
+                                <a data-jump="cert-system-architect" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-system-architect.png" alt="System Architect" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">SA</div>
+                                    <span class="badge-label">System Architect</span>
+                                </a>
+
+                                <a data-jump="cert-integration-arch" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-integration-arch.png" alt="Integration Architect" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">IA</div>
+                                    <span class="badge-label">Integration Architect</span>
+                                </a>
+
+                                <a data-jump="cert-data-arch" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-data-arch.png" alt="Data Architect" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">DA</div>
+                                    <span class="badge-label">Data Architect</span>
+                                </a>
+
+                                <a data-jump="cert-sharing-arch" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-sharing-arch.png" alt="Sharing & Visibility Architect" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">SVA</div>
+                                    <span class="badge-label">Sharing & Visibility</span>
+                                </a>
+
+                                <a data-jump="cert-iam-arch" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-iam-arch.png" alt="Identity & Access Architect" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">IAM</div>
+                                    <span class="badge-label">Identity & Access</span>
+                                </a>
+
+                                <a data-jump="cert-dev-lifecycle" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-dev-lifecycle.png" alt="Dev Lifecycle Architect" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">DLC</div>
+                                    <span class="badge-label">Dev Lifecycle</span>
+                                </a>
+
+                                <a data-jump="cert-pd1" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-pd1.png" alt="Platform Developer I" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">PD1</div>
+                                    <span class="badge-label">Platform Dev I</span>
+                                </a>
+
+                                <a data-jump="cert-app-builder" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-app-builder.png" alt="Platform App Builder" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">PAB</div>
+                                    <span class="badge-label">App Builder</span>
+                                </a>
+
+                                <a data-jump="cert-exp-cloud" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-exp-cloud.png" alt="Experience Cloud Consultant" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">EXP</div>
+                                    <span class="badge-label">Experience Cloud</span>
+                                </a>
+
+                                <a data-jump="cert-service-cloud" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-service-cloud.png" alt="Service Cloud Consultant" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">SVC</div>
+                                    <span class="badge-label">Service Cloud</span>
+                                </a>
+
+                                <a data-jump="cert-agentforce" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-agentforce.png" alt="Agentforce Specialist" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">AF</div>
+                                    <span class="badge-label">Agentforce</span>
+                                </a>
+
+                                <a data-jump="cert-mc-admin" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-mc-admin.png" alt="Marketing Cloud Admin" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">MC</div>
+                                    <span class="badge-label">Marketing Cloud</span>
+                                </a>
+
+                                <a data-jump="cert-admin" class="badge-item" role="button" tabindex="0">
+                                    <img src="badge-admin.png" alt="Administrator" class="badge-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="badge-icon-placeholder">ADM</div>
+                                    <span class="badge-label">Administrator</span>
+                                </a>
+
+                            </div>
+                        </div>
+
 
                     <div class="cert-matrix">
 
                     <!-- Tier 1: Pyramid Pillars -->
-                    <div class="cert-row architect-tier">
+                    <div id="cert-app-architect"  class="cert-row architect-tier">
                         <div class="cert-header">
                             <h3 class="cert-title">Application Architect</h3>
                             <span class="cert-code">System Milestone</span>
@@ -147,7 +211,7 @@
                         </p>
                     </div>
 
-                    <div class="cert-row architect-tier">
+                    <div id="cert-system-architect" class="cert-row architect-tier">
                         <div class="cert-header">
                             <h3 class="cert-title">System Architect</h3>
                             <span class="cert-code">System Milestone</span>
@@ -164,7 +228,7 @@
                     </div>
 
                     <!-- Tier 2: Component Architect Certs -->
-                    <div class="cert-row">
+                    <div id="cert-integration-arch"  class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Integration Architect</h3>
                             <span class="cert-code">SF-INT-ARCH</span>
@@ -178,7 +242,7 @@
                             streaming event patterns, and building resilient API wrappers.</p>
                     </div>
 
-                    <div class="cert-row">
+                    <div id="cert-data-arch"  class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Data Architect</h3>
                             <span class="cert-code">SF-DATA-ARCH</span>
@@ -192,7 +256,7 @@
                             storage bottlenecks, and configuring multi-system object mappings.</p>
                     </div>
 
-                    <div class="cert-row">
+                    <div id="cert-sharing-arch" class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Sharing and Visibility Architect</h3>
                             <span class="cert-code">SF-SEC-ARCH</span>
@@ -206,7 +270,7 @@
                             models, dynamic field permissions, and territory structures.</p>
                     </div>
 
-                    <div class="cert-row">
+                    <div id="cert-iam-arch" class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Identity and Access Management Architect</h3>
                             <span class="cert-code">SF-IAM-ARCH</span>
@@ -220,7 +284,7 @@
                             connection routes, and handling multi-factor verification frameworks.</p>
                     </div>
 
-                    <div class="cert-row">
+                    <div id="cert-dev-lifecycle" class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Development Lifecycle and Deployment Architect</h3>
                             <span class="cert-code">SF-DEV-ARCH</span>
@@ -236,7 +300,7 @@
 
                     <!-- Tier 3: Programmatic & Core Dev -->
 
-                    <div class="cert-row">
+                    <div id="cert-pd1" class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Platform Developer I</h3>
                             <span class="cert-code">SF-PDI</span>
@@ -250,7 +314,7 @@
                             logic, automated process layers, and interface controllers.</p>
                     </div>
 
-                    <div class="cert-row">
+                    <div id="cert-app-builder" class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Platform App Builder</h3>
                             <span class="cert-code">SF-APP-BUILDER</span>
@@ -265,7 +329,7 @@
                     </div>
 
                     <!-- Tier 4: Functional & Consulting Extensions -->
-                    <div class="cert-row">
+                    <div id="cert-exp-cloud" class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Experience Cloud Consultant</h3>
                             <span class="cert-code">SF-EXP-CONS</span>
@@ -279,7 +343,7 @@
                             routing structures, and decoupled integration frontends.</p>
                     </div>
 
-                    <div class="cert-row">
+                    <div id="cert-service-cloud" class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Service Cloud Consultant</h3>
                             <span class="cert-code">SF-SVC-CONS</span>
@@ -293,7 +357,7 @@
                             resolution threads, and real-time support engine frameworks.</p>
                     </div>
 
-                    <div class="cert-row">
+                    <div id="cert-agentforce" class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Agentforce Specialist</h3>
                             <span class="cert-code">SF-AGENTFORCE</span>
@@ -309,9 +373,9 @@
                         </p>
                     </div>
 
-                    <div class="cert-row">
+                    <div id="cert-mc-admin" class="cert-row">
                         <div class="cert-header">
-                            <h3 class="cert-title">Marketing Cloud Administrator</h3>
+                            <h3 class="cert-title">Marketing Cloud Engagement Administrator</h3>
                             <span class="cert-code">SF-MC-ADM</span>
                         </div>
                         <div class="cert-tags">
@@ -325,7 +389,7 @@
                         </p>
                     </div>
 
-                    <div class="cert-row">
+                    <div id="cert-admin" class="cert-row">
                         <div class="cert-header">
                             <h3 class="cert-title">Administrator</h3>
                             <span class="cert-code">SF-ADM-201</span>
@@ -350,6 +414,7 @@
         <p>&copy; 2026 Ntermaris Evangelos. All rights reserved. Powered by Salesforce Architecture.</p>
     </footer>
 
+    <script src="components/header.js"></script>
     <script src="app.js"></script>
 </body>
 

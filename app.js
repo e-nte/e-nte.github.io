@@ -3,7 +3,7 @@ const SF_API_URL = 'https://sf-arch-and-dev-ed.develop.my.site.com/services/apex
 document.addEventListener('DOMContentLoaded', () => {
     initSPARouter();
     initThemeManager();
-    fetchSalesforceProjects();
+    //fetchSalesforceProjects();
 });
 
 /* --- 1. AGNOSTIC SALESFORCE DATA LAYER --- */
@@ -76,6 +76,8 @@ function executeInjectedScripts(containerElement) {
 //     initThemeManager();
 // });
 
+let isSfDataLoaded = false; // Flag to prevent duplicate API fetches
+
 function initSPARouter() {
     const topNavLinks = document.querySelectorAll('.navbar nav .nav-link');
     const sections = document.querySelectorAll('.view-section');
@@ -97,6 +99,13 @@ function initSPARouter() {
                 link.classList.remove('active');
             }
         });
+
+
+            // LAZY LOAD: Fetch Salesforce data ONLY when entering Dynamic Features
+            if (targetId === 'dynamic-features' && !isSfDataLoaded) {
+                fetchSalesforceProjects();
+                isSfDataLoaded = true; // Mark as fetched
+            }
 
         // C. Write the state silently to the browser's Back/Forward timeline
         window.history.pushState(null, null, `#${targetId}`);
@@ -123,6 +132,31 @@ function initSPARouter() {
         }
     });
 
+    // Badge jump listener (prevents SPA router page reset)
+    document.addEventListener('click', (e) => {
+        const badgeItem = e.target.closest('.badge-item[data-jump]');
+        if (!badgeItem) return;
+
+        // Prevent SPA router from treating this as a section switch
+        e.preventDefault();
+        e.stopPropagation();
+
+        const targetId = badgeItem.getAttribute('data-jump');
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            // Trigger flash highlight pulse
+            targetElement.classList.remove('highlight-pulse');
+            void targetElement.offsetWidth; // Force CSS reflow
+            targetElement.classList.add('highlight-pulse');
+        }
+    });
+
     // 3. Catch Page Refreshes / Direct URL deep-links (e.g. user lands on domain.com/#certs)
     const initialHash = window.location.hash.replace('#', '');
     if (initialHash) {
@@ -134,33 +168,59 @@ function initSPARouter() {
         const hash = window.location.hash.replace('#', '') || 'home';
         navigateTo(hash);
     });
+
+    //**//migrate to multipage
+    const isHomePage = window.location.pathname.endsWith('index.html') || 
+                       window.location.pathname.endsWith('/') || 
+                       window.location.pathname === '';
+
+    // Delegate menu navigation clicks
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a[data-target]');
+        if (!link) return;
+
+        // If on external page (insights.html) and clicking SPA anchor, allow standard link navigation
+        if (!isHomePage) return;
+
+        const targetSection = link.getAttribute('data-target');
+        if (targetSection) {
+            e.preventDefault();
+            navigateToSection(targetSection);
+        }
+    });
+
+    // Handle initial hash load when returning to index.html (e.g. index.html#certs)
+    if (isHomePage) {
+        const initialHash = window.location.hash.replace('#', '') || 'home';
+        navigateToSection(initialHash);
+    }
 }
 
-// function initThemeToggle() {
-//     const themeToggleBtn = document.getElementById('theme-toggle');
-//     const currentTheme = localStorage.getItem('theme');
+function initThemeToggle() {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
 
-//     // 1. Render system states based on persistent storage variables
-//     if (currentTheme === 'light') {
-//         document.body.classList.add('light-theme');
-//         themeToggleBtn.textContent = '☀️';
-//     }
+    // 1. Render system states based on persistent storage variables
+    if (currentTheme === 'light') {
+        document.body.classList.add('light-theme');
+        themeToggleBtn.textContent = '☀️';
+    }
 
-//     // 2. Listen for change parameters to trigger paint modifications
-//     themeToggleBtn.addEventListener('click', () => {
-//         document.body.classList.toggle('light-theme');
+    // 2. Listen for change parameters to trigger paint modifications
+    themeToggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
         
-//         let theme = 'dark';
-//         if (document.body.classList.contains('light-theme')) {
-//             theme = 'light';
-//             themeToggleBtn.textContent = '☀️';
-//         } else {
-//             themeToggleBtn.textContent = '🌙';
-//         }
+        let theme = 'dark';
+        if (document.body.classList.contains('light-theme')) {
+            theme = 'light';
+            themeToggleBtn.textContent = '☀️';
+        } else {
+            themeToggleBtn.textContent = '🌙';
+        }
         
-//         localStorage.setItem('theme', theme);
-//     });
-// }
+        localStorage.setItem('theme', theme);
+    });
+}
 
 function initThemeManager() {
     const settingsBtn = document.getElementById('theme-settings-btn');
@@ -255,4 +315,20 @@ function initThemeManager() {
             }
         }
     }, 300000); 
+}
+
+function navigateToSection(sectionId) {
+    const sections = document.querySelectorAll('.spa-section');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    sections.forEach(sec => sec.classList.remove('active'));
+    navItems.forEach(item => item.classList.remove('active'));
+
+    const activeSection = document.getElementById(sectionId);
+    const activeNavItem = document.querySelector(`.nav-item[data-target="${sectionId}"]`);
+
+    if (activeSection) activeSection.classList.add('active');
+    if (activeNavItem) activeNavItem.classList.add('active');
+
+    history.pushState(null, '', `#${sectionId}`);
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture Insights</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Shared Header -->
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+        <div class="page-container">
+            <!-- Navigation Back to SPA -->
+            <div class="back-navigation">
+                <a href="index.html#certs" class="btn-back">
+                    &larr; Back to Credentials SPA
+                </a>
+            </div>
+
+            <section class="page-header">
+                <h1 class="page-title">Architecture Insights & Case Studies</h1>
+                <p class="page-subtitle">Deep dives into Salesforce enterprise patterns, integration strategies, and multi-cloud governance.</p>
+            </section>
+
+            <!-- Page Content Cards -->
+            <div class="insights-grid">
+                <article class="insight-card">
+                    <span class="badge-tag">Integration Pattern</span>
+                    <h2>Event-Driven Architectures with Salesforce Pub/Sub API</h2>
+                    <p>Best practices for high-throughput messaging, streaming event recovery, and gRPC implementations.</p>
+                </article>
+
+                <article class="insight-card">
+                    <span class="badge-tag">Data Governance</span>
+                    <h2>Large Data Volumes (LDV) Strategy</h2>
+                    <p>Indexing, custom skinny tables, and archiving pipelines for datasets exceeding 10M+ records.</p>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <script src="components/header.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
