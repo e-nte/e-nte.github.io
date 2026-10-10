@@ -12,6 +12,7 @@ function renderSiteHeader() {
             <a href="${isHomePage ? '#projects' : 'index.html#projects'}" class="nav-link" data-target="projects">Dynamic Features</a>
             <a href="${isHomePage ? '#certs' : 'index.html#certs'}" class="nav-link" data-target="certs">14x Credentials</a>
             <a href="insights.html" class="nav-link ${!isHomePage ? 'active' : ''}">Insights</a>
+            <a href="articles.html" class="nav-link ${!isHomePage ? 'active' : ''}">Articles</a>
             <a href="https://www.linkedin.com/in/evangelos-nt/" target="_blank" class="linkedin-link" rel="noopener noreferrer">LinkedIn ↗</a>
             
             <div class="theme-menu-wrapper">

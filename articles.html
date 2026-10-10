@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Articles | Architecture Insights</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lightweight Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+        <!-- 1. INDEX VIEW (Lists all articles) -->
+        <section id="articles-list-view">
+            <div class="page-header">
+                <h1 class="page-title">Architecture Articles</h1>
+                <p class="page-subtitle">Technical papers, design patterns, and platform engineering notes.</p>
+            </div>
+            <div id="articles-grid" class="insights-grid">
+                <p class="text-muted">Loading article manifest...</p>
+            </div>
+        </section>
+
+        <!-- 2. DETAIL READER VIEW (Displays full markdown content) -->
+        <section id="article-detail-view" style="display: none;">
+            <div class="back-navigation">
+                <a href="articles.html" class="btn-back" id="back-to-articles">
+                    &larr; Back to Articles
+                </a>
+            </div>
+            <article id="markdown-content" class="markdown-body"></article>
+        </section>
+    </main>
+
+    <script src="components/header.js"></script>
+    <script src="articles.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
