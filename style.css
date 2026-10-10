@@ -1040,3 +1040,17 @@ input:focus-visible + .toggle-slider {
   padding: 0;
   color: var(--text-main);
 }
+
+/****/
+.logo div{
+  width: 33%;
+  font-size: 12px;
+  display: inline-flex;
+}
+.navbar .logo {
+  flex-basis: 0;
+}
+article td{
+  border-top: solid #F4A261 1px;
+  padding: 4px 6px 2px 0px;
+}

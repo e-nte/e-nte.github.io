@@ -1,6 +1,6 @@
 [
   {
-    "slug": "visit-job-execution-salesforce",
+    "slug": "visit-job-execution",
     "title": "Visit Job Execution: Consumer Goods Cloud vs. Field Service",
     "date": "2026-10-10",
     "summary": "How Salesforce addresses field visit execution across Consumer Goods Cloud and Field Service, when to choose each, and whether a native Flow build is worth it.",

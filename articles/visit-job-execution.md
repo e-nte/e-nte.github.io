@@ -1,3 +1,4 @@
+<!--
 ---
 title: "Visit Job Execution: Consumer Goods Cloud vs. Field Service"
 description: "How Salesforce addresses field visit execution across Consumer Goods Cloud and Field Service, when to choose each, and whether a native Flow build is worth it."
@@ -15,8 +16,16 @@ audience:
   - business-analysts
   - developers
 ---
-
+-->
 # Visit Job Execution: Consumer Goods Cloud vs. Field Service
+
+`#salesforce` `#consumer-goods-cloud` `#field-service` `#solution-architecture`
+
+> **Author:** Evangelos Ntermaris | **Date:** 2026-10-10 | **Read Time:** 6 min
+
+How Salesforce addresses field visit execution across Consumer Goods Cloud and Field Service, when to choose each, and whether a native Flow build is worth it.
+
+---
 
 ## The Business Need: Closing the Field Execution Gap
 

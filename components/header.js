@@ -6,7 +6,7 @@ function renderSiteHeader() {
     const isHomePage = currentPath.endsWith('index.html') || currentPath.endsWith('/') || currentPath === '';
 
     headerContainer.innerHTML = `
-        <div class="logo">Engineered::SF</div>
+        <div class="logo">Engineered::<div>Enterprise Cloud Solutions</div></div>
         <nav>
             <a href="${isHomePage ? '#home' : 'index.html#home'}" class="nav-link ${isHomePage ? 'active' : ''}" data-target="home">Home & Experience</a>
             <a href="${isHomePage ? '#projects' : 'index.html#projects'}" class="nav-link" data-target="projects">Dynamic Features</a>
