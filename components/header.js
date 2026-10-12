@@ -4,15 +4,19 @@ function renderSiteHeader() {
 
     const currentPath = window.location.pathname;
     const isHomePage = currentPath.endsWith('index.html') || currentPath.endsWith('/') || currentPath === '';
+    const isArticlesPage = currentPath.includes('articles.html');
+
+    // Detect if we are inside a nested subdirectory like /articles/
+    const isSubfolder = currentPath.includes('/articles/');
+    const basePath = isSubfolder ? '../' : '';
 
     headerContainer.innerHTML = `
         <div class="logo">Engineered::<div>Enterprise Cloud Solutions</div></div>
         <nav>
-            <a href="${isHomePage ? '#home' : 'index.html#home'}" class="nav-link ${isHomePage ? 'active' : ''}" data-target="home">Home & Experience</a>
-            <a href="${isHomePage ? '#projects' : 'index.html#projects'}" class="nav-link" data-target="projects">Dynamic Features</a>
-            <a href="${isHomePage ? '#certs' : 'index.html#certs'}" class="nav-link" data-target="certs">14x Credentials</a>
-            <a href="insights.html" class="nav-link ${!isHomePage ? 'active' : ''}">Insights</a>
-            <a href="articles.html" class="nav-link ${!isHomePage ? 'active' : ''}">Articles</a>
+            <a href="${isHomePage ? '#home' : basePath + 'index.html#home'}" class="nav-link ${isHomePage ? 'active' : ''}" data-target="home">Home & Experience</a>
+            <a href="${isHomePage ? '#projects' : basePath + 'index.html#projects'}" class="nav-link" data-target="projects">Dynamic Features</a>
+            <a href="${isHomePage ? '#certs' : basePath + 'index.html#certs'}" class="nav-link" data-target="certs">14x Credentials</a>
+            <a href="${basePath}articles.html" class="nav-link ${isArticlesPage ? 'active' : ''}">Articles</a>
             <a href="https://www.linkedin.com/in/evangelos-nt/" target="_blank" class="linkedin-link" rel="noopener noreferrer">LinkedIn ↗</a>
             
             <div class="theme-menu-wrapper">
