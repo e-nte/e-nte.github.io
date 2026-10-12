@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit Job Execution: Consumer Goods Cloud vs. Field Service | Articles</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- Shared Navigation Header -->
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+        
+        <!-- Back Navigation -->
+        <div class="back-navigation">
+            <a href="../articles.html" class="btn-back">&larr; Back to Articles</a>
+        </div>
+
+        <article class="article-wrapper">
+            
+            <!-- Article Header Banner -->
+            <header class="article-meta-banner">
+                <div class="meta-tags-row">
+                    <span class="badge-tag">#salesforce</span>
+                    <span class="badge-tag">#consumer-goods-cloud</span>
+                    <span class="badge-tag">#field-service</span>
+                    <span class="badge-tag">#solution-architecture</span>
+                </div>
+
+                <h1 class="article-title">Visit Job Execution: Consumer Goods Cloud vs. Field Service</h1>
+                
+                <p class="article-description">
+                    How Salesforce addresses field visit execution across Consumer Goods Cloud and Field Service, when to choose each, and whether a native Flow build is worth it.
+                </p>
+
+                <div class="article-author-bar">
+                    <span>👤 Evangelos Ntermaris: Senior Salesforce Consultant</span>
+                    <span class="meta-divider">•</span>
+                    <span>📅 2026-10-10</span>
+                    <span class="meta-divider">•</span>
+                    <span>⏱️ 6 min read</span>
+                </div>
+
+                <div class="audience-row">
+                    <strong>Target Audience:</strong>
+                    <span class="pill">Prospective Customers</span>
+                    <span class="pill">Business Analysts</span>
+                    <span class="pill">Developers</span>
+                </div>
+            </header>
+
+            <hr class="meta-separator" />
+
+            <!-- Article Body Content -->
+            <div class="article-body">
+                
+                <h2>The Business Need: Closing the Field Execution Gap</h2>
+                <p>
+                    Every organisation that sends people into the field — whether to stock shelves, audit planograms, or repair equipment — faces the same fundamental problem: <strong>the gap between what is planned and what actually happens on the ground</strong>. Field teams operate under cost pressure, time pressure, and increasing scrutiny over whether visits deliver measurable value. Without a structured execution framework, visits become unstructured conversations, task completion is inconsistently recorded, and managers lack the data to distinguish productive field time from wasted travel. This is the core business need that visit job execution addresses: turning every field appointment into a repeatable, verifiable, and measurable unit of work.
+                </p>
+                <p>
+                    Salesforce approaches this need through two distinct products: <strong>Consumer Goods Cloud</strong> (now branded Agentforce Consumer Goods) for retail execution, and <strong>Field Service</strong> (Agentforce Field Service) for service-driven field operations. They share a platform and a philosophy — plan the work, execute it on mobile, capture the outcome — but they solve fundamentally different problems. Understanding where each belongs is the first architectural decision a consultant must get right.
+                </p>
+
+                <h2>Consumer Goods Cloud: Structured Retail Execution</h2>
+                <p>
+                    Consumer Goods Cloud is purpose-built for <strong>repetitive, compliance-driven store visits</strong> in industries such as FMCG, beverages, and consumer health. The central object is the <strong>Visit</strong>, which stores the place, visitor, planned and actual start/end times, special instructions, priority, and status (Planned, In Progress, Abandoned, Completed). What makes CG Cloud distinctive is how it answers the question <em>"what happens during the visit?"</em> through <strong>Action Plan Templates</strong>.
+                </p>
+                <p>
+                    An Action Plan Template is a reusable definition of the tasks a rep must perform in a given visit type. It contains items built from <strong>Assessment Task Definitions</strong>, which map to six standard task types: Inventory Check, Planogram Check, Promotion Check, Place Order, In-Store Survey, and Other. Each task definition can be linked to Assessment Indicator Definitions — the metrics that capture the actual in-store reality, such as facings, share of shelf, or out-of-stock counts. When a rep starts a visit on the Consumer Goods mobile app, the Action Plan is instantiated as Assessment Task records, each with its own status and captured data. The <strong>Retail Visit KPI</strong> object then stores the captured metric values for that specific visit, enabling comparison against the Retail Store KPI targets defined at the store level.
+                </p>
+                <p>
+                    The practical implication is <strong>standardisation at scale</strong>: a sales manager defines one "NTO Stores – Compliance Checks" template once, publishes it, and applies it to hundreds of visits. Reps execute the same checklist every time, and the data captured flows into dashboards that show compliance rates, not just visit counts. CG Cloud also includes geofencing and explicit start-visit controls to reduce visit fraud and improve execution reliability.
+                </p>
+
+                <h2>Field Service: Dispatched Work Order Execution</h2>
+                <p>
+                    Field Service solves a different problem. Its data model is built around the <strong>Work Order</strong> — the unit of work — and the <strong>Service Appointment</strong>, which represents the scheduled visit. A single Work Order can spawn multiple Service Appointments (a multi-day installation, for example), and each appointment has a time window, an assigned Service Resource, a location, and a status. The execution flow is fundamentally <strong>case-driven or asset-driven</strong>: a customer reports an issue, a Case or Work Order is created, and the scheduling engine assigns a qualified technician based on skills, territories, operating hours, and service-level agreements.
+                </p>
+                <p>
+                    During execution, the technician uses the <strong>Field Service Mobile app</strong> (offline-capable) to view the appointment, access asset history and prior visit notes, capture parts used, record labour time, and obtain customer sign-off. Recent Agentforce capabilities add pre-work briefs that analyse the work order and predict likely faults before the technician arrives, and post-job summaries drafted from technician notes. The critical difference is that Field Service execution is <strong>not template-driven in the same way</strong>. Each work order line item defines what needs to be done (replace compressor, inspect wiring), and the service appointment is the scheduled opportunity to do it. There is no equivalent of a reusable "action plan" applied across hundreds of visits — each job is scoped individually, though Work Types and Work Order Line Items provide structuring mechanisms.
+                </p>
+
+                <h2>The Comparison: Choosing the Right Cloud</h2>
+                <p>
+                    The decision between Consumer Goods Cloud and Field Service is not about which is "better" — it is about which model matches the operational reality. CG Cloud assumes <strong>high-frequency, low-variability visits</strong> to the same type of location, where the value comes from consistency and compliance measurement. Field Service assumes <strong>variable-scope, dispatch-driven jobs</strong> where the value comes from matching the right resource to the right task at the right time.
+                </p>
+
+                <!-- Comparison Table -->
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Dimension</th>
+                                <th style="padding: 12px;">Consumer Goods Cloud</th>
+                                <th style="padding: 12px;">Field Service</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Core execution object</td>
+                                <td style="padding: 12px;">Visit</td>
+                                <td style="padding: 12px;">Service Appointment (child of Work Order)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Task definition model</td>
+                                <td style="padding: 12px;">Action Plan Template to Assessment Task Definitions</td>
+                                <td style="padding: 12px;">Work Order Line Items</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Primary driver</td>
+                                <td style="padding: 12px;">Route and call cycle planning</td>
+                                <td style="padding: 12px;">Customer request or asset condition</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Metric capture</td>
+                                <td style="padding: 12px;">Retail Visit KPI vs. Retail Store KPI</td>
+                                <td style="padding: 12px;">Work order completion fields, parts, labour</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Scheduling emphasis</td>
+                                <td style="padding: 12px;">Trip Lists and optimised routes</td>
+                                <td style="padding: 12px;">Scheduling engine with skills and SLA constraints</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Mobile app</td>
+                                <td style="padding: 12px;">Consumer Goods offline app</td>
+                                <td style="padding: 12px;">Field Service Mobile</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Typical user</td>
+                                <td style="padding: 12px;">Merchandiser, pre-sales rep</td>
+                                <td style="padding: 12px;">Technician, engineer, installer</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>
+                    A useful heuristic: if the rep visits the same store every Tuesday and performs the same five checks, CG Cloud is the natural fit. If the rep is dispatched to a different customer site each day to fix something specific, Field Service is the correct platform. Some organisations, particularly in equipment rental or technical consumer goods, may need both — CG Cloud for retail presence and Field Service for after-sales support — and Salesforce supports this coexistence on the same org, though the data models remain separate and require deliberate integration design.
+                </p>
+
+                <h2>The Decoupling Option: Building Visit Execution with Native Flows</h2>
+                <p>
+                    A client that does not need the full Consumer Goods Cloud suite — with its trade promotion management, order capture, and offline mobile app — might reasonably ask: <em>can we build a leaner visit execution capability using standard Salesforce objects and Flow Builder?</em> The answer is yes, and for a focused use case, the effort is moderate and well within reach for an experienced admin or consultant.
+                </p>
+                <p>
+                    The core of a custom solution rests on three or four custom objects: a <strong>Visit</strong> object (linked to Account and User), a <strong>Visit Task</strong> object (child of Visit, with a status and a reference to a task template), and a <strong>Task Template</strong> object that mirrors the role of the Action Plan Template. Record-triggered flows on Visit creation can instantiate the required Visit Tasks from the template, and screen flows embedded in the Salesforce mobile app can guide the rep through check-in, task completion, and check-out. Check-in and check-out timestamps can be captured via a screen flow action or a Lightning web component, and geolocation can be approximated using the standard <code>Location</code> field or a lightweight Apex callout if the client has a Maps licence. Reporting on task completion rates and visit durations is straightforward using standard reports and dashboards.
+                </p>
+                <p>
+                    The effort is <strong>not trivial, but it is contained</strong>. The typical build involves 3–5 custom objects, 6–10 fields per object, 3–4 record-triggered flows, 2–3 screen flows for mobile execution, and a small number of validation rules and permission sets. For an experienced Salesforce professional, this is a matter of weeks, not months — particularly if the client is willing to accept the trade-offs. Those trade-offs are worth stating plainly. A custom build will <strong>not</strong> have the offline capability of the CG Cloud mobile app, so it is unsuitable for environments with unreliable connectivity. It will <strong>not</strong> have Einstein Vision for shelf recognition or AI-driven task recommendations. It will <strong>not</strong> have the process-contract architecture that governs the CG Cloud mobile UI, meaning the mobile experience must be built and maintained manually. And it will <strong>not</strong> be supported by Salesforce as a managed package, so every enhancement and bug fix becomes the client's responsibility.
+                </p>
+                <p>
+                    The decision, therefore, is a classic build-versus-buy calculation. If the client's needs are a structured checklist, basic geo-tagged check-in, and task completion reporting, a native Flow-based build delivers 80% of the value at a fraction of the licence cost and implementation time. If the client needs offline execution, AI-driven compliance checks, or tight integration with trade promotion and order capture, the full Consumer Goods Cloud suite is the right investment. A senior consultant's role is to help the client see that trade-off clearly — and to resist the temptation to build custom simply because it feels lighter, when the operational reality demands the robustness of the packaged product.
+                </p>
+
+                <h2>Critical Components to Get Right</h2>
+                <p>
+                    For either cloud, three implementation components determine whether visit job execution succeeds in production. First, <strong>the task or work definition layer</strong>: in CG Cloud, this means Assessment Task Definitions and Action Plan Templates; in Field Service, Work Types and Work Order Line Items; in a custom build, the Task Template object. If this layer is inconsistent, the execution data becomes unreliable. Second, <strong>the mobile experience</strong>: both platforms are mobile-first, but offline behaviour must be tested against real network conditions, especially in CG Cloud where the offline app is the primary execution surface for merchandisers. Third, <strong>the measurement feedback loop</strong>: CG Cloud's Retail Visit KPI must be mapped correctly to Assessment Indicator Definitions, and Field Service's completion data must flow back to the Work Order and Asset history. Without this loop, the system records activity but does not enable learning.
+                </p>
+
+                <h2>Summary</h2>
+                <p>
+                    Visit job execution is where field strategy meets field reality. Consumer Goods Cloud provides a template-driven, compliance-oriented execution model for structured retail visits, while Field Service provides a dispatch-driven, work-order-oriented model for variable-scope service jobs. Both are built on the Salesforce platform and share core principles — mobile execution, offline capability, structured task capture — but their data models and assumptions differ enough that the choice should be driven by visit frequency, task variability, and the primary reason the visit exists. For clients with narrower needs, a native Flow-based build offers a viable middle path, provided the trade-offs around offline capability, AI, and long-term support are understood. For potential customers, the question is not "which cloud is better?" but "which execution model matches how our field teams actually work?" For analysts and developers, the critical components are the task/work definition layer, the mobile execution layer, and the KPI feedback loop — get these right, and the platform delivers; get them wrong, and you have digitised chaos.
+                </p>
+
+            </div>
+
+        </article>
+    </main>
+
+    <script src="../components/header.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>
