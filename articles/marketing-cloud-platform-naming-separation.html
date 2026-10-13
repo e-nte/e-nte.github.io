@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesforce Marketing Cloud: Engagement vs. Account Engagement vs. Next | Articles</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- Shared Navigation Header -->
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+
+        <!-- Back Navigation -->
+        <div class="back-navigation">
+            <a href="../articles.html" class="btn-back">&larr; Back to Articles</a>
+        </div>
+
+        <article class="article-wrapper">
+
+            <!-- Article Header Banner -->
+            <header class="article-meta-banner">
+                <div class="meta-tags-row">
+                    <span class="badge-tag">#salesforce</span>
+                    <span class="badge-tag">#marketing-cloud</span>
+                    <span class="badge-tag">#agentforce</span>
+                    <span class="badge-tag">#solution-architecture</span>
+                </div>
+
+                <h1 class="article-title">Salesforce Marketing Cloud: Engagement vs. Account Engagement vs. Next</h1>
+
+                <p class="article-description">
+                    How Salesforce's three Marketing Cloud platforms differ in data model, tooling, and fit — with a full feature comparison, edition limits, and what has been retired.
+                </p>
+
+                <div class="article-author-bar">
+                    <span>👤 Evangelos Ntermaris: Senior Salesforce Consultant</span>
+                    <span class="meta-divider">•</span>
+                    <span>📅 2026-10-13</span>
+                    <span class="meta-divider">•</span>
+                    <span>⏱️ 9 min read</span>
+                </div>
+
+                <div class="audience-row">
+                    <strong>Target Audience:</strong>
+                    <span class="pill">Prospective Customers</span>
+                    <span class="pill">Business Analysts</span>
+                    <span class="pill">Developers</span>
+                </div>
+            </header>
+
+            <hr class="meta-separator" />
+
+            <!-- Article Body Content -->
+            <div class="article-body">
+
+                <h2>The Business Need: One Brand Name, Three Products</h2>
+                <p>
+                    "Salesforce Marketing Cloud" is not a single platform. It is an umbrella brand covering three distinct products built for three different marketing motions. The naming has changed repeatedly — ExactTarget became Marketing Cloud Engagement, Pardot became Marketing Cloud Account Engagement, and a brand-new AI-native platform arrived as Marketing Cloud Next. The result is that buyers routinely compare products that were never designed to compete.
+                </p>
+                <p>
+                    Choosing the wrong one is not a minor inconvenience. It means paying for capability you will never use, or — more painfully — hitting a structural ceiling eighteen months into a programme because the platform's core data model was never designed for your motion. This article separates the three platforms by what they actually do, which tools each one ships, and where the decision should land.
+                </p>
+
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The one-line version:</strong> Account Engagement is for B2B pipeline. Engagement is for B2C omnichannel at scale. Next is Salesforce's AI-first rebuild on a unified data foundation — and it does not yet do everything Engagement does.</p>
+                </div>
+
+                <h2>The Three Solutions at a Glance</h2>
+
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Dimension</th>
+                                <th style="padding: 12px;">Engagement</th>
+                                <th style="padding: 12px;">Account Engagement</th>
+                                <th style="padding: 12px;">Next</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Formerly known as</td>
+                                <td style="padding: 12px;">ExactTarget</td>
+                                <td style="padding: 12px;">Pardot</td>
+                                <td style="padding: 12px;">New platform (Agentforce Marketing)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Primary motion</td>
+                                <td style="padding: 12px;">B2C omnichannel</td>
+                                <td style="padding: 12px;">B2B lead management</td>
+                                <td style="padding: 12px;">AI-led, cross-motion</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Core people object</td>
+                                <td style="padding: 12px;">Contact / Subscriber</td>
+                                <td style="padding: 12px;">Prospect (mapped to Lead or Contact)</td>
+                                <td style="padding: 12px;">Unified individual profile</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Automation tool</td>
+                                <td style="padding: 12px;">Journey Builder</td>
+                                <td style="padding: 12px;">Engagement Studio</td>
+                                <td style="padding: 12px;">Flow-based orchestration</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Data foundation</td>
+                                <td style="padding: 12px;">Data extensions</td>
+                                <td style="padding: 12px;">Salesforce CRM objects</td>
+                                <td style="padding: 12px;">Data 360</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Channel depth</td>
+                                <td style="padding: 12px;">Deepest — email, SMS, push, web, ads</td>
+                                <td style="padding: 12px;">Email-led, B2B focused</td>
+                                <td style="padding: 12px;">Broad, still maturing</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">AI layer</td>
+                                <td style="padding: 12px;">Einstein</td>
+                                <td style="padding: 12px;">Einstein + Agentforce campaign creation</td>
+                                <td style="padding: 12px;">Agentforce agents throughout</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Editions</td>
+                                <td style="padding: 12px;">Pro, Corporate, Enterprise, Engagement+</td>
+                                <td style="padding: 12px;">Growth, Plus, Advanced, Premium</td>
+                                <td style="padding: 12px;">Growth, Advanced</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Tools and Features by Platform</h2>
+
+                <h3>Marketing Cloud Engagement — The Studio Stack</h3>
+                <p>
+                    Engagement is organised around a collection of specialised studios, each owning a channel or a function. <strong>Email Studio</strong> handles email creation, audience selection, sending, and deliverability. <strong>Mobile Studio</strong> covers SMS through MobileConnect, push notifications through MobilePush, and messaging channels such as WhatsApp. <strong>Journey Builder</strong> is the orchestration engine — multi-step, multi-channel journeys triggered by behaviour, time, CRM events, or audience entry. <strong>Content Builder</strong> is the shared asset library that all other studios draw from. <strong>Automation Studio</strong> runs scheduled and file-based data operations: imports, extracts, SQL queries against data extensions, and file transfers.
+                </p>
+                <p>
+                    Around those core studios sit <strong>Advertising Studio</strong> for audience sync to paid media, <strong>Audience Studio</strong> for data-management and audience segmentation, <strong>Contact Builder</strong> for the underlying data model, <strong>Marketing Cloud Personalization</strong> for real-time web and in-app experiences, and <strong>Analytics Builder</strong> alongside Marketing Cloud Intelligence for cross-channel reporting. <strong>Marketing Cloud Connect</strong> bridges the platform to Salesforce CRM. Scripting runs on AMPscript, Server-Side JavaScript, and Guide Template Language.
+                </p>
+
+                <h3>Marketing Cloud Account Engagement — B2B Lead Management</h3>
+                <p>
+                    Account Engagement centres on the prospect record and a small number of powerful tools. <strong>Engagement Studio</strong> is the visual nurture builder: branching programmes with waits, rules, and actions, driven by prospect behaviour or scoring thresholds. <strong>Lead scoring and grading</strong> is the platform's signature capability — scoring measures engagement (opens, clicks, page views, form submissions), while grading measures fit against an ideal-customer profile. <strong>Forms, form handlers, and landing pages</strong> capture prospect data. <strong>Visitor tracking</strong> surfaces anonymous website activity and ties it to known prospects where possible.
+                </p>
+                <p>
+                    Native <strong>Salesforce CRM integration</strong> is the reason most organisations choose it: leads, contacts, and engagement history sync directly with Sales Cloud, enabling closed-loop reporting. <strong>B2B Marketing Analytics</strong> dashboards (Plus edition and above), <strong>Google Ads integration</strong> (Plus and above), <strong>Automation Rules</strong>, <strong>Custom Redirects</strong>, and <strong>Lifecycle Reporting</strong> complete the toolkit. Merge language is Handlebars (HML).
+                </p>
+
+                <h3>Marketing Cloud Next — Agentforce on a Unified Data Foundation</h3>
+                <p>
+                    Marketing Cloud Next is a rebuild, not a re-skin. It sits natively on the Salesforce platform with <strong>Data 360</strong> as its data foundation, meaning audience segments, unified profiles, and calculated insights come from the same layer that powers the rest of the org. Journey orchestration is handled by <strong>Flow</strong> rather than Journey Builder — a deliberate architectural choice that keeps automation inside the standard Salesforce automation stack, but also means existing Journey Builder assets do not transfer.
+                </p>
+                <p>
+                    The differentiator is <strong>Agentforce</strong>. Rather than bolting AI onto an existing journey canvas, Next exposes agents that generate campaign briefs and content, recommend and refine audience segments, optimise paid media spend, qualify and route leads, and handle two-way prospect conversations. Supporting capabilities include AI-driven personalisation for email and web, unified marketing performance reporting, loyalty management, and a messaging layer spanning SMS, push, WhatsApp, and RCS.
+                </p>
+
+                <h2>Master Feature Comparison</h2>
+                <p>
+                    The table below maps the major capability areas across all three platforms. Where a capability exists in one platform but not another, that gap is usually architectural rather than temporary.
+                </p>
+
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Capability</th>
+                                <th style="padding: 12px;">Engagement</th>
+                                <th style="padding: 12px;">Account Engagement</th>
+                                <th style="padding: 12px;">Next</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Segmentation</td>
+                                <td style="padding: 12px;">Data extensions, filtered lists, SQL</td>
+                                <td style="padding: 12px;">Lists, dynamic lists, segmentation rules</td>
+                                <td style="padding: 12px;">Data 360 segments</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Journey automation</td>
+                                <td style="padding: 12px;">Journey Builder</td>
+                                <td style="padding: 12px;">Engagement Studio</td>
+                                <td style="padding: 12px;">Flow-based orchestration</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Email creation</td>
+                                <td style="padding: 12px;">Email Studio, Content Builder, CloudPages</td>
+                                <td style="padding: 12px;">Email builder with HML templates</td>
+                                <td style="padding: 12px;">Content blocks in platform UI</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Mobile messaging</td>
+                                <td style="padding: 12px;">MobileConnect (SMS), MobilePush, WhatsApp</td>
+                                <td style="padding: 12px;">SMS via add-on</td>
+                                <td style="padding: 12px;">SMS, push, WhatsApp, RCS</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Web personalisation</td>
+                                <td style="padding: 12px;">Marketing Cloud Personalization</td>
+                                <td style="padding: 12px;">Visitor tracking, dynamic content</td>
+                                <td style="padding: 12px;">AI-driven personalisation</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Advertising</td>
+                                <td style="padding: 12px;">Advertising Studio, Audience Studio</td>
+                                <td style="padding: 12px;">Google Ads integration (Plus+)</td>
+                                <td style="padding: 12px;">Paid media optimisation via agents</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Lead scoring</td>
+                                <td style="padding: 12px;">Einstein engagement scoring</td>
+                                <td style="padding: 12px;">Native scoring and grading</td>
+                                <td style="padding: 12px;">Agent-driven lead qualification</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">CRM integration</td>
+                                <td style="padding: 12px;">Marketing Cloud Connect</td>
+                                <td style="padding: 12px;">Native Salesforce sync</td>
+                                <td style="padding: 12px;">Native (same platform)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Scripting</td>
+                                <td style="padding: 12px;">AMPscript, SSJS, GTL</td>
+                                <td style="padding: 12px;">Handlebars (HML)</td>
+                                <td style="padding: 12px;">Handlebars, with AMPscript support added</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Analytics</td>
+                                <td style="padding: 12px;">Analytics Builder, Intelligence</td>
+                                <td style="padding: 12px;">B2B Marketing Analytics (Plus+)</td>
+                                <td style="padding: 12px;">Unified marketing performance dashboards</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Offline mobile execution</td>
+                                <td style="padding: 12px;">Yes (mobile app)</td>
+                                <td style="padding: 12px;">Not applicable</td>
+                                <td style="padding: 12px;">Yes (mobile app messaging)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Marketing Cloud Next: What Has Shipped and When</h2>
+                <p>
+                    Next has been delivered in waves rather than as a single launch. Understanding the sequence matters, because several capabilities that were absent at launch were the exact blockers preventing existing Engagement customers from migrating.
+                </p>
+
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Release</th>
+                                <th style="padding: 12px;">What arrived</th>
+                                <th style="padding: 12px;">Why it mattered</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Initial launch</td>
+                                <td style="padding: 12px;">Growth and Advanced editions; Agentforce campaign creation; Flow-based journeys; Data 360 foundation</td>
+                                <td style="padding: 12px;">Established the platform's architecture and its break from Journey Builder</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Subsequent waves</td>
+                                <td style="padding: 12px;">Sandbox support, mobile app messaging, expanded personalisation, additional Agentforce tools</td>
+                                <td style="padding: 12px;">Platform hardening — the groundwork for enterprise-scale delivery</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Spring release cycle</td>
+                                <td style="padding: 12px;">Dedicated IPs, business units, custom preference centres, ability to send Engagement emails within Next</td>
+                                <td style="padding: 12px;">Removed the three biggest structural objections for large B2C senders</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Summer release cycle</td>
+                                <td style="padding: 12px;">AMPscript support alongside Handlebars; native RCS messaging</td>
+                                <td style="padding: 12px;">Unblocked migration for customers with years of AMPscript investment in templates</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>Verify before you commit:</strong> Marketing Cloud capabilities ship on different schedules by edition and by region, and release names change between cycles. Always confirm current availability against the Salesforce release notes for your specific org before writing a roadmap around a feature.</p>
+                </div>
+
+                <h3>Which Next Capabilities Reach Engagement</h3>
+                <p>
+                    The traffic is not one-directional. Salesforce has extended several Next-era capabilities back to Engagement customers. Engagement orgs can now use <strong>Flow</strong> to automate processes and connect with journey events, and the <strong>Journey Decisioning Agent</strong> enhances journeys for Engagement+ customers. Salesforce has also enabled unification of legacy Engagement data with Next, so existing data remains compatible with newer reporting and campaign experiences rather than becoming stranded.
+                </p>
+
+                <h2>Where Marketing Cloud Engagement Still Leads</h2>
+                <p>
+                    It is tempting to read Next as the successor and Engagement as the legacy. That reading is wrong on both counts. Engagement remains the most feature-complete platform in the portfolio, and its depth is not accidental — it reflects more than a decade of development on the ExactTarget foundation.
+                </p>
+                <p>
+                    The advantage is concentrated in three places. First, <strong>channel depth</strong>: Engagement's Email Studio, Mobile Studio, Content Builder, and Automation Studio form a cohesive ecosystem that has been tested at enterprise scale in ways newer platforms have not. Second, <strong>journey maturity</strong>: Journey Builder handles complexity — multi-entry sources, decision splits, Einstein-driven branching — that Flow-based orchestration is still catching up to. Third, <strong>scripting and template investment</strong>: organisations with large AMPscript estates have a decade of reusable assets.
+                </p>
+                <p>
+                    Salesforce has confirmed that Engagement is not being retired. Email Studio, Journey Builder, Content Builder, and Automation Studio have no published end-of-life dates and continue to receive updates. For organisations with complex, high-volume requirements and established processes, that predictability is worth more than novelty.
+                </p>
+
+                <h2>Retired and Discontinued in Engagement</h2>
+                <p>
+                    Several capabilities have nonetheless reached end-of-life, mostly driven by the migration to Hyperforce infrastructure and by the retirement of legacy social tooling.
+                </p>
+                <ul>
+                    <li><strong>Intelligence Reports</strong> — no longer accessible on Hyperforce instances. Reporting moved to Data Cloud, and customers must build the equivalent there.</li>
+                    <li><strong>Social Studio</strong> — retired, ending social listening and publishing within Engagement. Social capabilities are now handled outside the platform.</li>
+                    <li><strong>Process Builder for Marketing Cloud Connect</strong> — retired, with existing processes migrated to record-triggered flows.</li>
+                    <li><strong>Subscriber engagement data retention</strong> — reduced to a fixed window rather than indefinite retention. Historical engagement data beyond the window is no longer available in reports or tracking.</li>
+                    <li><strong>Einstein features in selected Hyperforce regions</strong> — end-of-life in some data-residency regions, with data processing in another region or a move to Next as the continuity options.</li>
+                </ul>
+                <p>
+                    The pattern is consistent: capabilities that were tied to pre-Hyperforce infrastructure or to a single channel are the ones being retired, not the core studios.
+                </p>
+
+                <h2>Account Engagement: The Edition Limits</h2>
+                <p>
+                    Account Engagement is a capable B2B platform, but its limits are structural rather than cosmetic. They are not arbitrary — they reflect a design intent of lead management rather than mass communication. Plan against them before you scale.
+                </p>
+
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Limit</th>
+                                <th style="padding: 12px;">Growth</th>
+                                <th style="padding: 12px;">Plus</th>
+                                <th style="padding: 12px;">Advanced</th>
+                                <th style="padding: 12px;">Premium</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Running Engagement Studio programs</td>
+                                <td style="padding: 12px;">20</td>
+                                <td style="padding: 12px;">100</td>
+                                <td style="padding: 12px;">200</td>
+                                <td style="padding: 12px;">200</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Automation Rules</td>
+                                <td style="padding: 12px;">50</td>
+                                <td style="padding: 12px;">100</td>
+                                <td style="padding: 12px;">150</td>
+                                <td style="padding: 12px;">200</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Forms, form handlers, landing pages</td>
+                                <td style="padding: 12px;">50 each</td>
+                                <td style="padding: 12px;">Unlimited</td>
+                                <td style="padding: 12px;">Unlimited</td>
+                                <td style="padding: 12px;">Unlimited</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">API requests per day</td>
+                                <td style="padding: 12px;">25,000</td>
+                                <td style="padding: 12px;">50,000</td>
+                                <td style="padding: 12px;">100,000</td>
+                                <td style="padding: 12px;">100,000</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Concurrent API requests</td>
+                                <td style="padding: 12px;">5</td>
+                                <td style="padding: 12px;">5</td>
+                                <td style="padding: 12px;">5</td>
+                                <td style="padding: 12px;">5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>
+                    Two further limits deserve attention. <strong>Mailable prospects</strong> are determined by edition plus any additional contact blocks purchased, and the count is summed across all business units — unsubscribed prospects do not count toward it. <strong>Custom field mapping</strong> to Salesforce objects is capped, with Salesforce recommending a deliberately conservative number of mapped prospect fields to protect sync performance. Both limits are commercial levers: exceeding them means buying more, not reconfiguring.
+                </p>
+
+                <h2>Summary</h2>
+                <p>
+                    The three Marketing Cloud platforms are not competitors. Account Engagement serves B2B pipeline generation with CRM-native lead management, scoring and grading, and Engagement Studio nurture programs. Engagement delivers enterprise-scale B2C omnichannel orchestration through a mature studio stack that remains the deepest in the portfolio, with Journey Builder at its centre. Marketing Cloud Next is Salesforce's AI-first rebuild — Flow-based orchestration on Data 360, with Agentforce agents throughout — and it is still maturing.
+                </p>
+                <p>
+                    The practical guidance for anyone evaluating in 2026 is straightforward. If you are already on Engagement and it meets your needs, there is no forced migration: the core studios have no published end-of-life dates and continue to receive updates. If you are starting fresh and your strategy is genuinely AI-led, Next deserves serious consideration — but validate the specific capabilities you depend on, particularly around journey complexity and offline behaviour, rather than assuming parity. And if your business is B2B, Account Engagement remains the correct tool, provided you understand its edition limits before you scale. The question is never "which cloud is better?" but "which execution model matches how our marketing actually works?"
+                </p>
+
+            </div>
+
+        </article>
+    </main>
+
+    <script src="../components/header.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>

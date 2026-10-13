@@ -5,5 +5,12 @@
     "date": "2026-10-10",
     "summary": "How Salesforce addresses field visit execution across Consumer Goods Cloud and Field Service, when to choose each, and whether a native Flow build is worth it.",
     "tags": ["Visit Execution","Consumer Goods Cloud","Field Service Cloud","Salesforce Platform Development"]
+  },
+  {
+    "slug": "marketing-cloud-platform-naming-separation",
+    "title": "Salesforce Marketing Cloud: Engagement vs. Account Engagement vs. Next",
+    "date": "2026-10-13",
+    "summary": "The three Marketing Cloud platforms are not competitors. The question is never which cloud is better, but which execution model matches how our marketing actually works.",
+    "tags": ["salesforce","marketing-cloud","agentforce","solution-architecture"]
   }
 ]
