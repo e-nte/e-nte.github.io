@@ -919,7 +919,7 @@ input:focus-visible + .toggle-slider {
 
 /* Scroll alignment offset for fixed headers */
 .cert-row {
-  scroll-margin-top: 100px;
+  scroll-margin-top: 128px;
 }
 
 /* Flash highlight class applied via JavaScript */
