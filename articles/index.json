@@ -12,5 +12,12 @@
     "date": "2026-10-13",
     "summary": "The three Marketing Cloud platforms are not competitors. The question is never which cloud is better, but which execution model matches how our marketing actually works.",
     "tags": ["salesforce","marketing-cloud","agentforce","solution-architecture"]
+  },
+  {
+    "slug": "Data-Factory-Pattern",
+    "title": "The Data Factory Pattern and its Importance In Software Engineering",
+    "date": "2026-10-14",
+    "summary": "The data factory is more than a helper class. It is a <strong>design commitment</strong> — a promise that test data creation will be centralised, isolated, and readable.",
+    "tags": ["SoftwareEngineering","APEX-Code","Design-Patterns","Data-Factory"]
   }
 ]
