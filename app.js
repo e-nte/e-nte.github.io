@@ -30,7 +30,8 @@ function renderProjects(projects) {
         const tagsHtml = proj.tags.map(t => `<span class="tag tag-green">${t}</span>`).join('');
 
         // Use Payload_Algorithm__c (algorithmData) first since Long Text Area preserves <script> tags
-        const widgetPayload = proj.algorithmData || proj.rawHtml || '';
+        //const widgetPayload = proj.algorithmData || proj.rawHtml || '';
+        const widgetPayload = proj.algorithmData || '';
 
         card.innerHTML = `
             <div class="card-header">
