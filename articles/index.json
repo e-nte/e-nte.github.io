@@ -1,5 +1,18 @@
 [
   {
+    "slug": "elasgov-smishing-alert",
+    "title": "Smishing Alert: The elasgov.cc Fake Traffic Fine Scam",
+    "date": "2026-10-16",
+    "summary": "The <code>elasgov.cc</code> campaign is a textbook example of smishing: it combines impersonation of authority, urgency, and technical evasion to steal money and data.",
+    "tags": ["SoftwareEngineering","APEX-Code","Design-Patterns","Data-Factory"]
+  },
+  {
+    "slug": "The-Significance-of-the-Data-Factory-Pattern",
+    "title": "The Significance of the Data Factory: From Abstract Pattern to Salesforce Test Classes",
+    "date": "2026-10-14",
+    "summary": "The data factory is more than a helper class. It is a <strong>design commitment</strong> — a promise that test data creation will be centralised, isolated, and readable.",
+    "tags": ["SoftwareEngineering","APEX-Code","Design-Patterns","Data-Factory"]
+  },{
     "slug": "visit-job-execution",
     "title": "Visit Job Execution: Consumer Goods Cloud vs. Field Service",
     "date": "2026-10-10",
@@ -12,12 +25,5 @@
     "date": "2026-10-13",
     "summary": "The three Marketing Cloud platforms are not competitors. The question is never which cloud is better, but which execution model matches how our marketing actually works.",
     "tags": ["salesforce","marketing-cloud","agentforce","solution-architecture"]
-  },
-  {
-    "slug": "The-Significance-of-the-Data-Factory-Pattern",
-    "title": "The Significance of the Data Factory: From Abstract Pattern to Salesforce Test Classes",
-    "date": "2026-10-14",
-    "summary": "The data factory is more than a helper class. It is a <strong>design commitment</strong> — a promise that test data creation will be centralised, isolated, and readable.",
-    "tags": ["SoftwareEngineering","APEX-Code","Design-Patterns","Data-Factory"]
   }
 ]

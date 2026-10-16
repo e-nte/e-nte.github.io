@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smishing Alert: The elasgov.cc Fake Traffic Fine Scam | Articles</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+
+        <div class="back-navigation">
+            <a href="../articles.html" class="btn-back">&larr; Back to Articles</a>
+        </div>
+
+        <article class="article-wrapper">
+
+            <header class="article-meta-banner">
+                <div class="meta-tags-row">
+                    <span class="badge-tag">#cybersecurity</span>
+                    <span class="badge-tag">#phishing</span>
+                    <span class="badge-tag">#smishing</span>
+                    <span class="badge-tag">#greece</span>
+                    <span class="badge-tag">#scam-alert</span>
+                </div>
+
+                <h1 class="article-title">Smishing Alert: The <code>elasgov.cc</code> Fake Traffic Fine Scam Impersonating the Hellenic Police</h1>
+
+                <p class="article-description">
+                    A new smishing campaign impersonates the Hellenic Police and targets Greek mobile users with fake traffic fines. Here is how it works, why it sometimes redirects, and how to stay safe.
+                </p>
+
+                <div class="article-author-bar">
+                    <span>👤 Evangelos Ntermaris: Senior Salesforce Consultant</span>
+                    <span class="meta-divider">•</span>
+                    <span>📅 2026-10-16</span>
+                    <span class="meta-divider">•</span>
+                    <span>⏱️ 11 min read</span>
+                </div>
+
+                <div class="audience-row">
+                    <strong>Target Audience:</strong>
+                    <span class="pill">General Public</span>
+                    <span class="pill">Mobile Users</span>
+                    <span class="pill">Security Teams</span>
+                </div>
+            </header>
+
+            <hr class="meta-separator" />
+
+            <div class="article-body">
+
+                <p>
+                    <em><strong>Disclaimer:</strong> This article is for educational and defensive purposes only. Do not visit the domain mentioned. The information is based on public threat intelligence and may evolve as the campaign changes.</em>
+                </p>
+
+                <h2>Executive Summary</h2>
+                <p>
+                    A smishing (SMS phishing) campaign is targeting mobile users in Greece by impersonating the Hellenic Police (ΕΛ.ΑΣ.) and the official government portal <code>gov.gr</code>. The fraudulent messages claim the recipient has an unpaid traffic fine and pressure them to pay online via a link to <code>elasgov.cc</code>.
+                </p>
+                <p>
+                    The domain is newly registered, hidden behind Cloudflare's reverse proxy, and designed to harvest personal and financial data. In some cases, visitors see no form at all and are simply redirected to <code>x.com</code>. This is not a sign that the scam is harmless—it is a strong indicator of <strong>cloaking</strong>, a technique used to hide the malicious page from researchers, security scanners, and anyone who does not match the attacker's exact target profile.
+                </p>
+                <p>
+                    This article breaks down how the scam works, why the redirect happens, how the sender name "ΕΛ.ΑΣ." appears on your phone, the vulnerabilities it exploits, who is targeted, and the risks involved.
+                </p>
+
+                <h2>How the Scam Works: Step-by-Step</h2>
+                <ol>
+                    <li><strong>Initial contact via SMS</strong> — The victim receives a text message that appears to come from an official source. It claims a traffic violation has been recorded and that a fine must be paid urgently. The message includes a link to <code>elasgov.cc</code>.</li>
+                    <li><strong>The lure of authority and urgency</strong> — The message uses the name "ΕΛ.ΑΣ." or "ELAS-GR" and mimics official language. It creates fear of legal consequences and a sense of urgency, pushing the victim to act quickly without verifying.</li>
+                    <li><strong>The fake government portal</strong> — Clicking the link may open a page designed to look like <code>gov.gr</code> or a police payment service. It may display official logos, Greek text, and a form asking for license plate number, full name, address, ID or tax number, credit/debit card details, and CVV.</li>
+                    <li><strong>Data harvesting</strong> — When the victim submits the form, the information is sent to the attackers. In many cases the "payment" is fake—there is no real transaction. The page may show a success message or an error, but the card data has already been stolen.</li>
+                    <li><strong>Monetization</strong> — Stolen card details are used for unauthorized purchases, sold on dark web markets, or used for identity theft. If the victim entered government credentials, those may be used for account takeover or further fraud.</li>
+                    <li><strong>Infrastructure and evasion</strong> — The domain <code>elasgov.cc</code> was registered recently and is hosted behind Cloudflare. This masks the true origin server and makes takedown more difficult. HTTPS may be present, but it does not mean the site is legitimate—phishing sites routinely use HTTPS.</li>
+                </ol>
+
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The one-line version:</strong> If it looks like the police, asks for a card number, and the link is not <code>gov.gr</code>, it is a scam—no exceptions.</p>
+                </div>
+
+                <h2>Why the Page Sometimes Shows No Form and Redirects to <code>x.com</code></h2>
+                <p>
+                    If you visit <code>elasgov.cc</code> and see no phishing form—just a redirect to <code>x.com</code>—this is likely not a mistake. It is part of the attackers' evasion strategy. The most common reasons are:
+                </p>
+
+                <h3>1. Cloaking / conditional serving</h3>
+                <p>
+                    The malicious server decides what to show based on who is visiting. If certain conditions are not met, it redirects to a harmless, high-reputation site like <code>x.com</code>. Common checks include geography (only Greek IPs see the phishing page), device type (only mobile users get the form), User-Agent, referrer, single-use tokens in the SMS link, and bot detection that redirects scanners and researchers away from the payload.
+                </p>
+
+                <h3>2. Domain warming / reputation building</h3>
+                <p>
+                    Attackers sometimes register a domain early and redirect it to a trusted site like <code>x.com</code>, Google, or YouTube. This makes the domain look harmless to SMS filters, email filters, and security vendors. Once the domain has a "clean" reputation, they swap in the phishing page. You may have caught it during this phase.
+                </p>
+
+                <h3>3. Campaign is over or taken down</h3>
+                <p>
+                    The phishing kit may have been removed by the host, or the attacker may have moved to a new domain. The domain is left with a redirect to <code>x.com</code> as a placeholder—or the attacker simply abandoned it.
+                </p>
+
+                <h3>4. SMS filter evasion</h3>
+                <p>
+                    Mobile carriers and spam filters often check links. If the link redirects to <code>x.com</code>, it may look less suspicious and pass through filters. The phishing payload is only served later to the intended victim.
+                </p>
+
+                <h3>5. Traffic monetization / click fraud</h3>
+                <p>
+                    Less likely, but some domains redirect to social media or ad pages to generate traffic or ad revenue. This is not typical for a police-impersonation scam, but it is possible if the domain changed hands.
+                </p>
+
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>Important:</strong> A redirect to <code>x.com</code> does <em>not</em> mean X/Twitter is involved or compromised. It is simply a common, trusted site used as a decoy.</p>
+                </div>
+
+                <h2>How the Sender Appears as "ΕΛ.ΑΣ." — SMS Sender ID Spoofing</h2>
+                <p>
+                    The reason the sender can appear as "ΕΛ.ΑΣ." is not because the message actually comes from the Greek Police, but because of <strong>SMS sender ID spoofing</strong>—a technique that lets an attacker set the "display name" that appears on your phone, rather than a real phone number. This is a known vulnerability in the SMS system itself, and the Greek Police have issued public warnings about exactly this kind of abuse.
+                </p>
+
+                <h3>How sender ID spoofing works</h3>
+                <p>
+                    The SMS specification allows a message to carry not just a phone number, but also an <strong>alphanumeric sender ID</strong>—a display name made of letters and numbers. This is the same feature that legitimate companies use so you see "VODAFONE" or "YOURBANK" instead of a long number.
+                </p>
+                <p>
+                    The problem is that many SMS gateways and telecom protocols <strong>do not strictly verify</strong> that the sender actually owns the name they are using. Attackers can:
+                </p>
+                <ul>
+                    <li><strong>Use a bulk SMS provider or gateway</strong> — some allow arbitrary alphanumeric sender IDs without verification.</li>
+                    <li><strong>Exploit SS7 protocol weaknesses</strong> — manipulating the signalling that carries the sender information.</li>
+                    <li><strong>Use SMS spoofing services</strong> — openly sold online for this purpose.</li>
+                </ul>
+                <p>
+                    Because "ΕΛ.ΑΣ." is an alphanumeric string (Greek letters and periods), it fits perfectly into the sender ID field—and your phone simply displays what it receives. There is no built-in way for your phone to check whether the sender is really the police.
+                </p>
+
+                <h3>Why this works in Greece</h3>
+                <p>
+                    The Greek Cybercrime Directorate has confirmed that these messages <strong>appear to come from "EL.AS."</strong> and are part of an active smishing campaign. The attackers are not hacking the police's systems—they are simply <strong>abusing the trust that people place in the sender name</strong> on their phone screen.
+                </p>
+                <p>
+                    Official Greek police announcements also warn that similar impersonation happens via <strong>email</strong>, where attackers use addresses like <code>kepik.astynomia.gov.gr@gmail.com</code>—a Gmail address designed to <em>look</em> official at a glance. The principle is the same: exploit the gap between what the display shows and what is technically verified.
+                </p>
+
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>Remember:</strong> The sender name on your screen is not proof of identity. The attacker did not breach the police—they simply told the SMS system to label the message as "ΕΛ.ΑΣ." and the system allowed it.</p>
+                </div>
+
+                <h2>Vulnerability Analysis</h2>
+                <p>
+                    This scam exploits several layers of vulnerability—human, technical, and institutional.
+                </p>
+
+                <h3>1. Human and social vulnerabilities</h3>
+                <ul>
+                    <li><strong>Trust in authority</strong> — people are conditioned to comply with police and government requests.</li>
+                    <li><strong>Fear and urgency</strong> — the threat of a fine or legal action short-circuits careful thinking.</li>
+                    <li><strong>Lack of awareness</strong> — many users do not know that Greek police do not send fine payment links via SMS.</li>
+                    <li><strong>Mobile screen limitations</strong> — on a phone, URLs are harder to inspect and security indicators are less visible.</li>
+                </ul>
+
+                <h3>2. Technical and mobile vulnerabilities</h3>
+                <ul>
+                    <li><strong>SMS spoofing</strong> — attackers can send messages that appear to come from short codes or official senders.</li>
+                    <li><strong>Lookalike domains</strong> — <code>elasgov.cc</code> mimics <code>gov.gr</code> and ΕΛ.ΑΣ. branding. The <code>.cc</code> TLD is often used in phishing.</li>
+                    <li><strong>Cloudflare abuse</strong> — the reverse proxy hides the origin IP, complicating blocklists and takedowns.</li>
+                    <li><strong>HTTPS misuse</strong> — a padlock icon does not guarantee legitimacy.</li>
+                    <li><strong>Mobile browsers</strong> — address bars may be truncated, and users may not notice the domain is not <code>gov.gr</code>.</li>
+                    <li><strong>Cloaking</strong> — conditional serving hides the malicious page from researchers and automated scanners.</li>
+                </ul>
+
+                <h3>3. Institutional and process vulnerabilities</h3>
+                <ul>
+                    <li><strong>Slow takedown</strong> — newly registered domains can operate for hours or days before being blocked.</li>
+                    <li><strong>Limited public warnings</strong> — not all citizens are aware of the campaign.</li>
+                    <li><strong>Impersonation of official services</strong> — government brands are attractive targets because they carry inherent trust.</li>
+                </ul>
+
+                <h2>Who Is Targeted?</h2>
+                <p>
+                    The campaign targets a broad audience, but certain groups are at higher risk:
+                </p>
+                <ul>
+                    <li><strong>Greek residents and citizens</strong> who may have vehicles or driver's licenses.</li>
+                    <li><strong>Mobile users</strong> who receive SMS messages and are more likely to click on links.</li>
+                    <li><strong>Older adults</strong> who may be less familiar with phishing tactics.</li>
+                    <li><strong>Anyone who has recently driven</strong> or believes they might have a traffic violation.</li>
+                    <li><strong>People who trust official-looking messages</strong> and act quickly under pressure.</li>
+                </ul>
+                <p>
+                    The attackers cast a wide net. Even if only a small percentage respond, the campaign can be profitable.
+                </p>
+
+                <h2>The Risks</h2>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Risk</th>
+                                <th style="padding: 12px;">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Financial fraud</td>
+                                <td style="padding: 12px;">Stolen card details used for unauthorized purchases or cash advances.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Identity theft</td>
+                                <td style="padding: 12px;">Personal data used to open accounts, apply for loans, or commit other crimes.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Account takeover</td>
+                                <td style="padding: 12px;">Government or banking credentials used to access sensitive accounts.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Malware infection</td>
+                                <td style="padding: 12px;">Some phishing pages may deliver malicious apps or scripts, especially on mobile.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Privacy breach</td>
+                                <td style="padding: 12px;">Personal information sold or leaked, leading to further targeting.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Secondary phishing</td>
+                                <td style="padding: 12px;">Victims may be contacted again with more convincing scams.</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Erosion of trust</td>
+                                <td style="padding: 12px;">Damage to public confidence in government and police communications.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>Indicators of Compromise</h2>
+                <p>
+                    If you receive a message with these signs, treat it as suspicious:
+                </p>
+                <ul>
+                    <li>Unsolicited SMS about a traffic fine.</li>
+                    <li>Link to a domain that is <strong>not</strong> <code>gov.gr</code> (for example <code>elasgov.cc</code>).</li>
+                    <li>Urgent demands for payment.</li>
+                    <li>Requests for card details, CVV, or passwords.</li>
+                    <li>Sender name that mimics "ΕΛ.ΑΣ.", "ELAS", or "Greek Police".</li>
+                    <li>Poor grammar or formatting (though some scams are well-written).</li>
+                    <li>The message asks you to click a link instead of using an official app or website.</li>
+                    <li>The link redirects to a harmless site like <code>x.com</code> instead of showing a form—this can indicate cloaking or domain warming.</li>
+                </ul>
+                <p>
+                    <strong>Technical indicators:</strong> At the time of analysis, <code>elasgov.cc</code> resolved to Cloudflare IPs such as <code>104.21.63.31</code>, <code>188.114.96.3</code>, and <code>188.114.97.3</code>. These are shared proxy addresses and do not reveal the attacker's origin server.
+                </p>
+
+                <h2>What to Do If You Interacted</h2>
+                <p>
+                    If you clicked the link but did <strong>not</strong> enter any information, you are likely safe. Close the page, delete the message, and block the sender.
+                </p>
+
+                <h3>If you entered card details</h3>
+                <ol>
+                    <li><strong>Contact your bank immediately.</strong> Ask them to freeze the card and dispute any unauthorized transactions.</li>
+                    <li><strong>Monitor your accounts</strong> for suspicious activity.</li>
+                    <li><strong>Consider a credit freeze</strong> or fraud alert if identity theft is suspected.</li>
+                </ol>
+
+                <h3>If you entered passwords or government credentials</h3>
+                <ol>
+                    <li><strong>Change the password</strong> on that account and any other account that uses the same password.</li>
+                    <li><strong>Enable two-factor authentication (2FA)</strong> wherever possible.</li>
+                    <li><strong>Check for unauthorized activity</strong> on your accounts.</li>
+                </ol>
+
+                <h3>If you downloaded anything</h3>
+                <ol>
+                    <li><strong>Run a mobile security scan</strong> using a reputable app.</li>
+                    <li><strong>Uninstall any unknown apps</strong> that were installed after clicking the link.</li>
+                    <li><strong>Reset your device</strong> if you suspect malware.</li>
+                </ol>
+
+                <h2>How to Protect Yourself</h2>
+                <ul>
+                    <li><strong>Never click links in unsolicited SMS or emails</strong> claiming to be from police or government.</li>
+                    <li><strong>Verify through official channels.</strong> Type <code>gov.gr</code> directly into your browser or use the official app.</li>
+                    <li><strong>Remember:</strong> Greek police do not send fine payment requests via SMS or messaging apps.</li>
+                    <li><strong>Check the domain carefully.</strong> Official Greek government sites end in <code>gov.gr</code>.</li>
+                    <li><strong>Keep your phone and apps updated.</strong></li>
+                    <li><strong>Use mobile security software.</strong></li>
+                    <li><strong>Report suspicious messages</strong> to your carrier and authorities.</li>
+                    <li><strong>Warn friends and family</strong>, especially those who may be less tech-savvy.</li>
+                </ul>
+
+                <h2>Reporting and Resources</h2>
+                <p>
+                    If you receive a phishing SMS or believe you are a victim:
+                </p>
+                <ul>
+                    <li><strong>Greek National Cyber Security Authority</strong> — report the incident through their official channels.</li>
+                    <li><strong>Hellenic Police Cybercrime Unit</strong> — file a report if you have suffered financial loss or identity theft.</li>
+                    <li><strong>Your mobile carrier</strong> — forward the SMS to their spam reporting number.</li>
+                    <li><strong>Your bank</strong> — report fraudulent transactions immediately.</li>
+                    <li><strong>Cloudflare Abuse</strong> — report the malicious domain via Cloudflare's abuse form.</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>
+                    The <code>elasgov.cc</code> campaign is a textbook example of smishing: it combines impersonation of authority, urgency, and technical evasion to steal money and data. The domain's use of Cloudflare and recent registration makes it harder to trace. The fact that it sometimes shows no form and redirects to <code>x.com</code> is not a sign of safety—it is likely a cloaking or reputation-building tactic designed to evade detection. And the reason the sender name reads "ΕΛ.ΑΣ." is not a breach of police systems, but a well-known weakness in how SMS sender IDs are handled.
+                </p>
+                <p>
+                    If you received this message, do not interact. If you already did, take the steps above to secure your accounts. Share this article to help others recognize the scam.
+                </p>
+                <p>
+                    <strong>Stay vigilant. Verify before you click.</strong>
+                </p>
+
+                <hr class="meta-separator" />
+
+                <p>
+                    <em>This article is for informational purposes only and does not constitute legal or professional security advice. If you are a victim of fraud, contact your bank and local law enforcement immediately.</em>
+                </p>
+
+            </div>
+
+        </article>
+    </main>
+
+    <script src="../components/header.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>
