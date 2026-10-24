@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud vs On-Premise: Security, GDPR and Health Data | Articles</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+
+        <div class="back-navigation">
+            <a href="../articles.html" class="btn-back">&larr; Back to Articles</a>
+        </div>
+
+        <article class="article-wrapper">
+
+            <header class="article-meta-banner">
+                <div class="meta-tags-row">
+                    <span class="badge-tag">#cloud-security</span>
+                    <span class="badge-tag">#gdpr</span>
+                    <span class="badge-tag">#health-data</span>
+                    <span class="badge-tag">#ai-governance</span>
+                </div>
+
+                <h1 class="article-title">Cloud vs On-Premise: Security, GDPR and Health Data</h1>
+
+                <p class="article-description">
+                    A plain guide to where security risk actually sits in cloud and on-premise deployments — and why the distinction matters more than ever for health data, anonymisation, and AI.
+                </p>
+
+                <div class="article-author-bar">
+                    <span>👤 Evangelos Ntermaris: Senior Salesforce Consultant</span>
+                    <span class="meta-divider">•</span>
+                    <span>📅 2026-10-24</span>
+                    <span class="meta-divider">•</span>
+                    <span>⏱️ 13 min read</span>
+                </div>
+
+                <div class="audience-row">
+                    <strong>Target Audience:</strong>
+                    <span class="pill">Prospective Customers</span>
+                    <span class="pill">Business Analysts</span>
+                    <span class="pill">Developers</span>
+                    <span class="pill">Compliance Leads</span>
+                </div>
+            </header>
+
+            <hr class="meta-separator" />
+
+            <div class="article-body">
+
+                <h2>The question in one minute</h2>
+                <p>
+                    You have sensitive data — patient records, for example. You can keep it on your own computers (<strong>on-premise</strong>) or rent space and software from a provider over the internet (<strong>the cloud</strong>).
+                </p>
+                <p>
+                    People often ask: <em>which one is safer?</em> That is the wrong question. There is no "safer" answer in general. The right question is: <strong>which risks do I take on, and which do I hand to someone else?</strong>
+                </p>
+
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The one-line version:</strong> Cloud and on-premise do not differ in how much risk exists — they differ in where the risk sits.</p>
+                </div>
+
+                <h2>Two ways to keep your data</h2>
+                <p>
+                    <strong>On-premise</strong> means the servers are in your building. You buy the hardware, patch the software, lock the door, and hire the people who run it. You own everything — including every problem.
+                </p>
+                <p>
+                    <strong>Cloud</strong> means a provider runs the servers. You access the software through a browser. The provider handles the building, the hardware and much of the upkeep. You still handle your own settings, accounts and data.
+                </p>
+                <p>
+                    A simple comparison: owning a house versus renting a serviced apartment. In the apartment, you do not fix the roof. But you also cannot knock down a wall — and if you leave the door unlocked, that is still on you.
+                </p>
+
+                <h2>The on-premise option is not what it was</h2>
+                <p>
+                    A common assumption is that "on-premise" means bare metal, manual patching, and a server room held together by cables and hope. That picture is outdated.
+                </p>
+                <p>
+                    There is now a mature market of <strong>ready-made on-premise solutions</strong> — purpose-built appliances and preconfigured platforms that bring cloud-grade tooling into your own data centre. These are not DIY projects. They arrive integrated, with security, backup, and compliance features already assembled.
+                </p>
+                <p>
+                    Examples illustrate the category. Acronis Cyber Protect Local is an all-in-one platform for organisations "where cloud deployment is not an option," combining backup, recovery, cybersecurity, and endpoint management in a single package. Qualys offers a <strong>Private Cloud Platform Appliance</strong> — a preconfigured 1U device that delivers its cloud security and compliance services inside the customer's own data centre, explicitly designed for strict data-sovereignty rules. Defence-grade appliances exist for healthcare specifically, checking systems for vulnerabilities weekly while supporting HIPAA and GDPR compliance.
+                </p>
+                <p>
+                    This matters for the comparison. The on-premise model is no longer defined by <em>absence of tooling</em>. It is defined by <strong>who operates the tooling and where the data sits</strong>. A preconfigured on-premise appliance can be as capable as a cloud service. What changes is the <strong>risk allocation</strong>: you keep control of the data path, but you also keep the operational burden of running the appliance, applying its updates, and securing its physical location.
+                </p>
+
+                <h2>Who guards what: the shared responsibility idea</h2>
+                <p>
+                    In the cloud, security is <strong>split</strong> between two parties: the <strong>provider</strong> secures the building, the hardware and the network; <strong>you</strong> secure your users, your settings, your permissions and your data.
+                </p>
+                <p>
+                    That split is the cloud's great strength. Professional data centres are usually better protected than anything a single organisation can build. It is also the cloud's biggest weakness. Most cloud breaches are not caused by the provider failing. They are caused by the <strong>customer</strong> leaving something open.
+                </p>
+                <p>
+                    Gartner has estimated that through 2026, <strong>99% of cloud security failures will be the customer's fault</strong>. Misconfiguration was behind roughly <strong>23% of cloud security incidents in 2025</strong>.
+                </p>
+
+                <h2>Cloud risks, in plain terms</h2>
+                <p>
+                    <strong>Risk 1 — The attack surface gets bigger, not smaller.</strong> On-premise, you can point at a network boundary and say "inside" and "outside." In the cloud there is no wall. Security experts describe the shift bluntly: <em>"Identity has replaced the perimeter entirely."</em> As hybrid and multi-cloud adoption expands, so does the attack surface, with misconfigurations, excessive permissions and cross-platform blind spots creating new exposure points. Research from Microsoft found cloud and hybrid incidents increased by <strong>26% in early 2025</strong>, with attackers exploiting <em>how systems are configured and accessed</em> rather than breaching a defined perimeter.
+                </p>
+                <p>
+                    <strong>Risk 2 — Wrong settings, at scale.</strong> Cloud systems are controlled through dashboards and permissions. One over-broad account or one publicly open folder can expose data. This is the most common cloud failure. 78% of cloud breaches involve overly permissive identity policies.
+                </p>
+                <p>
+                    <strong>Risk 3 — Everyone is connected to the same provider.</strong> If a platform serving thousands of hospitals is breached, thousands of organisations have a problem at once. One incident becomes many.
+                </p>
+                <p>
+                    <strong>Risk 4 — Where the data really goes.</strong> You may store data in the EU, but the provider might process it elsewhere. Data residency must be checked for <strong>storage, processing and AI use</strong> — not just storage.
+                </p>
+                <p>
+                    <strong>Risk 5 — Notification delays.</strong> Under GDPR you have <strong>72 hours</strong> to report a breach. If your provider needs two weeks to finish its investigation, your clock is already running out.
+                </p>
+
+                <h2>On-premise risks, in plain terms</h2>
+                <p>
+                    <strong>Risk 1 — Unpatched systems.</strong> On-premise means <em>you</em> install every security update. In healthcare this discipline often slips: research has found <strong>96% of hospitals run end-of-life software</strong>, and average Windows endpoints sit <strong>48 days behind</strong> on critical patches. Attackers scan for exactly this.
+                </p>
+                <p>
+                    <strong>Risk 2 — Physical events.</strong> Fire, flood, theft, power failure. A provider invests heavily in resilience. A single server room usually cannot.
+                </p>
+                <p>
+                    <strong>Risk 3 — Quiet movement inside.</strong> Once an attacker is inside your network, spotting them requires modern monitoring. Many on-premise environments have little automation and rely on a static boundary that has already been crossed.
+                </p>
+                <p>
+                    <strong>Risk 4 — Staffing.</strong> On-premise security needs expertise across hardware, operating systems, networks and law. When the team is stretched, controls quietly weaken. A preconfigured appliance reduces <em>setup</em> complexity, but it does not eliminate the need for people to run it.
+                </p>
+                <p>
+                    <strong>Risk 5 — Breach cost.</strong> Healthcare breaches average between <strong>$7.4 million and $10.9 million</strong>, and take <strong>279 days</strong> to contain — the longest of any industry.
+                </p>
+
+                <h2>Insider threats: the risk that follows you</h2>
+                <p>
+                    It is tempting to think that moving to the cloud <em>creates</em> insider risk, or that staying on-premise <em>avoids</em> it. Neither is true. <strong>Insider threats exist in both models.</strong> What changes is the <strong>shape of the risk</strong>.
+                </p>
+                <p>
+                    The statistics are striking. <strong>68% of insider threat incidents now involve cloud or SaaS applications</strong> — up from 41% in 2022. Gartner data indicates the cloud creates a <strong>3.5× larger insider threat attack surface</strong> than on-premises. And detection is slower in the cloud: <strong>127 days on average</strong>, versus <strong>81 days on-premises</strong>.
+                </p>
+                <p>
+                    Why the difference? Not because on-premise insiders are better behaved. Because <strong>on-premise environments have a fixed boundary that monitoring tools understand</strong>. Traditional data-loss prevention watches network egress. It can see someone trying to move data <em>out</em>. In the cloud, that model breaks. An insider can move data <strong>within</strong> the cloud ecosystem — from a corporate storage bucket to a personal one, or from a sanctioned application to a personal drive — without crossing a network boundary. Traditional monitoring goes blind. The insider can authenticate from anywhere, on any device, and exfiltrate through approved tools that never look suspicious.
+                </p>
+                <p>
+                    <strong>On-premise is not immune.</strong> A preconfigured appliance does not stop a privileged administrator from copying records. Internal APIs on-premise often suffer from <em>reduced</em> governance and visibility, creating vulnerabilities that are simply harder to see.
+                </p>
+                <p>
+                    In short: the cloud does not create insider threats. It <strong>changes where they can hide</strong> — and makes them take longer to find.
+                </p>
+
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Question</th>
+                                <th style="padding: 12px;">Cloud</th>
+                                <th style="padding: 12px;">On-Premise</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Who patches the infrastructure?</td>
+                                <td style="padding: 12px;">The provider</td>
+                                <td style="padding: 12px;">You (or the appliance vendor)</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Where do most failures happen?</td>
+                                <td style="padding: 12px;">Your settings and permissions</td>
+                                <td style="padding: 12px;">Your patching and monitoring</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Attack surface</td>
+                                <td style="padding: 12px;">Larger, distributed, identity-driven</td>
+                                <td style="padding: 12px;">Smaller, but with internal blind spots</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Insider detection time</td>
+                                <td style="padding: 12px;">~127 days</td>
+                                <td style="padding: 12px;">~81 days</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Physical security</td>
+                                <td style="padding: 12px;">Provider's strength</td>
+                                <td style="padding: 12px;">Your responsibility</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Data location</td>
+                                <td style="padding: 12px;">Configurable, but must be verified</td>
+                                <td style="padding: 12px;">On your premises</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Blast radius of a breach</td>
+                                <td style="padding: 12px;">Can hit many organisations at once</td>
+                                <td style="padding: 12px;">Usually contained to you</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Ready-made options</td>
+                                <td style="padding: 12px;">Standard SaaS</td>
+                                <td style="padding: 12px;">Preconfigured appliances now exist</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2>GDPR and health data: what actually changes</h2>
+                <p>
+                    The GDPR does not say "use the cloud" or "stay on-premise." It sets <strong>obligations</strong>. The deployment model changes how easily you meet them. Three points matter most.
+                </p>
+                <p>
+                    <strong>Health data is special.</strong> Article 9 treats health data as a special category. You need a strong legal reason to process it. The rules are stricter, and the penalties are the same size as for any other serious breach.
+                </p>
+                <p>
+                    <strong>Transfers need a legal basis.</strong> Sending health data outside the EEA requires an adequacy decision or safeguards such as Standard Contractual Clauses. In the cloud this is harder than it sounds, because data may be stored in one country and processed in another.
+                </p>
+                <p>
+                    <strong>You have 72 hours to report.</strong> In the cloud, you depend on your provider's speed. On-premise, you depend on your own detection. Both can fail.
+                </p>
+                <p>
+                    In short: the law does not pick a side. It asks whether you can prove you are in control.
+                </p>
+
+                <h2>What "anonymous" really means: anonymisation, pseudonymisation, and profiling</h2>
+                <p>
+                    Before you send data to an AI model, you will be told it has been "anonymised." The word sounds definitive. Legally, it is not.
+                </p>
+                <p>
+                    <strong>Anonymous data</strong> sits outside the GDPR entirely — but only if the data subject is truly no longer identifiable by anyone, using means reasonably likely to be used. Recital 26 defines anonymous data as information that "does not relate to an identified or identifiable natural person" or has been rendered anonymous "in such a manner that the data subject is not or no longer identifiable"[reference:0]. The threshold is strict: anonymisation is only achieved if there is <strong>no reasonable likelihood</strong> that any person could identify the individual, considering the cost, time, and technology required for re-identification[reference:1].
+                </p>
+                <p>
+                    <strong>Pseudonymised data</strong> is different. Article 4(5) defines pseudonymisation as processing that makes data no longer attributable to a specific data subject <strong>without the use of additional information</strong> — provided that additional information is kept separately and protected by technical and organisational measures[reference:2]. Pseudonymised data <strong>remains personal data</strong> and stays fully within the GDPR's scope[reference:3]. Replacing a name with a code is pseudonymisation, not anonymisation, because the key still exists.
+                </p>
+                <p>
+                    <strong>Profiling</strong> is a separate concept, defined in Article 4(4) as "any form of automated processing of personal data consisting of the use of personal data to evaluate certain personal aspects relating to a natural person" — in particular to analyse or predict aspects concerning health, performance, preferences, behaviour, or location[reference:4]. Profiling does not require a name. It can operate on pseudonymised or even ostensibly anonymous records. The GDPR applies because the <strong>act of evaluation</strong> treats the individual as identifiable in a meaningful sense: the system is making decisions <em>about them</em>. Profiling is therefore regulated even where direct identifiers are absent, and it triggers specific obligations around transparency, automated decision-making, and safeguards.
+                </p>
+
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The distinction that matters:</strong> Anonymisation removes the person from the data. Pseudonymisation hides the person behind a key. Profiling keeps the person in view — it simply operates without their name.</p>
+                </div>
+
+                <p>
+                    The European Data Protection Board's 2026 draft guidelines make the identifiability test even harder to satisfy. They introduce <strong>relative identifiability</strong>: the same dataset may be anonymous for one recipient and personal for another, depending on the means each reasonably has to re-identify individuals[reference:5]. The assessment must consider not only the data's granularity but the <strong>technological environment</strong>, the <strong>cost and time</strong> required for re-identification, and <strong>legal barriers</strong> that might prevent it[reference:6]. A dataset that passes the test for a small clinic may fail it for a cloud provider with access to auxiliary datasets.
+                </p>
+                <p>
+                    This has two consequences for health data in the cloud.
+                </p>
+                <p>
+                    First, <strong>anonymising is itself processing</strong>. It needs a legal basis. For health data, the strict Article 9 conditions apply to the anonymisation step too[reference:7].
+                </p>
+                <p>
+                    Second, <strong>the vendor's role matters</strong>. If the provider acts as your processor, it inherits your perspective on identifiability. If you could re-identify the data, it remains personal data in the provider's hands — even if the provider itself lacks the key. This undermines the common contract clause allowing vendors to use "anonymised" data to improve their products. That data is often not anonymous at all; it is pseudonymised, and it remains protected.
+                </p>
+
+                <h2>The new problem: sending "anonymous" data to AI</h2>
+                <p>
+                    Cloud platforms now offer to <strong>anonymise</strong> data before it reaches an AI model. The pitch is simple: strip out the names, and the GDPR's strictest rules no longer apply. That pitch is too simple.
+                </p>
+                <p>
+                    The legal test is identification, not appearance. A record without a name can still <strong>single out</strong> an individual through a unique combination of attributes — a rare diagnosis, a birth date, a postcode. It can still be <strong>linked</strong> to another dataset that re-identifies the person. And it can still support <strong>inference</strong> about them[reference:8]. If any of these three is possible, the data is not anonymous.
+                </p>
+                <p>
+                    Profiling sharpens the problem. An AI model does not need to know <em>who</em> a patient is to make decisions about their care, their risk, or their eligibility. It only needs to distinguish them from others and treat them differently. Under the EDPB's framework, that is enough to make the data personal — and to trigger the GDPR's obligations around automated decision-making.
+                </p>
+                <p>
+                    <strong>And the protection is usually optional.</strong> Vendors supply masking tools; customers must switch them on and configure them. A default setup may send prompts unprotected. That is the shared responsibility idea again, one layer deeper.
+                </p>
+                <p>
+                    <strong>On-premise is not automatically safer here.</strong> A local AI model faces the same legal test. The real difference is <strong>verifiability</strong>: you can inspect an on-premise pipeline end to end, but you must trust a vendor's description of what happens inside theirs.
+                </p>
+
+                <h2>Deployment models in practice: two brief examples</h2>
+                <p>
+                    Two large enterprise platforms illustrate that "cloud" and "on-premise" are <strong>choices</strong>, not product categories.
+                </p>
+                <p>
+                    <strong>ServiceNow</strong> is a cloud-first platform, but it offers a self-hosted option called <strong>Private Stack</strong> for organisations with strict sovereignty needs. That exception is itself instructive: even a cloud-native vendor acknowledges that some data cannot leave the customer's control.
+                </p>
+                <p>
+                    <strong>Salesforce</strong> is also cloud-first. Its approach to health data leans on application-level encryption, consent tracking, and privacy controls for AI use — features that assume a cloud deployment but still require the customer to configure them correctly.
+                </p>
+                <p>
+                    The lesson is not that one platform is better. It is that <strong>both vendors treat deployment model as a risk decision</strong>. The platform is the instrument. The assessment is the work.
+                </p>
+
+                <h2>How to decide</h2>
+                <p>Five plain questions:</p>
+                <ol>
+                    <li><strong>Where does the data actually go?</strong> Trace storage, processing and AI use — not just the database.</li>
+                    <li><strong>Who does what?</strong> Write down which controls the provider or appliance vendor owns, and which you own.</li>
+                    <li><strong>Can you patch reliably?</strong> If not, the cloud's built-in patching — or a vendor-managed appliance — is a real gain.</li>
+                    <li><strong>Can you detect an insider in time?</strong> Cloud detection takes longer. If you move to the cloud, invest in identity monitoring, not just network monitoring.</li>
+                    <li><strong>Is your masking actually switched on — and does it survive the profiling test?</strong> Encryption and anonymisation without configuration protect very little. A name removed is not a person removed if the remaining attributes can still single them out.</li>
+                </ol>
+
+                <h2>Summary</h2>
+                <p>
+                    Cloud and on-premise do not differ in <em>how much</em> risk exists. They differ in <strong>where the risk sits</strong>. The cloud moves risk from hardware to configuration — and expands the attack surface while making insider activity harder to see. On-premise keeps the data path under your control, and modern appliances reduce the setup burden — but the operational and insider risks remain yours.
+                </p>
+                <p>
+                    The same logic applies to anonymisation and AI. Neither deployment model makes data anonymous by default. Anonymisation is a legal status, not a technical checkbox. Pseudonymisation is not anonymisation. Profiling is regulated even without a name. And the platform — cloud or on-premise — is only the instrument.
+                </p>
+                <p>
+                    <strong>The risk assessment is the work.</strong>
+                </p>
+
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>Next step:</strong> Map one real data flow in your organisation — from the patient record to the AI prompt. At each step, ask: who is responsible, what legal status does the data have, and could I prove it?</p>
+                </div>
+
+            </div>
+
+        </article>
+    </main>
+
+    <script src="../components/header.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>

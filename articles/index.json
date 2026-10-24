@@ -1,8 +1,17 @@
 [
+    {
+    "slug": "cloud-vs-on-premise-for-data-security-1",
+    "title": "Cloud vs On-Premise: Security, GDPR and Health Data",
+    "date": "2026-10-24",
+    "reading_time": "18 min",
+    "summary": "Cloud and on-premise do not differ in <em>how much</em> risk exists. They differ in <strong>where the risk sits</strong>. The same logic applies to anonymisation and AI.",
+    "tags": ["GDPR","HIPAA","Data-Security","Data-Integrity","Cloud-vs-OnPremise","Ethical-AI","Responsible-AI","Anonymization","Profiling","Compliance"]
+  },
   {
     "slug": "elasgov-smishing-alert",
     "title": "Smishing Alert: The elasgov.cc Fake Traffic Fine Scam",
     "date": "2026-10-16",
+    "reading_time": "12 min",
     "summary": "The <code>elasgov.cc</code> campaign is a textbook example of smishing: it combines impersonation of authority, urgency, and technical evasion to steal money and data.",
     "tags": ["SoftwareEngineering","APEX-Code","Design-Patterns","Data-Factory"]
   },
@@ -10,12 +19,14 @@
     "slug": "The-Significance-of-the-Data-Factory-Pattern",
     "title": "The Significance of the Data Factory: From Abstract Pattern to Salesforce Test Classes",
     "date": "2026-10-14",
+    "reading_time": "11 min",
     "summary": "The data factory is more than a helper class. It is a <strong>design commitment</strong> — a promise that test data creation will be centralised, isolated, and readable.",
     "tags": ["SoftwareEngineering","APEX-Code","Design-Patterns","Data-Factory"]
   },{
     "slug": "visit-job-execution",
     "title": "Visit Job Execution: Consumer Goods Cloud vs. Field Service",
     "date": "2026-10-10",
+    "reading_time": "7 min",
     "summary": "How Salesforce addresses field visit execution across Consumer Goods Cloud and Field Service, when to choose each, and whether a native Flow build is worth it.",
     "tags": ["Visit Execution","Consumer Goods Cloud","Field Service Cloud","Salesforce Platform Development"]
   },
