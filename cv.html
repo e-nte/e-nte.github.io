@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Vitae | Evangelos Ntermaris</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- TIMELINE & CV SPECIFIC STYLES --- */
+        .cv-header-banner {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--navbar-border);
+            border-left: 4px solid var(--accent-rose);
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 40px;
+        }
+
+        .cv-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .cv-name {
+            font-size: 2.2rem;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .cv-role-title {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .cv-contact-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 16px 0 24px 0;
+        }
+
+        .cv-contact-bar a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        .cv-contact-bar a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- VERTICAL TIMELINE --- */
+        .timeline-wrapper {
+            position: relative;
+            margin: 40px 0;
+            padding-left: 30px;
+        }
+
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 10px;
+            bottom: 10px;
+            width: 2px;
+            background: var(--navbar-border);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -30px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg-deep);
+            border: 3px solid var(--accent-rose);
+            box-shadow: 0 0 10px rgba(230, 57, 155, 0.4);
+        }
+
+        .timeline-content {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--navbar-border);
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-company {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent-rose);
+        }
+
+        .timeline-role {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            background: rgba(244, 162, 97, 0.12);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .timeline-content ul {
+            padding-left: 20px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .timeline-content li {
+            margin-bottom: 8px;
+        }
+
+        .cv-section-title {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 6px;
+        }
+
+        .competency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .competency-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--navbar-border);
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .competency-card h3 {
+            font-size: 1rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .competency-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+        
+        <!-- CV HEADER BANNER -->
+        <section class="cv-header-banner">
+            <div class="cv-title-row">
+                <div>
+                    <h1 class="cv-name">Evangelos Ntermaris</h1>
+                    <div class="cv-role-title">Enterprise Platform Architect & Engineer</div>
+                </div>
+                <a href="EVANGELOS NTERMARIS - MASTER CV.pdf" download target="_blank" class="btn-verify-action">
+                    📄 Download PDF CV ➔
+                </a>
+            </div>
+
+            <div class="cv-contact-bar">
+                <span>🔗 <a href="https://www.linkedin.com/in/evangelos-nt/" target="_blank">LinkedIn</a></span>
+                <span>💻 <a href="https://github.com/e-nte" target="_blank">GitHub</a></span>
+            </div>
+
+            <p style="color: var(--text-muted); line-height: 1.7; font-size: 1rem;">
+                Enterprise platform architect and engineer with 10 years of IT experience and 7.5+ years delivering complex, multi‑cloud Salesforce solutions across enterprise environments. Expert in translating business requirements into scalable architecture, secure data models, robust API integrations, and governed release pipelines. Hands‑on engineer with deep programmatic capability in Apex, LWC, JavaScript, and REST/SOAP APIs. 15 certifications spanning Salesforce Architecture, Data, Integration, Security, and AWS AI. Proven delivery at PwC, IBM, and Deloitte.
+            </p>
+        </section>
+
+        <!-- CAREER TIMELINE -->
+        <h2 class="cv-section-title">Professional Experience</h2>
+        
+        <div class="timeline-wrapper">
+
+            <!-- PEAK & PEAK -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <span class="timeline-company">Peak & Peak</span>
+                        <span class="timeline-date">Sep 2025 – Sep 2026</span>
+                    </div>
+                    <div class="timeline-role">Senior Salesforce Developer & Consultant</div>
+                    <ul>
+                        <li>Architected and delivered cross‑cloud solutions spanning Service Cloud, Experience Cloud, Marketing Cloud Next, and Data Cloud across international operations.</li>
+                        <li>Designed Experience Cloud portals with multi‑audience targeting, custom‑branded LWC components, and tailored page structures.</li>
+                        <li>Supported Marketing Cloud Next and Data Cloud architecture for subscriber growth initiatives, including web capture, consent governance, and Customer 360 monitoring.</li>
+                        <li>Governed organisation security and data visibility through personas, profiles, permissioning, and sharing rules.</li>
+                        <li>Managed SFDX/Git deployment workflows and Jira delivery tracking, including conflict resolution and metadata deployment pipelines.</li>
+                        <li>Extended Field Service Mobile with custom LWC and Apex functionality, including offline-ready considerations.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PWC -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <span class="timeline-company">PwC</span>
+                        <span class="timeline-date">Aug 2024 – May 2025</span>
+                    </div>
+                    <div class="timeline-role">Salesforce Consultant</div>
+                    <ul>
+                        <li>Translated enterprise functional requirements into technical designs, implementation specifications, effort estimations, and proof‑of‑concepts.</li>
+                        <li>Delivered data‑driven CloudPages and subscriber experiences using JavaScript, HTML, and AMPscript.</li>
+                        <li>Designed a GDPR‑oriented customer preference centre using Salesforce security and sharing controls for consent governance.</li>
+                        <li>Facilitated technical discovery workshops with project managers and client specialists, communicating architecture risks and dependencies.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- IBM -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <span class="timeline-company">IBM</span>
+                        <span class="timeline-date">Mar 2021 – Apr 2024</span>
+                    </div>
+                    <div class="timeline-role">Salesforce Consultant / Delivery Specialist</div>
+                    <ul>
+                        <li>Supported Service Cloud operations for 100,000+ contacts and 16 business departments, including Omni‑Channel, Web‑to‑Case, SLAs, entitlements, and milestones.</li>
+                        <li>Administered and enhanced Marketing Cloud Engagement for 50,000+ subscribers, including Journey Builder, Automation Studio, and audience segmentation.</li>
+                        <li>Built REST/SOAP integrations, validated endpoints using Postman, and maintained Marketing Cloud Connect synchronisation.</li>
+                        <li>Established release, code‑review, and testing practices with Git, Metadata API, and CI/CD processes.</li>
+                        <li>Developed bulkified Apex, asynchronous processing, Flow automation, LWC, and supporting test classes.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DELOITTE -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <span class="timeline-company">Deloitte</span>
+                        <span class="timeline-date">Feb 2019 – Feb 2021</span>
+                    </div>
+                    <div class="timeline-role">Salesforce Developer / Analyst</div>
+                    <ul>
+                        <li>Consolidated 12 business processes and complex record‑type structures into a Field Service architecture supporting 500+ technicians and dispatch users.</li>
+                        <li>Configured and extended Field Service Mobile, service appointment lifecycles, scheduling logic, Apex controllers, and automation.</li>
+                        <li>Owned testing and release‑readiness activities across sandboxes, including unit tests, mock frameworks, SIT/UAT, and defect tracking.</li>
+                        <li>Managed security and visibility through profiles, permission sets, OWD, and sharing rules; supported bulk data migration with Data Loader.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ZSTORES -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <span class="timeline-company">Zstores</span>
+                        <span class="timeline-date">Dec 2016 – Aug 2017</span>
+                    </div>
+                    <div class="timeline-role">Back Office Specialist</div>
+                    <ul>
+                        <li>Managed data collection, formatting, and bulk imports into Magento CMS.</li>
+                        <li>Administered third‑party integrations and automated data import processes for large product catalogs.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ARTABOUT -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <span class="timeline-company">ArtAbout</span>
+                        <span class="timeline-date">Apr 2016 – Oct 2016</span>
+                    </div>
+                    <div class="timeline-role">Web Developer Intern</div>
+                    <ul>
+                        <li>Developed and maintained WordPress websites with custom PHP and JavaScript extensions.</li>
+                        <li>Built responsive front‑end interfaces using CSS and Bootstrap.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CORE COMPETENCIES MATRIX -->
+        <h2 class="cv-section-title">Core Competencies</h2>
+        <div class="competency-grid">
+            <div class="competency-card">
+                <h3>Enterprise Architecture</h3>
+                <p>Solution design, technical blueprinting, data modeling, scalability patterns, multi‑cloud strategy, POCs, estimation.</p>
+            </div>
+            <div class="competency-card">
+                <h3>Salesforce Platform</h3>
+                <p>Sales, Service, Experience, Field Service, Marketing Cloud Engagement & Next, Data Cloud, Consumer Goods Cloud.</p>
+            </div>
+            <div class="competency-card">
+                <h3>Security & IAM</h3>
+                <p>Profiles, permission sets, OWD, sharing rules, field‑level security, GDPR compliance, Salesforce Identity & Access Management.</p>
+            </div>
+            <div class="competency-card">
+                <h3>Integration & Data</h3>
+                <p>REST/SOAP APIs, Platform Events, Marketing Cloud Connect, Data Loader, Postman, JSON, SOQL/SQL, ETL patterns.</p>
+            </div>
+            <div class="competency-card">
+                <h3>Programmatic Dev</h3>
+                <p>Apex (triggers, async, controllers), LWC, Aura, Visualforce, JavaScript (ES6+), Node.js, PHP, HTML5, CSS3, AMPscript, SSJS.</p>
+            </div>
+            <div class="competency-card">
+                <h3>DevOps & Delivery</h3>
+                <p>Git, GitHub, GitHub Actions, SFDX, CI/CD, Jira, sandbox strategy, SIT/UAT, unit testing, release management.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="components/header.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

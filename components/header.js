@@ -5,6 +5,7 @@ function renderSiteHeader() {
     const currentPath = window.location.pathname;
     const isHomePage = currentPath.endsWith('index.html') || currentPath.endsWith('/') || currentPath === '';
     const isArticlesPage = currentPath.includes('articles.html');
+    const isCvPage = currentPath.includes('cv.html');
 
     // Detect if we are inside a nested subdirectory like /articles/
     const isSubfolder = currentPath.includes('/articles/');
@@ -17,6 +18,8 @@ function renderSiteHeader() {
             <a href="${isHomePage ? '#projects' : basePath + 'index.html#projects'}" class="nav-link" data-target="projects">Dynamic Features</a>
             <a href="${isHomePage ? '#certs' : basePath + 'index.html#certs'}" class="nav-link" data-target="certs">14x Credentials</a>
             <a href="${basePath}articles.html" class="nav-link ${isArticlesPage ? 'active' : ''}">Articles</a>
+            <a href="${basePath}cv.html" class="nav-link ${isCvPage ? 'active' : ''}">CV</a>
+            <a href="https://github.com/e-nte/e-nte.github.io" target="_blank" class="linkedin-link" rel="noopener noreferrer">GitHub ↗</a>
             <a href="https://www.linkedin.com/in/evangelos-nt/" target="_blank" class="linkedin-link" rel="noopener noreferrer">LinkedIn ↗</a>
             
             <div class="theme-menu-wrapper">
