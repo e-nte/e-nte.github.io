@@ -1,5 +1,9 @@
 const SF_API_URL = 'https://sf-arch-and-dev-ed.develop.my.site.com/services/apexrest/portfolio/projects'; 
 
+
+const ANALYTICS_ENABLED = false;
+
+if (ANALYTICS_ENABLED) {
 PortfolioAnalytics.init({
   baseUrl: 'https://sf-arch-and-dev-ed.develop.my.site.com/services/apexrest/portfolio/analytics'
 });
