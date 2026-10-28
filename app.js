@@ -1,10 +1,7 @@
 const SF_API_URL = 'https://sf-arch-and-dev-ed.develop.my.site.com/services/apexrest/portfolio/projects'; 
 
-// app.js — at the top, so the visit log fires as early as possible
-import { initAnalytics } from './analytics.js';
-
-initAnalytics({
-  baseUrl: 'https://sf-arch-and-dev-ed.develop.my.site.com/services/apexrest/portfolio/analytics',
+PortfolioAnalytics.init({
+  baseUrl: 'https://sf-arch-and-dev-ed.develop.my.site.com/services/apexrest/portfolio/analytics'
 });
 
 document.addEventListener('DOMContentLoaded', () => {

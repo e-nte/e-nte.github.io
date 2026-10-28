@@ -56,21 +56,10 @@ async function loadStats(statsUrl, cacheKey, ttl) {
   } catch {}
 }
 
-export function initAnalytics({
-  baseUrl,
-  statsCacheTtl = DEFAULT_TTL,
-  cacheKey = 'visit_stats_v1',
-} = {}) {
-  if (!baseUrl) {
-    console.warn('[analytics] baseUrl is required');
-    return;
-  }
+function initAnalytics({ baseUrl, statsCacheTtl = DEFAULT_TTL, cacheKey = 'visit_stats_v1' } = {}) {
+  if (!baseUrl) { console.warn('[analytics] baseUrl is required'); return; }
   if (shouldSkip()) return;
-
-  // 1. Fire-and-forget visit log — runs as early as init() is called
   logVisit(baseUrl + '/log');
-
-  // 2. Fetch + render stats
   const run = () => loadStats(baseUrl + '/stats', cacheKey, statsCacheTtl);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', run, { once: true });
@@ -78,3 +67,5 @@ export function initAnalytics({
     run();
   }
 }
+
+window.PortfolioAnalytics = { init: initAnalytics };
