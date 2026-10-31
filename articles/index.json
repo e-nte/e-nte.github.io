@@ -1,5 +1,11 @@
-[
-    {
+[{
+    "slug": "The-Three-Lives-of-Data",
+    "title": "The Three Lives of Data",
+    "date": "2026-10-31",
+    "reading_time": "11 min",
+    "summary": "The three states are not a taxonomy for its own sake. They are a diagnostic tool.\"Encrypt everything\" is not a strategy. Knowing <strong>which state you are protecting, from whom, and with what key</strong> is.",
+    "tags": ["data-security","encryption","zero-trust","data-protection","cloud-security"]
+  },{
     "slug": "cloud-vs-on-premise-for-data-security-1",
     "title": "Cloud vs On-Premise: Security, GDPR and Health Data",
     "date": "2026-10-24",

@@ -337,6 +337,13 @@ function navigateToSection(sectionId) {
     history.pushState(null, '', `#${sectionId}`);
 }
 
-
+document.querySelectorAll('.article-toc a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation(); // also blocks sibling capture listeners
+        var id = decodeURIComponent(this.getAttribute('href').slice(1));
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, true);
+});
 
 // ... the rest of your app code, unchanged ...
