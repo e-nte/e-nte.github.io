@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trust: The End of the Perimeter | Articles</title>
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Article-scoped styles: table of contents and glossary layout -->
+    <style>
+        .article-toc {
+            border: 1px solid var(--navbar-border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 0 0 32px;
+            background: rgba(127, 127, 127, 0.04);
+        }
+        .article-toc__title {
+            margin: 0 0 12px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.82rem;
+        }
+        .article-toc ul {
+            margin: 0;
+            padding-left: 20px;
+            line-height: 1.85;
+            font-size: 0.95rem;
+        }
+        .article-toc ul ul {
+            margin: 2px 0 6px;
+            padding-left: 20px;
+            line-height: 1.65;
+            font-size: 0.88rem;
+            opacity: 0.88;
+        }
+        .article-toc a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-gold);
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+        .article-toc a:hover {
+            color: var(--accent-gold);
+        }
+        .article-body h2[id],
+        .article-body h3[id] {
+            scroll-margin-top: 128px;
+        }
+        .glossary-list {
+            column-count: 2;
+            column-gap: 36px;
+            padding-left: 20px;
+            line-height: 1.9;
+        }
+        @media (max-width: 640px) {
+            .glossary-list { column-count: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Shared Navigation Header -->
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+
+        <!-- Back Navigation -->
+        <div class="back-navigation">
+            <a href="../articles.html" class="btn-back">&larr; Back to Articles</a>
+        </div>
+
+        <article class="article-wrapper">
+
+            <!-- ============================================================
+                 ARTICLE HEADER BANNER
+                 ============================================================ -->
+            <header class="article-meta-banner">
+                <div class="meta-tags-row">
+                    <span class="badge-tag">#zero-trust</span>
+                    <span class="badge-tag">#architecture</span>
+                    <span class="badge-tag">#identity</span>
+                    <span class="badge-tag">#security-model</span>
+                    <span class="badge-tag">#foundations</span>
+                </div>
+
+                <h1 class="article-title">Zero Trust: The End of the Perimeter</h1>
+
+                <p class="article-description">
+                    The firewall never failed—the assumption behind it did. A theory-level explanation of what zero trust actually claims, what it removes, and why the term is both precisely defined and routinely diluted.
+                </p>
+
+                <div class="article-author-bar">
+                    <span>👤 Evangelos Ntermaris: Senior Software Architect</span>
+                    <span class="meta-divider">•</span>
+                    <span>📅 2026-10-31</span>
+                    <span class="meta-divider">•</span>
+                    <span>⏱️ 10 min read</span>
+                </div>
+
+                <div class="audience-row">
+                    <strong>Target Audience:</strong>
+                    <span class="pill">Security Practitioners</span>
+                    <span class="pill">Cloud Engineers</span>
+                    <span class="pill">Business Analysts</span>
+                </div>
+            </header>
+
+            <hr class="meta-separator" />
+
+            <!-- ============================================================
+                 ARTICLE BODY
+                 ============================================================ -->
+            <div class="article-body">
+
+                <!-- BLOCK: Table of Contents with anchor links -->
+                <nav class="article-toc" aria-label="Table of contents">
+                    <p class="article-toc__title">Table of Contents</p>
+                    <ul>
+                        <li><a href="#introduction">Introduction: The Perimeter Was a Theory of Trust</a></li>
+                        <li>
+                            <a href="#perimeter-failure">1. Why the Perimeter Stopped Working</a>
+                            <ul>
+                                <li><a href="#four-forces">Four forces that dissolved the boundary</a></li>
+                                <li><a href="#soft-center">The soft center</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#what-zero-trust-says">2. What Zero Trust Actually Says</a>
+                            <ul>
+                                <li><a href="#the-definition">The definition, and what it removes</a></li>
+                                <li><a href="#two-models">Two models, side by side</a></li>
+                                <li><a href="#decision-loop">The decision loop</a></li>
+                                <li><a href="#five-principles">Five principles</a></li>
+                                <li><a href="#continuous-verification">Why "verified once" is the failure mode</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#model-not-product">3. A Model, Not a Product</a>
+                            <ul>
+                                <li><a href="#terminology">The terminology debate</a></li>
+                                <li><a href="#washing">How to spot zero-trust washing</a></li>
+                                <li><a href="#misconceptions">Five misconceptions</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#beyond-cyber">4. The Principle Travels: Beyond Cyber</a>
+                            <ul>
+                                <li><a href="#physical">Physical security</a></li>
+                                <li><a href="#ot">Operational technology</a></li>
+                                <li><a href="#data-centric">Data-centric control</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#summary">Summary: Trust as a Continuous Decision</a></li>
+                        <li><a href="#acronyms">Acronyms</a></li>
+                    </ul>
+                </nav>
+
+                <!-- BLOCK: Introduction -->
+                <h2 id="introduction">Introduction: The Perimeter Was a Theory of Trust</h2>
+                <p>
+                    The corporate firewall is often described as a wall. It was never just a wall. It was an <strong>epistemology</strong>—a theory about who deserves trust, expressed in network topology.
+                </p>
+                <p>
+                    The theory went like this: an entity's network location predicts its intent. If a request originated from inside the perimeter, it came from a managed device, operated by a vetted employee, running approved software, on a network the organization controlled. Therefore it could be trusted. The firewall was not merely a filter; it was the mechanism that made the prediction reliable, by physically excluding everyone else.
+                </p>
+                <p>
+                    That prediction was reasonable for as long as the premises held. The trouble is that all of the premises have since expired—and the firewall, still doing exactly what it was built to do, now certifies something it can no longer observe.
+                </p>
+
+                <!-- BLOCK: Callout — the core reframing -->
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The one-line version:</strong> The perimeter was a claim that location predicts intent. Zero trust begins by admitting that claim was never true, and is now not even approximately true.</p>
+                </div>
+
+                <p>
+                    This article is about the <strong>model</strong>, not the machinery. It explains why implicit trust collapsed, what zero trust actually asserts (as defined in standards, not in marketing), where the terminology has been stretched beyond usefulness, and why the underlying principle turns out to apply far outside cybersecurity. It deliberately avoids naming products or describing implementation—a model is not a shopping list, and confusing the two is the single most common error in this field.
+                </p>
+
+                <!-- BLOCK: Section 1 -->
+                <h2 id="perimeter-failure">1. Why the Perimeter Stopped Working</h2>
+
+                <h3 id="four-forces">Four forces that dissolved the boundary</h3>
+                <p>
+                    No single event ended the perimeter era. Four shifts, each independently sufficient to undermine it, arrived roughly together.
+                </p>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Force</th>
+                                <th style="padding: 12px;">What it broke</th>
+                                <th style="padding: 12px;">Why location stopped predicting intent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">SaaS adoption</td>
+                                <td style="padding: 12px;">Data left the building</td>
+                                <td style="padding: 12px;">The system of record lives in someone else's infrastructure; the "inside" is now a browser session</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">API-driven integration</td>
+                                <td style="padding: 12px;">The primary interface became machine-to-machine</td>
+                                <td style="padding: 12px;">Workloads call workloads directly; no human and no office network are involved in most traffic</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Multi-cloud and hybrid</td>
+                                <td style="padding: 12px;">There is no single choke point</td>
+                                <td style="padding: 12px;">Identity and data are federated across providers the organization does not own or control</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Remote and hybrid work</td>
+                                <td style="padding: 12px;">The device left the network</td>
+                                <td style="padding: 12px;">Employees connect from untrusted networks on devices the organization may not fully manage</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Each row is a different way of saying the same thing: <strong>the signal the perimeter relied on—being inside—stopped carrying information about the requester</strong>. An inside IP address no longer implies a managed device, a vetted human, or approved software. It may imply nothing at all.
+                </p>
+
+                <h3 id="soft-center">The soft center</h3>
+                <p>
+                    There is a second, structural problem, and it is the one that made the model dangerous rather than merely outdated.
+                </p>
+                <p>
+                    Perimeter architecture concentrated defensive investment at the boundary and economized everywhere behind it. That allocation is rational <em>if and only if</em> the boundary holds—because the cost of defending one crossing is lower than the cost of defending everything. But the entire logic rests on a single assumption: that no one gets through.
+                </p>
+                <p>
+                    Once someone does, they inherit the trust the model extends to insiders. The interior was not merely less defended; it was defended on the premise that defense was unnecessary there. This is why the post-breach phase of a perimeter-era incident reads the same way every time: one crossing, then free movement. The attacker does not escalate privileges so much as <em>collect</em> them, because the network already treats them as a member.
+                </p>
+                <p>
+                    There is also an asymmetry that the model could never resolve. The defender must hold every crossing, permanently, against every technique. The attacker must find one. Time favors the attacker, and so does the economics.
+                </p>
+                <p>
+                    The honest conclusion is uncomfortable: the perimeter model did not fail because it was implemented badly. It failed because <strong>its central assumption was load-bearing and unverifiable</strong>—and it was designed so that the assumption never needed testing until it was already false.
+                </p>
+
+                <!-- BLOCK: Section 2 -->
+                <h2 id="what-zero-trust-says">2. What Zero Trust Actually Says</h2>
+
+                <h3 id="the-definition">The definition, and what it removes</h3>
+                <p>
+                    Zero trust is an architectural approach in which <strong>implicit trust based on network location is removed</strong>. Every request for access to a resource is evaluated on its own evidence—identity, device state, context, and policy—before it is granted, regardless of where the request originates. The most widely cited formulation is NIST Special Publication 800-207, which defines the model in vendor-neutral terms and is the reference most serious implementations are measured against.
+                </p>
+                <p>
+                    The precision here matters, because the phrase is constantly misread. Zero trust does not remove <em>trust</em>. It removes <strong>implicit</strong> trust—the unearned kind, granted by category rather than by evidence. What replaces it is explicit trust: granted for a specific request, to a specific identity, for a specific resource, for a bounded period, and revocable the moment the evidence changes.
+                </p>
+                <p>
+                    The distinction is not semantic. "Trust nothing" is an instruction to block everything, which is both unimplementable and useless. "Trust nothing by default, and grant it narrowly, temporarily, and on evidence" is an instruction to build a decision system. The first is a slogan; the second is an architecture.
+                </p>
+
+                <h3 id="two-models">Two models, side by side</h3>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Dimension</th>
+                                <th style="padding: 12px;">Perimeter model</th>
+                                <th style="padding: 12px;">Zero trust model</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Unit of trust</td>
+                                <td style="padding: 12px;">The network segment</td>
+                                <td style="padding: 12px;">The individual request</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">When trust is decided</td>
+                                <td style="padding: 12px;">Once, at the boundary</td>
+                                <td style="padding: 12px;">Continuously, per session or per request</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">What is evaluated</td>
+                                <td style="padding: 12px;">Origin address</td>
+                                <td style="padding: 12px;">Identity, device, workload, context, policy</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Scope of a grant</td>
+                                <td style="padding: 12px;">Broad and long-lived</td>
+                                <td style="padding: 12px;">Narrow and short-lived</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Assumed state</td>
+                                <td style="padding: 12px;">Inside is safe</td>
+                                <td style="padding: 12px;">The adversary may already be inside</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Characteristic failure</td>
+                                <td style="padding: 12px;">One crossing becomes total access</td>
+                                <td style="padding: 12px;">One compromised identity becomes bounded access</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Read the last row carefully, because it is the most honest thing in this article. Zero trust does not prevent compromise. It changes what a compromise <em>costs</em>. The perimeter model made a single failure catastrophic; zero trust makes it survivable. That is the actual promise, and it is a considerably more modest one than the marketing implies.
+                </p>
+
+                <h3 id="decision-loop">The decision loop</h3>
+                <p>
+                    Strip away the products and the model reduces to three components and one requirement.
+                </p>
+                <ul>
+                    <li><strong>A place where the decision is made</strong> — the component that evaluates identity, device state, context, and policy, and produces an allow or deny. Standards refer to this as the policy decision point.</li>
+                    <li><strong>A place where the decision is enforced</strong> — the component actually sitting in the path of the request, capable of blocking it. Standards call this the policy enforcement point.</li>
+                    <li><strong>A channel between them</strong> — the decision must be current, and the enforcement must be able to consult it per request rather than once per connection.</li>
+                    <li><strong>The requirement: enforcement must be unavoidable.</strong> If any path to the resource bypasses the enforcement point, the architecture is decorative. This is the single most common structural failure in real deployments—a control plane that makes excellent decisions which the data plane does not oblige.</li>
+                </ul>
+                <p>
+                    Everything else in a zero trust deployment is an implementation of one of those four lines. That is why the model is stable across vendors, protocols, and generations of technology: it describes a <em>shape</em>, not a product.
+                </p>
+
+                <h3 id="five-principles">Five principles</h3>
+                <p>
+                    The architecture rests on five assertions. Each is a direct inversion of a perimeter assumption.
+                </p>
+                <ol>
+                    <li><strong>The network is assumed hostile.</strong> Not "untrusted until authenticated"—<em>hostile</em>, including internal networks, because an internal network is now just a network the organization happens to own part of.</li>
+                    <li><strong>Every request is authenticated and authorized, regardless of origin.</strong> An internal call and an internet call receive the same scrutiny. There is no trusted origin.</li>
+                    <li><strong>Access is granted per session, not per login.</strong> The grant is scoped to the interaction and expires with it, rather than persisting for a workday or a token lifetime.</li>
+                    <li><strong>Least privilege, applied continuously.</strong> Access is the minimum needed for the task, and it is re-evaluated as the task changes rather than fixed at the start.</li>
+                    <li><strong>Assume breach.</strong> The design premise is that an adversary is already present. Consequences: segment aggressively, monitor behavior rather than only perimeter events, and treat blast radius as a first-class design concern.</li>
+                </ol>
+                <p>
+                    Two of these deserve emphasis for anyone working with cloud and web systems. First, <strong>identity applies to workloads, devices, and services, not only humans</strong>. A service calling another service is a request requiring authentication and authorization, and in modern architectures the majority of requests are exactly this kind. Second, <strong>east-west traffic matters as much as north-south</strong>. The perimeter model was almost entirely concerned with traffic crossing the boundary; the model's successor is concerned primarily with what happens after it has been crossed.
+                </p>
+
+                <h3 id="continuous-verification">Why "verified once" is the failure mode</h3>
+                <p>
+                    The most frequent gap between what organizations claim and what they have built is this: they authenticate strongly at login, then grant a session that is broad and long-lived. Multi-factor authentication at the door, and an all-areas keycard for the rest of the day.
+                </p>
+                <p>
+                    That is a real improvement over a password alone, and it is not zero trust. The model's defining claim is that <strong>a session is a liability with a lifetime</strong>. Conditions change after authentication: the device falls out of compliance, the user's behavior shifts, the location becomes implausible, the workload's image is replaced. A system that decided once cannot observe any of it.
+                </p>
+                <p>
+                    Continuous verification is therefore not an enhancement to zero trust—it is the mechanism by which the word "trust" stops being a state and becomes a computation. Everything else follows from taking that seriously.
+                </p>
+
+                <!-- BLOCK: Section 3 -->
+                <h2 id="model-not-product">3. A Model, Not a Product</h2>
+
+                <h3 id="terminology">The terminology debate</h3>
+                <p>
+                    "Zero trust" is a <strong>fixed term</strong> in the sense that matters: it has a standards definition, a documented reference architecture, and a coherent set of principles that a knowledgeable reader can check a claim against. The term was popularized commercially around 2010 and later formalized in vendor-neutral guidance, and the formalized version is the one worth using.
+                </p>
+                <p>
+                    It is also, unavoidably, a marketing word. Popularity created an incentive to attach the label to anything adjacent to access control, and the result is a term whose <em>definition</em> is stable and whose <em>usage</em> is frequently meaningless. Both facts are true at once. The correct response is not to abandon the term but to hold claims to the definition—which is possible precisely because a definition exists.
+                </p>
+
+                <!-- BLOCK: Callout — component vs property -->
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The distinction worth remembering:</strong> a vendor can sell you a component. A vendor cannot sell you the property "verified." Zero trust is a property of a system, which is why it cannot be purchased in a single transaction.</p>
+                </div>
+
+                <h3 id="washing">How to spot zero-trust washing</h3>
+                <p>
+                    Claims can be tested. These are the signals that a product or architecture is using the term decoratively:
+                </p>
+                <ul>
+                    <li><strong>It addresses exactly one pillar</strong> and calls itself a zero trust solution. Strong authentication, or a modern remote-access replacement, or microsegmentation may each be a <em>component</em>; none is the model.</li>
+                    <li><strong>Network location still functions as a trust signal.</strong> If being on the corporate network or in a particular subnet still expands what a request can do, the implicit trust was never removed.</li>
+                    <li><strong>The decision point is not identifiable.</strong> Ask where the authorization decision is made and what evidence it consumes. Vague answers usually mean the decision is spread across implicit configuration.</li>
+                    <li><strong>Decisions happen at login only.</strong> No re-evaluation, no short-lived grants, no revocation path.</li>
+                    <li><strong>Enforcement is bypassable.</strong> Optional agents, direct address access that skips the control, or a data path that does not traverse the enforcement point.</li>
+                    <li><strong>Trust is treated as binary.</strong> A system that can only say "trusted" or "untrusted," rather than computing a scoped decision from several signals, has the vocabulary but not the mechanism.</li>
+                </ul>
+
+                <h3 id="misconceptions">Five misconceptions</h3>
+                <ol>
+                    <li><strong>"It's a product."</strong> It is a target architecture and a migration path. Products implement components of it.</li>
+                    <li><strong>"It's a VPN replacement."</strong> Modern remote-access patterns are one application of the model, addressing one traffic class. The model also governs workload-to-workload calls, data access, and administrative paths.</li>
+                    <li><strong>"It means trust nothing and block everything."</strong> It means compute trust from evidence and grant it narrowly. Denial is the default, not the goal.</li>
+                    <li><strong>"It's only about identity."</strong> Identity is the anchor, because it is the one signal that exists for humans, devices, and workloads alike. But policy, segmentation, and continuous monitoring are co-equal—identity without enforced scope is just better authentication.</li>
+                    <li><strong>"It's a destination."</strong> It is an operating posture. Environments change, identities accumulate, and policies rot. A completed zero trust program is one that has stopped being maintained.</li>
+                </ol>
+
+                <!-- BLOCK: Section 4 -->
+                <h2 id="beyond-cyber">4. The Principle Travels: Beyond Cyber</h2>
+                <p>
+                    Here is the test for whether zero trust is a principle or merely a cybersecurity fashion. Ask: <em>does this domain make access decisions based on implicit signals?</em> Wherever the answer is yes, the same reasoning applies—and the answer is yes in several domains that have nothing to do with firewalls.
+                </p>
+
+                <h3 id="physical">Physical security</h3>
+                <p>
+                    A badge reader, a camera, and a door controller are edge devices making access decisions. The traditional design treats them as trustworthy because they sit on the building's internal network—which is the perimeter assumption, reproduced in concrete and copper.
+                </p>
+                <p>
+                    The zero trust version inverts it. A badge read is a <strong>request</strong>, not a state: it carries an identity, a device, a location, and a context, and it is evaluated against policy. Controllers authenticate themselves and their firmware, credentials are short-lived, and policy can be enforced locally with central governance so a door decision does not depend on a WAN link. The characteristic attack maps exactly onto the cyber version: a cloned credential plus a looped camera feed is lateral movement and sensor spoofing in physical form—the attacker is inside the perimeter, and the perimeter was the whole defense.
+                </p>
+
+                <h3 id="ot">Operational technology</h3>
+                <p>
+                    Industrial and operational environments—utilities, manufacturing, transport, building systems—present the hardest adaptation, because the constraints are real: equipment with decade-long lifetimes, safety requirements that outrank security policy, and systems that cannot be patched on a security schedule.
+                </p>
+                <p>
+                    The principle survives; the implementation changes shape. Continuous device attestation, least-privilege access to control systems, and segmentation all apply—but segmentation must respect process safety, and enforcement must fail safe rather than fail closed. What carries over is the <strong>refusal to treat "inside the plant network" as evidence of trust</strong>. What must be adapted is everything about how that refusal is enforced.
+                </p>
+
+                <h3 id="data-centric">Data-centric control</h3>
+                <p>
+                    The most interesting extension moves the unit of decision from the network path to the <strong>data object itself</strong>. Instead of asking whether a requester is on the trusted network, a data-centric model enforces fine-grained access and encryption <em>at the data layer</em>, so that protection travels with the data wherever it is stored, moved, or shared.
+                </p>
+                <p>
+                    This is where the model meets the question of data states—what protects a record at rest, in transit, and in use—because a decision that follows the object must hold in all three. The companion article, <em>The Three Lives of Data: At Rest, in Transit, and in Use</em>, covers that dimension; the specific mechanisms that implement these decisions are collected in the reference article, <em>Mechanisms of Trust: How the Controls Actually Work</em>. The model says <em>decide continuously on evidence</em>; those articles cover <em>what the evidence is made of</em>.
+                </p>
+
+                <!-- BLOCK: Summary -->
+                <h2 id="summary">Summary: Trust as a Continuous Decision</h2>
+                <p>
+                    Zero trust is not a technology and not a purchase. It is the position that <strong>trust is a decision, not a location</strong>—and that a decision which cannot be re-evaluated is not a decision but a guess with a timestamp.
+                </p>
+                <p>
+                    The perimeter model was internally coherent and built on an assumption that stopped holding: that location predicts intent. Zero trust abandons the prediction and builds the machinery to make the judgment directly. It does not promise that compromise will not happen; it promises that compromise will be bounded.
+                </p>
+                <p>
+                    When you encounter the term—in a vendor deck, an architecture review, or your own roadmap—these are the questions that separate the model from the label:
+                </p>
+                <ul>
+                    <li><strong>Where is the decision made,</strong> and can you point to the component that makes it?</li>
+                    <li><strong>Can any request reach the resource without passing the enforcement point?</strong> If yes, nothing else matters.</li>
+                    <li><strong>How long does a grant last, and what revokes it?</strong> If the answer is "until logout," the decision is a login event, not a continuous one.</li>
+                    <li><strong>What does the system know about the device and the workload,</strong> not just the human?</li>
+                    <li><strong>If an adversary is already inside, what limits their reach?</strong> This is the only question the perimeter model could not answer.</li>
+                </ul>
+                <p>
+                    The perimeter failed because it confused where a request came from with what it intended. Zero trust is the discipline of refusing to make that mistake—per request, every time, including the requests that arrive from inside.
+                </p>
+
+                <!-- BLOCK: Acronyms (glossary) -->
+                <h2 id="acronyms">Acronyms</h2>
+                <ul class="glossary-list">
+                    <li><strong>API</strong> — Application Programming Interface</li>
+                    <li><strong>ICS</strong> — Industrial Control Systems</li>
+                    <li><strong>NIST</strong> — National Institute of Standards and Technology</li>
+                    <li><strong>OT</strong> — Operational Technology</li>
+                    <li><strong>PDP</strong> — Policy Decision Point</li>
+                    <li><strong>PEP</strong> — Policy Enforcement Point</li>
+                    <li><strong>SaaS</strong> — Software as a Service</li>
+                    <li><strong>VPN</strong> — Virtual Private Network</li>
+                </ul>
+
+            </div>
+
+        </article>
+    </main>
+
+    <script src="../components/header.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>

@@ -1,10 +1,17 @@
 [{
+    "slug": "Zero-Trust-The-End-of-the-Perimeter",
+    "title": "Zero Trust: The End of the Perimeter",
+    "date": "2026-10-31",
+    "reading_time": "10 min",
+    "summary": "The firewall never failed—the assumption behind it did. A theory-level explanation of what zero trust actually claims, what it removes, and why the term is both precisely defined and routinely diluted.",
+    "tags": ["zero-trust","architecture","identity","security-model","foundations"]
+  },{
     "slug": "The-Three-Lives-of-Data",
     "title": "The Three Lives of Data",
     "date": "2026-10-31",
     "reading_time": "10 min",
-    "summary": "The three states are not a taxonomy for its own sake. They are a diagnostic tool.\"Encrypt everything\" is not a strategy. Knowing <strong>which state you are protecting, from whom, and with what key</strong> is.",
-    "tags": ["data-security","encryption","zero-trust","data-protection","cloud-security"]
+    "summary": "A single file can be perfectly protected one moment and completely exposed the next—without the file itself changing. A theory-level guide to the three data states, the threats that define each one, and the classes of control that actually match them.",
+    "tags": ["data-security","encryption","zero-trust","data-protection","cloud-security","foundation"]
   },{
     "slug": "cloud-vs-on-premise-for-data-security-1",
     "title": "Cloud vs On-Premise: Security, GDPR and Health Data",
