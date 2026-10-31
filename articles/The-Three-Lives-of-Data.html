@@ -48,7 +48,7 @@
         }
         .article-body h2[id],
         .article-body h3[id] {
-            scroll-margin-top: 80px;
+            scroll-margin-top: 128px;
         }
         .glossary-list {
             column-count: 2;
@@ -82,15 +82,15 @@
                 <div class="meta-tags-row">
                     <span class="badge-tag">#data-security</span>
                     <span class="badge-tag">#encryption</span>
-                    <span class="badge-tag">#zero-trust</span>
                     <span class="badge-tag">#data-protection</span>
                     <span class="badge-tag">#cloud-security</span>
+                    <span class="badge-tag">#foundations</span>
                 </div>
 
                 <h1 class="article-title">The Three Lives of Data: At Rest, in Transit, and in Use</h1>
 
                 <p class="article-description">
-                    A single file can be perfectly protected one moment and completely exposed the next—without the file itself changing. A foundational guide to data at rest, in transit, and in use, and the controls that actually match each state.
+                    A single file can be perfectly protected one moment and completely exposed the next—without the file itself changing. A theory-level guide to the three data states, the threats that define each one, and the classes of control that actually match them.
                 </p>
 
                 <div class="article-author-bar">
@@ -98,7 +98,7 @@
                     <span class="meta-divider">•</span>
                     <span>📅 2026-10-31</span>
                     <span class="meta-divider">•</span>
-                    <span>⏱️ 11 min read</span>
+                    <span>⏱️ 10 min read</span>
                 </div>
 
                 <div class="audience-row">
@@ -142,7 +142,7 @@
                             <ul>
                                 <li><a href="#plaintext-problem">The plaintext problem</a></li>
                                 <li><a href="#in-use-attack-surface">The attack surface of the processing state</a></li>
-                                <li><a href="#in-use-controls">Foundational controls</a></li>
+                                <li><a href="#in-use-controls">Classes of control</a></li>
                                 <li><a href="#in-use-limits">What this does and does not solve</a></li>
                             </ul>
                         </li>
@@ -157,7 +157,7 @@
                     A single file can be perfectly protected at one moment and completely exposed the next—without anything about the file itself changing. What changes is <strong>where it is and what is happening to it</strong>.
                 </p>
                 <p>
-                    Most security conversations blur this distinction. "We encrypt our data" is offered as a complete answer, when in fact encryption is a family of controls, each designed for a specific condition. A control that is excellent in one state can be irrelevant in another. Full-disk encryption is close to useless against an attacker who has already logged into the running machine. Transport encryption is close to useless once the data has arrived and been decrypted for processing. And a hardware enclave does nothing for a backup tape sitting in a warehouse.
+                    Most security conversations blur this distinction. "We encrypt our data" is offered as a complete answer, when in fact encryption is a family of controls, each designed for a specific condition. A control that is excellent in one state can be irrelevant in another. Full-disk encryption is close to useless against an attacker who has already logged into the running machine. Transport encryption is close to useless once the data has arrived and been decrypted for processing. And a hardware-isolated environment does nothing for a backup tape sitting in a warehouse.
                 </p>
                 <p>
                     The way to organize this is by <strong>data state</strong>, a framing that appears across standards and guidance, including the NIST Cybersecurity Framework, which addresses data at rest, in transit, and in use as separate protection categories. This article walks through those three states in order, and adds a distinction that most treatments skip: <strong>transit happens twice</strong>. Data crosses networks between systems, and then it crosses memory inside a system. These are different journeys with different controls, and the gap between them is where many assumptions quietly break.
@@ -169,13 +169,13 @@
                 </div>
 
                 <p>
-                    This is a foundational piece. It does not assume familiarity with zero trust architecture, policy engines, or mutual authentication. It asks a simpler question: <em>for this data, right now, what is the actual threat—and what actually reduces it?</em>
+                    This is a foundational piece. It deliberately stays at the level of <strong>classes of control</strong> rather than named technologies: it does not assume familiarity with specific protocols, hardware, or vendor products. It asks a simpler question: <em>for this data, right now, what is the actual threat—and what kind of control actually reduces it?</em> The individual mechanisms that implement those classes are collected separately in the companion reference article, so that this one can remain readable and stable.
                 </p>
 
                 <!-- BLOCK: Threat matrix — a roadmap for the rest of the article -->
                 <h3 id="threat-map">Threat Map: A Roadmap for the Rest of This Article</h3>
                 <p>
-                    Before going state by state, the table below summarizes the threat model and primary control for each state. The sections that follow expand on each row.
+                    Before going state by state, the table below summarizes the threat model and the class of control for each state. The sections that follow expand on each row.
                 </p>
                 <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
                     <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
@@ -184,7 +184,7 @@
                                 <th style="padding: 12px;">Data State</th>
                                 <th style="padding: 12px;">Primary Threat</th>
                                 <th style="padding: 12px;">Representative Attack</th>
-                                <th style="padding: 12px;">Primary Control</th>
+                                <th style="padding: 12px;">Class of Control</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -192,13 +192,13 @@
                                 <td style="padding: 12px; font-weight: bold;">At Rest</td>
                                 <td style="padding: 12px;">Offline extraction</td>
                                 <td style="padding: 12px;">Stolen disk, exposed storage bucket, leaked backup</td>
-                                <td style="padding: 12px;">Layered encryption + key custody</td>
+                                <td style="padding: 12px;">Layered encryption with independent key custody</td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--navbar-border);">
                                 <td style="padding: 12px; font-weight: bold;">Network Transit</td>
                                 <td style="padding: 12px;">Interception</td>
                                 <td style="padding: 12px;">Passive capture, man-in-the-middle, harvest-now-decrypt-later</td>
-                                <td style="padding: 12px;">TLS 1.3 with forward secrecy, mTLS, certificate validation</td>
+                                <td style="padding: 12px;">Transport encryption with forward secrecy and mutual authentication</td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--navbar-border);">
                                 <td style="padding: 12px; font-weight: bold;">Memory Transit</td>
@@ -209,8 +209,8 @@
                             <tr style="border-bottom: 1px solid var(--navbar-border);">
                                 <td style="padding: 12px; font-weight: bold;">In Use</td>
                                 <td style="padding: 12px;">Plaintext exposure during computation</td>
-                                <td style="padding: 12px;">Memory scraping, dependency vulnerability, insider access at the platform layer</td>
-                                <td style="padding: 12px;">Confidential computing (TEE + attestation), runtime enforcement, data minimization</td>
+                                <td style="padding: 12px;">Memory scraping, dependency vulnerability, privileged platform access</td>
+                                <td style="padding: 12px;">Isolated execution with attestation, runtime enforcement, data minimization</td>
                             </tr>
                         </tbody>
                     </table>
@@ -232,10 +232,10 @@
                     "Encrypted at rest" is not one control. It is at least three, and they protect against different things.
                 </p>
                 <p>
-                    <strong>Full-disk or volume encryption (FDE)</strong> encrypts the entire storage device beneath the filesystem. It is transparent to applications and requires no code changes. Its real value is narrow but important: it protects data on <strong>lost, stolen, or improperly decommissioned hardware</strong>, and it supports compliance requirements around physical media. It offers no protection once the operating system is running and the volume is unlocked—at that point, the data is simply readable by anything with filesystem access.
+                    <strong>Device-level encryption</strong> encrypts the entire storage medium beneath the filesystem. It is transparent to applications and requires no code changes. Its real value is narrow but important: it protects data on <strong>lost, stolen, or improperly decommissioned hardware</strong>, and it supports compliance requirements around physical media. It offers no protection once the operating system is running and the volume is unlocked—at that point, the data is simply readable by anything with filesystem access.
                 </p>
                 <p>
-                    <strong>Database-level encryption</strong>, such as Transparent Data Encryption, encrypts the database files and logs beneath the query engine. It protects against theft of the database files themselves. It typically does <strong>not</strong> protect against a compromised database account, because the database decrypts on behalf of whoever queries it.
+                    <strong>Storage-engine-level encryption</strong> encrypts the database files and logs beneath the query engine. It protects against theft of the database files themselves. It typically does <strong>not</strong> protect against a compromised database account, because the database decrypts on behalf of whoever queries it.
                 </p>
                 <p>
                     <strong>Application-level encryption</strong> happens before data is handed to storage at all. The application encrypts fields or records, and the storage layer only ever sees ciphertext. This is the strongest of the three because the trust boundary shrinks: a compromised database administrator cannot read what the application never stored in readable form. The cost is real—you lose the ability to search, sort, or index on encrypted fields without additional design work.
@@ -249,7 +249,7 @@
                     Every encryption scheme above reduces to a key. If the key sits in the same place as the ciphertext, or in a configuration file readable by the same compromised process, the encryption is decorative.
                 </p>
                 <p>
-                    This is why at-rest protection is inseparable from <strong>key management</strong>: hardware security modules, cloud key management services, envelope encryption where a data key is itself encrypted by a longer-lived key-encryption key, and rotation policies that limit how long any single key is exposed. NIST SP 800-57 is the reference standard here, and the principle it enforces is simple—<strong>the key must live somewhere the ciphertext does not</strong>.
+                    This is why at-rest protection is inseparable from <strong>key management</strong>: hardware-backed key custody, envelope encryption where a data key is itself encrypted by a longer-lived key-encryption key, and rotation policies that limit how long any single key is exposed. NIST SP 800-57 is the reference standard here, and the principle it enforces is simple—<strong>the key must live somewhere the ciphertext does not</strong>.
                 </p>
 
                 <h3 id="at-rest-failures">Where at-rest protection fails in practice</h3>
@@ -273,23 +273,20 @@
                     Network transit is data crossing a channel between two systems: a browser and a web server, a service and a database, an application and a third-party API, a data center and a cloud region.
                 </p>
                 <p>
-                    <strong>The standard controls.</strong> Transport Layer Security (<strong>TLS</strong>) is the baseline, and modern deployment means TLS 1.3 with forward secrecy, enforced rather than optional. IPsec protects traffic at the network layer for site-to-site and remote-access links. VPNs tunnel traffic across untrusted networks. For service-to-service traffic, mutual TLS (<strong>mTLS</strong>) adds client authentication, so both ends prove identity rather than only the server.
-                </p>
-                <p>
-                    Two details matter more than they appear. First, <strong>forward secrecy</strong> means a compromised long-term key cannot retroactively decrypt previously captured sessions. Second, <strong>certificate validation must actually be enforced</strong>—a surprising amount of internal traffic runs encrypted but with validation disabled, which preserves confidentiality against a passive observer while offering nothing against an active interceptor.
+                    <strong>The standard controls.</strong> The baseline is transport-layer encryption on every channel, without exception—the category matters more than the specific protocol. Two properties matter more than the name. The first is <strong>forward secrecy</strong>: a compromised long-term key must not be able to retroactively decrypt sessions that were captured earlier. The second is <strong>enforced peer verification</strong>: the endpoint must actually validate the identity of the other side, otherwise encryption defends only against a passive observer and offers nothing against an active interceptor. For service-to-service traffic, <strong>mutual authentication</strong> extends the same requirement to both ends of the connection rather than only the server.
                 </p>
                 <p>
                     <strong>The threat model.</strong> Three categories:
                 </p>
                 <ul>
                     <li><strong>Passive interception</strong> — reading traffic off the wire or out of the air.</li>
-                    <li><strong>Active interception</strong> — man-in-the-middle, where an attacker positions themselves between endpoints and impersonates one side. This is what certificate validation and mTLS defend against.</li>
+                    <li><strong>Active interception</strong> — man-in-the-middle, where an attacker positions themselves between endpoints and impersonates one side. This is what peer verification and mutual authentication defend against.</li>
                     <li><strong>Harvest now, decrypt later</strong> — an adversary captures encrypted traffic today and stores it, intending to decrypt it once a cryptographically relevant quantum computer, or simply a leaked key, becomes available. Forward secrecy limits the damage; post-quantum key exchange is the longer-term answer, and migration planning for it is already underway in serious organizations.</li>
                 </ul>
 
                 <h3 id="memory-transit">2b. Memory Transit: the overlooked middle</h3>
                 <p>
-                    Here is the gap. <strong>Network encryption terminates at the machine boundary.</strong> When a packet arrives, TLS is decrypted by the kernel or the application, and from that instant forward the data is traveling in a completely different channel: across the memory bus, through CPU caches, into process heap, into buffers.
+                    Here is the gap. <strong>Network encryption terminates at the machine boundary.</strong> When a packet arrives, the transport layer is decrypted by the kernel or the application, and from that instant forward the data is traveling in a completely different channel: across the memory bus, through CPU caches, into process heap, into buffers.
                 </p>
                 <p>
                     This is transit. The data is in motion. It is just not covered by any of the controls above, because those controls were designed for a threat model that assumes the host is trustworthy.
@@ -304,7 +301,7 @@
                     Memory transit is where several assumptions break:
                 </p>
                 <ul>
-                    <li><strong>Encryption does not follow the data inside the machine.</strong> TLS protected the wire; nothing protects the buffer.</li>
+                    <li><strong>Encryption does not follow the data inside the machine.</strong> Transport encryption protected the wire; nothing protects the buffer.</li>
                     <li><strong>The boundary between "in transit" and "in use" is not a clean line.</strong> Decryption happens somewhere, and that somewhere is a moment of exposure—the plaintext exists, even if only briefly.</li>
                     <li><strong>Compromise of the host converts transit into an extraction opportunity.</strong> A process with sufficient privileges can read another process's memory, and crash dumps, core files, and swap partitions can carry plaintext to disk.</li>
                 </ul>
@@ -338,18 +335,18 @@
                     <li><strong>Privileged access at the platform level.</strong> A cloud provider operator, a hypervisor administrator, or anyone with host-level access sits beneath all application controls.</li>
                 </ul>
 
-                <h3 id="in-use-controls">Foundational controls</h3>
+                <h3 id="in-use-controls">Classes of control</h3>
                 <p>
-                    Four families of controls address this state, at increasing levels of maturity.
+                    Four classes of control address this state, in roughly increasing order of maturity. Each is described here by the capability it provides rather than by the technology that implements it; the named mechanisms are covered in the companion reference article.
                 </p>
                 <p>
-                    <strong>Confidential computing and Trusted Execution Environments (TEEs).</strong> A TEE is a hardware-isolated region of memory and execution—examples include Intel SGX, AMD SEV-SNP, and Arm Confidential Compute Architecture. Data inside the enclave is encrypted in memory and inaccessible to the host operating system, the hypervisor, and the cloud operator. Critically, <strong>remote attestation</strong> provides cryptographic evidence that the workload is running in a genuine, untampered enclave before sensitive data is released into it. This is the most direct answer to the data-in-use problem, and it is the reason hardware-enabled security is now a distinct topic in standards work such as the NIST IR 8320 series.
+                    <strong>Hardware-isolated execution with attestation.</strong> The processor and platform isolate a region of memory and execution so that neither the host operating system, nor the hypervisor, nor the platform operator can read what happens inside it. Because isolation alone is not enough, this class also requires <strong>remote attestation</strong>: cryptographic evidence that the isolated environment is genuine and untampered, presented before any sensitive data is released into it. This is the most direct answer to the data-in-use problem, and the reason hardware-enabled security is now its own topic in standards work.
                 </p>
                 <p>
-                    <strong>Memory and cache protection.</strong> Full memory encryption, cache isolation, and protections against speculative-execution leakage reduce the window in which plaintext is readable even outside an enclave.
+                    <strong>Memory and cache protection.</strong> Full memory encryption, cache isolation, and mitigations for speculative-execution leakage reduce the window in which plaintext is readable even outside an isolated environment. These do not eliminate exposure; they shrink it.
                 </p>
                 <p>
-                    <strong>Runtime policy enforcement.</strong> Controls that watch process behavior—unexpected system calls, unusual memory access, anomalous outbound connections—and block rather than merely alert. Because they act during execution, they can respond to behavior that no signature anticipated.
+                    <strong>Runtime policy enforcement.</strong> Controls that observe process behavior—unexpected system calls, unusual memory access, anomalous outbound connections—and block rather than merely alert. Because they act during execution, they can respond to behavior that no signature or prior patch anticipated. This is the operational counterpart to isolation: isolation limits <em>who</em> can see the plaintext, runtime enforcement limits <em>what the process is allowed to do</em> with it.
                 </p>
                 <p>
                     <strong>Not decrypting at all.</strong> The cheapest control is often to shrink the plaintext surface. <strong>Tokenization</strong> replaces sensitive values with meaningless substitutes resolved elsewhere. <strong>Data masking</strong> substitutes realistic but fake values. <strong>Data minimization</strong> means the processing step simply does not load fields it does not need. Further along the curve, <strong>homomorphic encryption</strong> allows computation on ciphertext without decryption, and <strong>secure multi-party computation</strong> lets parties compute jointly without revealing inputs—both promising, both currently limited to narrower workloads and higher cost than mainstream processing.
@@ -357,7 +354,7 @@
 
                 <h3 id="in-use-limits">What this does and does not solve</h3>
                 <p>
-                    Confidential computing substantially raises the bar against infrastructure-level attackers and privileged insiders. It does not protect against a vulnerability <em>inside</em> the attested enclave—if the code running there is flawed, the isolation is intact and the data still leaks. It also introduces operational complexity around attestation, key release policy, and performance, and its guarantees are only as strong as the vendor's hardware implementation.
+                    Hardware-based isolation substantially raises the bar against infrastructure-level attackers and privileged insiders. It does not protect against a vulnerability <em>inside</em> the isolated environment—if the code running there is flawed, the isolation is intact and the data still leaks. It also introduces operational complexity around attestation, key release policy, and performance, and its guarantees are only as strong as the underlying hardware implementation.
                 </p>
                 <p>
                     The honest framing: data in use is the hardest of the three states, and the controls here reduce risk rather than eliminate it.
@@ -370,7 +367,7 @@
                 </p>
                 <ul>
                     <li><strong>At rest</strong> — encrypted at which layer, with keys held where, and are the backups covered too?</li>
-                    <li><strong>In network transit</strong> — validated TLS with forward secrecy, and is internal traffic included?</li>
+                    <li><strong>In network transit</strong> — encrypted with forward secrecy, with peer identity actually verified, and does internal traffic get the same treatment as external?</li>
                     <li><strong>In memory transit</strong> — who can read this process's memory, and does plaintext reach disk through swap or dumps?</li>
                     <li><strong>In use</strong> — how much plaintext has to exist, for how long, and what isolates the environment that holds it?</li>
                 </ul>
@@ -378,25 +375,17 @@
                     "Encrypt everything" is not a strategy. Knowing <strong>which state you are protecting, from whom, and with what key</strong> is. The controls stack, the threat models differ, and the weakest state determines the actual exposure—which is usually the one nobody wrote a policy for.
                 </p>
 
+                <!-- BLOCK: Callout — forward reference to the companion article -->
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>Where the mechanisms live:</strong> this article stays at the level of classes of control on purpose. The specific technologies that implement them—the cryptographic primitives, the handshake that composes them, the isolation hardware, the attestation protocols, and the runtime enforcement engines—are covered in the companion reference, <em>Mechanisms of Trust: How the Controls Actually Work</em>.</p>
+                </div>
+
                 <!-- BLOCK: Acronyms (glossary) -->
                 <h2 id="acronyms">Acronyms</h2>
                 <ul class="glossary-list">
                     <li><strong>API</strong> — Application Programming Interface</li>
                     <li><strong>CPU</strong> — Central Processing Unit</li>
-                    <li><strong>FDE</strong> — Full-Disk Encryption</li>
-                    <li><strong>HSM</strong> — Hardware Security Module</li>
-                    <li><strong>IPsec</strong> — Internet Protocol Security</li>
-                    <li><strong>KMS</strong> — Key Management Service</li>
-                    <li><strong>MITM</strong> — Man-in-the-Middle</li>
-                    <li><strong>mTLS</strong> — Mutual Transport Layer Security</li>
                     <li><strong>NIST</strong> — National Institute of Standards and Technology</li>
-                    <li><strong>RAM</strong> — Random Access Memory</li>
-                    <li><strong>SGX</strong> — Software Guard Extensions (Intel)</li>
-                    <li><strong>SEV-SNP</strong> — Secure Encrypted Virtualization – Secure Nested Paging (AMD)</li>
-                    <li><strong>TDE</strong> — Transparent Data Encryption</li>
-                    <li><strong>TEE</strong> — Trusted Execution Environment</li>
-                    <li><strong>TLS</strong> — Transport Layer Security</li>
-                    <li><strong>VPN</strong> — Virtual Private Network</li>
                 </ul>
 
             </div>
