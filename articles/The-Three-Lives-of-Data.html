@@ -238,6 +238,9 @@
                     <strong>Storage-engine-level encryption</strong> encrypts the database files and logs beneath the query engine. It protects against theft of the database files themselves. It typically does <strong>not</strong> protect against a compromised database account, because the database decrypts on behalf of whoever queries it.
                 </p>
                 <p>
+                    Between those two sits a narrower pattern worth naming, because it is often the practical answer. <strong>Column-level encryption</strong>, and its cloud-database equivalent in the <em>Always Encrypted</em> family, encrypts specific fields with keys that the database engine cannot unwrap. The engine stores and returns ciphertext for those columns while operating normally on the rest of the row. This decouples key release from database administrator permissions without requiring the application to reimplement storage—which is why it is frequently the realistic middle path between one extreme where the administrator can read everything and another where the data layer is rewritten.
+                </p>
+                <p>
                     <strong>Application-level encryption</strong> happens before data is handed to storage at all. The application encrypts fields or records, and the storage layer only ever sees ciphertext. This is the strongest of the three because the trust boundary shrinks: a compromised database administrator cannot read what the application never stored in readable form. The cost is real—you lose the ability to search, sort, or index on encrypted fields without additional design work.
                 </p>
                 <p>
@@ -250,6 +253,9 @@
                 </p>
                 <p>
                     This is why at-rest protection is inseparable from <strong>key management</strong>: hardware-backed key custody, envelope encryption where a data key is itself encrypted by a longer-lived key-encryption key, and rotation policies that limit how long any single key is exposed. NIST SP 800-57 is the reference standard here, and the principle it enforces is simple—<strong>the key must live somewhere the ciphertext does not</strong>.
+                </p>
+                <p>
+                    In cloud environments the principle extends one step further. Key access is itself bound to an <strong>identity context</strong>, so holding a storage key is not sufficient without permission to use the key service. An attacker who obtains the encrypted volume and the key material, but not the identity that is authorized to invoke decryption, still cannot read the data. This is a useful property precisely because it means the compromise of one layer does not automatically grant the next—which is the effect the layers are stacked to produce.
                 </p>
 
                 <h3 id="at-rest-failures">Where at-rest protection fails in practice</h3>
@@ -281,7 +287,7 @@
                 <ul>
                     <li><strong>Passive interception</strong> — reading traffic off the wire or out of the air.</li>
                     <li><strong>Active interception</strong> — man-in-the-middle, where an attacker positions themselves between endpoints and impersonates one side. This is what peer verification and mutual authentication defend against.</li>
-                    <li><strong>Harvest now, decrypt later</strong> — an adversary captures encrypted traffic today and stores it, intending to decrypt it once a cryptographically relevant quantum computer, or simply a leaked key, becomes available. Forward secrecy limits the damage; post-quantum key exchange is the longer-term answer, and migration planning for it is already underway in serious organizations.</li>
+                    <li><strong>Harvest now, decrypt later</strong> — an adversary captures encrypted traffic today and stores it, intending to decrypt it later. There are two distinct versions of this threat, and they have different answers. In the <em>classical</em> version, the adversary waits for a long-term key to leak; forward secrecy limits the damage, because the ephemeral keys needed to decrypt each captured session no longer exist anywhere. In the <em>quantum</em> version, the adversary waits for a cryptographically relevant quantum computer, which breaks the ephemeral key exchange itself—so forward secrecy does not help, and post-quantum key exchange is the only defense. Migration planning for the latter is already underway in serious organizations.</li>
                 </ul>
 
                 <h3 id="memory-transit">2b. Memory Transit: the overlooked middle</h3>
