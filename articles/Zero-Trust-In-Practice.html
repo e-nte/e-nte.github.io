@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Trust in Practice | Articles</title>
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Article-scoped styles: table of contents and glossary layout -->
+    <style>
+        .article-toc {
+            border: 1px solid var(--navbar-border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 0 0 32px;
+            background: rgba(127, 127, 127, 0.04);
+        }
+        .article-toc__title {
+            margin: 0 0 12px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.82rem;
+        }
+        .article-toc ul {
+            margin: 0;
+            padding-left: 20px;
+            line-height: 1.85;
+            font-size: 0.95rem;
+        }
+        .article-toc ul ul {
+            margin: 2px 0 6px;
+            padding-left: 20px;
+            line-height: 1.65;
+            font-size: 0.88rem;
+            opacity: 0.88;
+        }
+        .article-toc a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-gold);
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+        .article-toc a:hover {
+            color: var(--accent-gold);
+        }
+        .article-body h2[id],
+        .article-body h3[id] {
+            scroll-margin-top: 128px;
+        }
+        .glossary-list {
+            column-count: 2;
+            column-gap: 36px;
+            padding-left: 20px;
+            line-height: 1.9;
+        }
+        @media (max-width: 640px) {
+            .glossary-list { column-count: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Shared Navigation Header -->
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+
+        <!-- Back Navigation -->
+        <div class="back-navigation">
+            <a href="../articles.html" class="btn-back">&larr; Back to Articles</a>
+        </div>
+
+        <article class="article-wrapper">
+
+            <!-- ============================================================
+                 ARTICLE HEADER BANNER
+                 ============================================================ -->
+            <header class="article-meta-banner">
+                <div class="meta-tags-row">
+                    <span class="badge-tag">#zero-trust</span>
+                    <span class="badge-tag">#identity</span>
+                    <span class="badge-tag">#segmentation</span>
+                    <span class="badge-tag">#cloud-architecture</span>
+                    <span class="badge-tag">#adoption</span>
+                </div>
+
+                <h1 class="article-title">Zero Trust in Practice: Identity, Segmentation, and the Road to Adoption</h1>
+
+                <p class="article-description">
+                    The model is easy to state and hard to sequence. A practical account of where access decisions actually get made, what segments should follow, and the order of adoption that avoids rebuilding twice.
+                </p>
+
+                <div class="article-author-bar">
+                    <span>👤 Evangelos Ntermaris: Senior Software Architect</span>
+                    <span class="meta-divider">•</span>
+                    <span>📅 2026-11-01</span>
+                    <span class="meta-divider">•</span>
+                    <span>⏱️ 11 min read</span>
+                </div>
+
+                <div class="audience-row">
+                    <strong>Target Audience:</strong>
+                    <span class="pill">Architects</span>
+                    <span class="pill">Cloud Engineers</span>
+                    <span class="pill">Security Practitioners</span>
+                </div>
+            </header>
+
+            <hr class="meta-separator" />
+
+            <!-- ============================================================
+                 ARTICLE BODY
+                 ============================================================ -->
+            <div class="article-body">
+
+                <!-- BLOCK: Table of Contents with anchor links -->
+                <nav class="article-toc" aria-label="Table of contents">
+                    <p class="article-toc__title">Table of Contents</p>
+                    <ul>
+                        <li><a href="#introduction">Introduction: The Model Is Not the Migration</a></li>
+                        <li>
+                            <a href="#identity">1. Identity: The New Perimeter</a>
+                            <ul>
+                                <li><a href="#three-identities">Three kinds of identity</a></li>
+                                <li><a href="#workload-identity">What workload identity changes</a></li>
+                                <li><a href="#identity-lifecycle">The lifecycle problem</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#enforcement">2. Enforcement Points: Where Decisions Become Real</a>
+                            <ul>
+                                <li><a href="#four-places">The four places decisions happen</a></li>
+                                <li><a href="#east-west">North-south versus east-west</a></li>
+                                <li><a href="#bypass-test">The bypass test</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#segmentation">3. Segmentation and Visibility: Bounding the Blast Radius</a>
+                            <ul>
+                                <li><a href="#segmentation-types">Network versus application segmentation</a></li>
+                                <li><a href="#telemetry">Telemetry as the feedback loop</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#roadmap">4. The Adoption Roadmap</a>
+                            <ul>
+                                <li><a href="#phases">The sequence, and why it has to be that sequence</a></li>
+                                <li><a href="#defer">What to defer deliberately</a></li>
+                                <li><a href="#buy-build">Buy, build, and spotting the slices</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#summary">Summary: Sequence Beats Ambition</a></li>
+                        <li><a href="#acronyms">Acronyms</a></li>
+                    </ul>
+                </nav>
+
+                <!-- BLOCK: Introduction -->
+                <h2 id="introduction">Introduction: The Model Is Not the Migration</h2>
+                <p>
+                    The previous article in this series defined zero trust as an architectural model: implicit trust based on network location is removed, and every request is evaluated on evidence. That definition is stable, well-documented, and about four sentences long.
+                </p>
+                <p>
+                    It is also nearly useless as an instruction. "Evaluate every request on evidence" does not tell an architect where to put the enforcement, which identity signal to trust first, how to decompose a monolith into segments, or what to do on Monday morning with a legacy system that authenticates by database connection string.
+                </p>
+                <p>
+                    This article is about the gap between the model and the migration. It assumes the model is settled and asks the practical questions: <strong>who or what is making the request, where does the decision get made, what limits the damage when it is made wrongly, and in what order do you build this without having to rebuild it twice?</strong>
+                </p>
+
+                <!-- BLOCK: Callout — framing -->
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The one-line version:</strong> Authentication is a solved problem. Authorization, enforcement, and sequencing are not—and those are where zero trust programs actually fail.</p>
+                </div>
+
+                <p>
+                    Two scoping notes. First, this article stays at the level of <strong>patterns and enforcement points</strong>; the underlying mechanisms—cryptographic primitives, the handshake that composes them, attestation, and runtime enforcement—are collected in the companion reference, <em>Mechanisms of Trust: How the Controls Actually Work</em>. Second, the data dimension—what protects a record at rest, in transit, and in use—is covered in <em>The Three Lives of Data</em>. What follows assumes both as background and concentrates on the control plane.
+                </p>
+
+                <!-- BLOCK: Section 1 -->
+                <h2 id="identity">1. Identity: The New Perimeter</h2>
+                <p>
+                    In the perimeter model, identity was a secondary signal. The network had already vouched for you by the time your credentials arrived; authentication confirmed that the person on the trusted network was the person you expected. Remove the network's endorsement and identity becomes the only signal that persists across every context—office, home, cloud region, and machine-to-machine call.
+                </p>
+                <p>
+                    That promotion has a consequence most organizations underestimate. Identity is no longer a directory of people. It is an <strong>inventory of every principal capable of making a request</strong>, and the inventory is much larger than the HR system suggests.
+                </p>
+
+                <h3 id="three-identities">Three kinds of identity</h3>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Principal</th>
+                                <th style="padding: 12px;">What the identity represents</th>
+                                <th style="padding: 12px;">Primary evidence</th>
+                                <th style="padding: 12px;">Hardest part</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Human</td>
+                                <td style="padding: 12px;">A person acting in a role</td>
+                                <td style="padding: 12px;">Federated authentication with strong factors; role and group membership</td>
+                                <td style="padding: 12px;">Joiner/mover/leaver drift and accumulated entitlements</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Device</td>
+                                <td style="padding: 12px;">A managed endpoint or edge node</td>
+                                <td style="padding: 12px;">Enrollment state, compliance posture, platform integrity</td>
+                                <td style="padding: 12px;">Assessing devices the organization does not fully control</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Workload</td>
+                                <td style="padding: 12px;">A service, job, or pipeline acting on its own behalf</td>
+                                <td style="padding: 12px;">Platform-issued short-lived credentials, mutually authenticated connections</td>
+                                <td style="padding: 12px;">Eliminating long-lived static secrets from configuration</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    The first two rows are familiar territory for most security programs. The third is where cloud-native and traditional architectures diverge most sharply, and where most of the residual risk now lives.
+                </p>
+
+                <h3 id="workload-identity">What workload identity changes</h3>
+                <p>
+                    A microservice calling another microservice has no password, no badge, and no plausible way to answer a challenge designed for a human. Historically, the workaround was to give it a credential—a static API key, a database password in an environment variable, a service account with a long-lived token. That workaround reproduces the perimeter problem in a new form: <strong>a secret that authenticates the caller is a secret that can be stolen, copied, and reused from anywhere</strong>. The network may be segmented; the credential is not.
+                </p>
+                <p>
+                    Workload identity replaces the static secret with a credential the platform issues, scoped to the workload, bound to its runtime context, and expiring in minutes or hours. The workload proves what it is rather than what it knows. Three consequences follow, and all three are architectural rather than cosmetic:
+                </p>
+                <ul>
+                    <li><strong>Bypass becomes visible.</strong> A stolen credential from a workload identity is useless outside the workload's context and expires quickly, so copying it out is no longer a durable attack.</li>
+                    <li><strong>Revocation becomes possible.</strong> You cannot rotate a credential embedded in forty deployment manifests. You can stop issuing credentials to a workload that should not be running.</li>
+                    <li><strong>The audit trail improves.</strong> Requests are attributable to a named workload rather than to a shared service account that half the platform uses.</li>
+                </ul>
+                <p>
+                    The migration cost is real: every static secret in configuration is a place where a workload was not really identified, and each one has to be found and replaced. That inventory work is the same work as Phase 0 of the roadmap below, which is why the two are usually done together.
+                </p>
+
+                <h3 id="identity-lifecycle">The lifecycle problem</h3>
+                <p>
+                    Here is the uncomfortable observation that follows from treating identity as the perimeter: <strong>perimeters can be enumerated, but identities accumulate.</strong>
+                </p>
+                <p>
+                    A perimeter is a fixed set of network ranges. You can list them, and the list does not grow on its own. An identity inventory grows every time a service is deployed, a pipeline is created, a contractor is onboarded, or a temporary integration is stood up and forgotten. Orphaned service accounts, credentials attached to workloads that no longer run, and roles granted for a migration that finished two years ago are not exceptions—they are the normal steady state of an unmanaged identity estate.
+                </p>
+                <p>
+                    The practical consequence: <strong>the hardest part of identity-centric security is not authentication, it is deprovisioning.</strong> Anything that makes creation easy and removal hard will, over enough time, produce an estate where the majority of principals are not actively needed. Whatever tooling you choose, the test is whether it can answer "who can reach this resource, and why?" without a manual audit. If it cannot, the perimeter has not moved—it has merely become invisible.
+                </p>
+
+                <!-- BLOCK: Section 2 -->
+                <h2 id="enforcement">2. Enforcement Points: Where Decisions Become Real</h2>
+                <p>
+                    A decision that is not enforced is a recommendation. This is the section where zero trust programs most often diverge from their own documentation: the policy is written, the identity provider is configured, and the requests still arrive through a path that never asks.
+                </p>
+
+                <h3 id="four-places">The four places decisions happen</h3>
+                <p>
+                    In a typical web and cloud system, access decisions concentrate at a small number of enforcement points. Each sees different traffic and offers different granularity.
+                </p>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Enforcement point</th>
+                                <th style="padding: 12px;">Traffic it sees</th>
+                                <th style="padding: 12px;">Granularity</th>
+                                <th style="padding: 12px;">Typical failure</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Access broker / identity provider</td>
+                                <td style="padding: 12px;">Session establishment for humans and devices</td>
+                                <td style="padding: 12px;">Session-level, per application</td>
+                                <td style="padding: 12px;">Strong login, then a broad and long-lived session</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">API gateway</td>
+                                <td style="padding: 12px;">Ingress and egress at the application edge</td>
+                                <td style="padding: 12px;">Per request, per route, per scope</td>
+                                <td style="padding: 12px;">Route-level policy with no per-object authorization behind it</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Service mesh proxy</td>
+                                <td style="padding: 12px;">Workload-to-workload traffic inside the cluster</td>
+                                <td style="padding: 12px;">Per connection and per call, workload-scoped</td>
+                                <td style="padding: 12px;">Mutual authentication without authorization policy</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Data-layer proxy or policy engine</td>
+                                <td style="padding: 12px;">Queries and record access at the datastore</td>
+                                <td style="padding: 12px;">Row, column, or object level</td>
+                                <td style="padding: 12px;">Shared credentials that collapse all callers into one principal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    The layering is deliberate. A single enforcement point cannot see everything: the access broker knows nothing about object-level authorization, and the data layer knows nothing about session context. Mature deployments distribute the decision across several points, each enforcing the part of the policy it is positioned to observe—and, crucially, each recording the decision so the whole path can be reconstructed afterwards.
+                </p>
+
+                <h3 id="east-west">North-south versus east-west</h3>
+                <p>
+                    The perimeter model was almost entirely a north-south concern: traffic crossing the boundary, in and out. That was a reasonable allocation when the majority of meaningful traffic did exactly that—users reaching applications, applications reaching the internet.
+                </p>
+                <p>
+                    In service-oriented and cloud-native systems the ratio inverts. Most requests are <strong>east-west</strong>: one service calling another, a job reading from a queue, a function writing to a datastore. Those requests never touch the boundary, and in a perimeter-era design they were implicitly trusted because they were "internal."
+                </p>
+                <p>
+                    This is the single most consequential structural change for anyone migrating from a network-centric design. Guarding the front door while leaving service-to-service traffic unauthenticated is not zero trust with an incomplete rollout—it is the perimeter model with new branding and a smaller perimeter. The internal network has become the soft center.
+                </p>
+
+                <h3 id="bypass-test">The bypass test</h3>
+                <p>
+                    There is one test that predicts the outcome of a zero trust deployment better than any maturity assessment, and it takes an afternoon.
+                </p>
+                <p>
+                    <strong>Take a resource you believe is protected. Enumerate every way a request can reach it. Count how many of those paths traverse the enforcement point.</strong> If the answer is "all of them," the architecture holds. If there is a path that does not, the policy on the other paths is a formality—an attacker will use the one you did not count.
+                </p>
+                <p>
+                    The bypasses are rarely exotic. They are usually one of these:
+                </p>
+                <ul>
+                    <li><strong>Direct network reachability</strong> — a service address that responds without passing the gateway, often left open for debugging or a legacy integration.</li>
+                    <li><strong>Shared data credentials</strong> — several services connecting to the same datastore with the same principal, so the data layer cannot distinguish them and authorization collapses to a single check.</li>
+                    <li><strong>Administrative interfaces</strong> — consoles and management endpoints that sit outside the policy path because they were built before the policy existed.</li>
+                    <li><strong>Deployment pipelines</strong> — the CI/CD system holding broad credentials, which means compromise of the pipeline is equivalent to compromise of everything it deploys.</li>
+                    <li><strong>Backup and batch jobs</strong> — scheduled processes with elevated access and no interactive identity, frequently the least monitored principals in the estate.</li>
+                </ul>
+
+                <!-- BLOCK: Callout — the bypass test -->
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The only test that matters:</strong> if a request can reach the resource without traversing the enforcement point, everything else about the deployment is decorative.</p>
+                </div>
+
+                <!-- BLOCK: Section 3 -->
+                <h2 id="segmentation">3. Segmentation and Visibility: Bounding the Blast Radius</h2>
+                <p>
+                    Enforcement controls who gets in. Segmentation controls what happens after someone is in—and since the model's premise is that an adversary may already be present, segmentation is not a supplementary control. It is the control that determines whether a single compromise stays a single compromise.
+                </p>
+
+                <h3 id="segmentation-types">Network versus application segmentation</h3>
+                <p>
+                    <strong>Network segmentation</strong> divides the environment into subnets, zones, or security groups and controls traffic between them at the network layer. It is well understood, widely available, and genuinely effective against naive lateral movement.
+                </p>
+                <p>
+                    It is also a poor fit for the way cloud systems actually behave. Addresses are ephemeral, workloads scale and move, and a cluster may host dozens of services in a shared address space. Segmentation that depends on stable addresses either freezes the architecture or rots within a quarter.
+                </p>
+                <p>
+                    <strong>Application-layer segmentation</strong> moves the boundary up. Instead of asking which subnet a request came from, the system asks which workload made the call and whether that workload is authorized for this specific dependency. Because it is bound to identity rather than address, it survives rescheduling, scaling, and multi-region deployment.
+                </p>
+                <p>
+                    In practice, mature designs use both: network segmentation as a coarse structural boundary, application-layer segmentation as the fine-grained policy that expresses what the system is actually allowed to do. Three properties distinguish segmentation that works from segmentation that merely exists:
+                </p>
+                <ul>
+                    <li><strong>It follows function and data sensitivity,</strong> not organizational convenience. A segment is meaningful if it groups workloads that should fail together and succeed together.</li>
+                    <li><strong>The default is deny between segments.</strong> An allow-list that is never reviewed is a network diagram. A deny-by-default policy that requires justification to extend is a control.</li>
+                    <li><strong>It is testable.</strong> The question "if this service is compromised, what can it reach?" must have a short, current, enumerable answer. If answering it requires a meeting, segmentation is not implemented.</li>
+                </ul>
+
+                <h3 id="telemetry">Telemetry as the feedback loop</h3>
+                <p>
+                    Continuous verification is impossible without continuous observation. A decision made once and never re-examined is not continuous; a decision re-examined on stale or missing signals is worse than one made once, because it produces confident wrong answers.
+                </p>
+                <p>
+                    The telemetry that matters is not general observability—latency, error rates, saturation. It is <strong>decision telemetry</strong>: what was requested, by whom, on what evidence, with what outcome. Four categories cover most of the value:
+                </p>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Signal</th>
+                                <th style="padding: 12px;">What it tells you</th>
+                                <th style="padding: 12px;">Why it is usually neglected</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Authentication events</td>
+                                <td style="padding: 12px;">Who obtained a session, from where, with what factors</td>
+                                <td style="padding: 12px;">Well covered—usually the only signal anyone collects</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Authorization denials</td>
+                                <td style="padding: 12px;">Who tried to reach what and was refused</td>
+                                <td style="padding: 12px;">Noisy and ignored, yet the single most valuable signal for both attackers and misconfiguration</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Grant lifetimes and scope</td>
+                                <td style="padding: 12px;">How long access lasted and how wide it was</td>
+                                <td style="padding: 12px;">Rarely instrumented; drift toward broad and permanent goes unnoticed</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Data access patterns</td>
+                                <td style="padding: 12px;">Which records a principal actually reads, and how many</td>
+                                <td style="padding: 12px;">Expensive to collect, and therefore deferred indefinitely</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    The feedback loop closes when these signals change the policy rather than merely filling a dashboard. An anomaly that generates an alert nobody acts on is observability. An anomaly that triggers a re-evaluation, narrows a grant, or retires an unused permission is the control plane working.
+                </p>
+
+                <!-- BLOCK: Section 4 -->
+                <h2 id="roadmap">4. The Adoption Roadmap</h2>
+
+                <h3 id="phases">The sequence, and why it has to be that sequence</h3>
+                <p>
+                    Zero trust programs fail less often from insufficient ambition than from wrong ordering. Each phase produces the evidence the next phase depends on; skipping ahead means building a control on assumptions that will later be invalidated, which is why so many programs report a second migration.
+                </p>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Phase</th>
+                                <th style="padding: 12px;">Goal</th>
+                                <th style="padding: 12px;">Exit criterion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">0. Inventory</td>
+                                <td style="padding: 12px;">Name every principal, service, data flow, and enforcement point</td>
+                                <td style="padding: 12px;">You can list the paths to a critical resource without interviewing anyone</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">1. Strong authentication</td>
+                                <td style="padding: 12px;">Eliminate standing credentials for humans and workloads alike</td>
+                                <td style="padding: 12px;">No static secret in configuration; all workload credentials are short-lived and platform-issued</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">2. Centralized decisions</td>
+                                <td style="padding: 12px;">Consolidate policy into a decision point that can be inspected</td>
+                                <td style="padding: 12px;">You can answer "why was this allowed?" from one place rather than from configuration archaeology</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">3. Least privilege</td>
+                                <td style="padding: 12px;">Narrow scopes, then shorten lifetimes</td>
+                                <td style="padding: 12px;">Most grants are scoped to a task rather than to a role or a person</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">4. Segmentation</td>
+                                <td style="padding: 12px;">Bound the blast radius; deny between segments by default</td>
+                                <td style="padding: 12px;">"If this service is compromised, what can it reach?" has a short, current answer</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">5. Continuous evaluation</td>
+                                <td style="padding: 12px;">Re-evaluate on changing conditions; automate policy changes</td>
+                                <td style="padding: 12px;">Telemetry triggers re-evaluation, and policy lives in version control</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    The dependency that trips most organizations is between phases 1 and 4. Segmentation sounds like the headline feature—it is the most visible, the most demonstrable, and the easiest to buy. But segmentation without workload identity is address-based segmentation, which cannot survive a scaling event. And segmentation without inventory segments the wrong things. <strong>Segment last among the foundational work, not first.</strong>
+                </p>
+                <p>
+                    A second dependency is easy to miss: phase 2 is what makes phase 5 possible. Continuous evaluation requires a decision point that can be re-queried. If decisions are distributed across implicit configuration—a setting here, a database grant there, a gateway route somewhere else—there is nothing to re-evaluate. Centralizing the decision is the prerequisite for making it continuous.
+                </p>
+
+                <h3 id="defer">What to defer deliberately</h3>
+                <p>
+                    Deferral is a design decision, not a failure of nerve. Four things are worth postponing on purpose:
+                </p>
+                <ul>
+                    <li><strong>Buying a platform before inventory.</strong> A platform configured against a wrong or incomplete inventory encodes the error permanently, and re-platforming is more expensive than waiting.</li>
+                    <li><strong>Automating policy changes before policy is centralized.</strong> Automation multiplies whatever is already there, including the inconsistency.</li>
+                    <li><strong>Pursuing full continuous evaluation before grants are short-lived.</strong> Continuous evaluation of a permanent grant produces a permanent alert stream and very little else.</li>
+                    <li><strong>Chasing a complete coverage metric.</strong> A complete, correct, enforced boundary around the most valuable resources is worth more than a partial deployment covering everything.</li>
+                </ul>
+
+                <h3 id="buy-build">Buy, build, and spotting the slices</h3>
+                <p>
+                    Zero trust is a property of a system, which means no single purchase delivers it. But the split between purchased and built is not arbitrary:
+                </p>
+                <ul>
+                    <li><strong>Generally buy:</strong> identity providers and access brokers, API gateways and mesh data planes, key and secret management, policy engines with mature expression languages. These are commodity problems with real operational complexity, and building them is rarely differentiating.</li>
+                    <li><strong>Generally build:</strong> the inventory, the segmentation model, the authorization logic specific to your domain, the decision telemetry pipeline, and the runbooks that decide what happens when a signal fires. These encode what your system actually does, and no vendor can supply them.</li>
+                </ul>
+                <p>
+                    The distinction matters because the market is full of products that address exactly one row of the enforcement table and market themselves as the model. The signals are consistent, and they are the same ones from the previous article: a single-pillar claim, network location still functioning as a trust signal, no identifiable decision point, decisions made only at login, bypassable enforcement, and binary trusted/untrusted thinking. A product that satisfies two or three of those criteria may be an excellent component. It is not a zero trust architecture, and buying it will not produce one.
+                </p>
+
+                <!-- BLOCK: Summary -->
+                <h2 id="summary">Summary: Sequence Beats Ambition</h2>
+                <p>
+                    The model says: remove implicit trust, decide on evidence, continuously. The practice says something less elegant and considerably more useful: <strong>make the decision observable, make the enforcement unavoidable, and build the sequence in the order the dependencies demand.</strong>
+                </p>
+                <p>
+                    Four questions worth applying to whatever you have built or are about to:
+                </p>
+                <ul>
+                    <li><strong>Who is the principal?</strong> If the answer for internal traffic is still "whoever is on the network," the perimeter has not moved—it has merely been relabelled.</li>
+                    <li><strong>Where is the decision made?</strong> If it cannot be pointed to, it is distributed across implicit configuration, and it cannot be made continuous.</li>
+                    <li><strong>Can any request reach the resource without the enforcement point?</strong> If yes, everything else is documentation.</li>
+                    <li><strong>If this workload is compromised right now, what can it reach?</strong> If the answer takes more than a minute to produce, segmentation is aspirational.</li>
+                </ul>
+                <p>
+                    The model is a destination that keeps moving, because environments keep changing. The sequence is what makes the journey survivable: inventory before segmentation, identity before scoping, centralized decisions before continuous evaluation. Get the order right and the architecture is incremental. Get it wrong and it is a rebuild.
+                </p>
+
+                <!-- BLOCK: Acronyms (glossary) -->
+                <h2 id="acronyms">Acronyms</h2>
+                <ul class="glossary-list">
+                    <li><strong>API</strong> — Application Programming Interface</li>
+                    <li><strong>CI/CD</strong> — Continuous Integration / Continuous Delivery</li>
+                    <li><strong>IdP</strong> — Identity Provider</li>
+                    <li><strong>mTLS</strong> — Mutual Transport Layer Security</li>
+                    <li><strong>NIST</strong> — National Institute of Standards and Technology</li>
+                    <li><strong>PDP</strong> — Policy Decision Point</li>
+                    <li><strong>PEP</strong> — Policy Enforcement Point</li>
+                    <li><strong>RBAC</strong> — Role-Based Access Control</li>
+                    <li><strong>SaaS</strong> — Software as a Service</li>
+                    <li><strong>ZTNA</strong> — Zero Trust Network Access</li>
+                </ul>
+
+            </div>
+
+        </article>
+    </main>
+
+    <script src="../components/header.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>

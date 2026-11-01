@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mechanisms of Trust | Articles</title>
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Article-scoped styles: table of contents and glossary layout -->
+    <style>
+        .article-toc {
+            border: 1px solid var(--navbar-border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 0 0 32px;
+            background: rgba(127, 127, 127, 0.04);
+        }
+        .article-toc__title {
+            margin: 0 0 12px;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.82rem;
+        }
+        .article-toc ul {
+            margin: 0;
+            padding-left: 20px;
+            line-height: 1.85;
+            font-size: 0.95rem;
+        }
+        .article-toc ul ul {
+            margin: 2px 0 6px;
+            padding-left: 20px;
+            line-height: 1.65;
+            font-size: 0.88rem;
+            opacity: 0.88;
+        }
+        .article-toc a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-gold);
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+        .article-toc a:hover {
+            color: var(--accent-gold);
+        }
+        .article-body h2[id],
+        .article-body h3[id] {
+            scroll-margin-top: 128px;
+        }
+        .glossary-list {
+            column-count: 2;
+            column-gap: 36px;
+            padding-left: 20px;
+            line-height: 1.9;
+        }
+        @media (max-width: 640px) {
+            .glossary-list { column-count: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Shared Navigation Header -->
+    <header id="site-header" class="navbar"></header>
+
+    <main class="content-wrapper standalone-page">
+
+        <!-- Back Navigation -->
+        <div class="back-navigation">
+            <a href="../articles.html" class="btn-back">&larr; Back to Articles</a>
+        </div>
+
+        <article class="article-wrapper">
+
+            <!-- ============================================================
+                 ARTICLE HEADER BANNER
+                 ============================================================ -->
+            <header class="article-meta-banner">
+                <div class="meta-tags-row">
+                    <span class="badge-tag">#cryptography</span>
+                    <span class="badge-tag">#protocols</span>
+                    <span class="badge-tag">#confidential-computing</span>
+                    <span class="badge-tag">#zero-trust</span>
+                    <span class="badge-tag">#reference</span>
+                </div>
+
+                <h1 class="article-title">Mechanisms of Trust: How the Controls Actually Work</h1>
+
+                <p class="article-description">
+                    The reference layer beneath the series. Primitives, composition, transport, and runtime—what each mechanism proves, what it assumes, and how they chain together on a single request.
+                </p>
+
+                <div class="article-author-bar">
+                    <span>👤 Evangelos Ntermaris: Senior Software Architect</span>
+                    <span class="meta-divider">•</span>
+                    <span>📅 2026-11-01</span>
+                    <span class="meta-divider">•</span>
+                    <span>⏱️ 13 min read</span>
+                </div>
+
+                <div class="audience-row">
+                    <strong>Target Audience:</strong>
+                    <span class="pill">Engineers</span>
+                    <span class="pill">Security Specialists</span>
+                    <span class="pill">Architects</span>
+                </div>
+            </header>
+
+            <hr class="meta-separator" />
+
+            <!-- ============================================================
+                 ARTICLE BODY
+                 ============================================================ -->
+            <div class="article-body">
+
+                <!-- BLOCK: Table of Contents with anchor links -->
+                <nav class="article-toc" aria-label="Table of contents">
+                    <p class="article-toc__title">Table of Contents</p>
+                    <ul>
+                        <li>
+                            <a href="#introduction">Introduction: The Layer Beneath the Model</a>
+                            <ul>
+                                <li><a href="#organizing-question">The organizing question</a></li>
+                                <li><a href="#how-to-read">How to read this article</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#primitives">1. The Primitives</a>
+                            <ul>
+                                <li><a href="#symmetric">1a. Symmetric cryptography</a></li>
+                                <li><a href="#asymmetric">1b. Asymmetric cryptography</a></li>
+                                <li><a href="#signatures">1c. Digital signatures</a></li>
+                                <li><a href="#non-repudiation">The non-repudiation caveat</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#composition">2. Composition: One Request, Three Primitives</a>
+                            <ul>
+                                <li><a href="#handshake">The handshake</a></li>
+                                <li><a href="#signed-request">The signed request</a></li>
+                                <li><a href="#what-each-proves">What each layer proves</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#transport">3. Transport Mechanisms</a>
+                            <ul>
+                                <li><a href="#mtls">Mutual authentication</a></li>
+                                <li><a href="#e2ee-vs-p2p">End-to-end versus point-to-point</a></li>
+                                <li><a href="#termination">TLS termination and the invisible boundary</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#runtime">4. Runtime Mechanisms</a>
+                            <ul>
+                                <li><a href="#tees">Isolated execution and attestation</a></li>
+                                <li><a href="#memory-encryption">Memory encryption and cache isolation</a></li>
+                                <li><a href="#runtime-enforcement">Runtime policy enforcement</a></li>
+                                <li><a href="#workload-identity">Workload identity</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#selection">5. Selection: Which Mechanism for Which Question</a></li>
+                        <li><a href="#summary">Summary: What Each Mechanism Assumes</a></li>
+                        <li><a href="#acronyms">Acronyms</a></li>
+                    </ul>
+                </nav>
+
+                <!-- BLOCK: Introduction -->
+                <h2 id="introduction">Introduction: The Layer Beneath the Model</h2>
+                <p>
+                    The first two articles in this series stayed deliberately at the level of <em>classes of control</em>: encryption at rest, transport encryption, isolated execution, runtime enforcement. That abstraction is what made them readable, and it is what makes them incomplete.
+                </p>
+                <p>
+                    At some point an engineer has to answer a narrower question. Not "what kind of control reduces this exposure," but "which primitive, in which order, proving what, and assuming what." This article is that layer. It is a reference rather than a narrative: it can be read front to back, but it is designed to be looked up.
+                </p>
+
+                <h3 id="organizing-question">The organizing question</h3>
+                <p>
+                    Every mechanism in this article answers a specific question, and the most common failure in applied cryptography is answering the wrong one. Confidentiality is not integrity. Authentication is not authorization. A signature is not a permission. The table below is the spine of everything that follows.
+                </p>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Question</th>
+                                <th style="padding: 12px;">Mechanism</th>
+                                <th style="padding: 12px;">Section</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How do we protect bulk data efficiently?</td>
+                                <td style="padding: 12px; font-weight: bold;">Symmetric encryption</td>
+                                <td style="padding: 12px;">1a</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How do we establish identity without a pre-shared secret?</td>
+                                <td style="padding: 12px; font-weight: bold;">Asymmetric cryptography</td>
+                                <td style="padding: 12px;">1b</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How do we prove <em>what</em> was sent, and prevent later denial?</td>
+                                <td style="padding: 12px; font-weight: bold;">Digital signatures</td>
+                                <td style="padding: 12px;">1c</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How do both ends prove identity per connection?</td>
+                                <td style="padding: 12px; font-weight: bold;">Mutual authentication</td>
+                                <td style="padding: 12px;">3</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How do we remove the intermediary from the trust boundary?</td>
+                                <td style="padding: 12px; font-weight: bold;">End-to-end encryption</td>
+                                <td style="padding: 12px;">3</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How do we trust the runtime that holds plaintext?</td>
+                                <td style="padding: 12px; font-weight: bold;">Isolated execution with attestation</td>
+                                <td style="padding: 12px;">4</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How do we shrink the window in which plaintext is readable?</td>
+                                <td style="padding: 12px; font-weight: bold;">Memory encryption, cache isolation</td>
+                                <td style="padding: 12px;">4</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How do we act during execution, before a signature exists?</td>
+                                <td style="padding: 12px; font-weight: bold;">Runtime policy enforcement</td>
+                                <td style="padding: 12px;">4</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How does a workload prove what it is?</td>
+                                <td style="padding: 12px; font-weight: bold;">Workload identity</td>
+                                <td style="padding: 12px;">4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="how-to-read">How to read this article</h3>
+                <p>
+                    The four sections that follow are ordered by depth in the stack: primitives, then the composition of primitives into a protocol, then transport mechanisms, then runtime mechanisms. Each can be read independently. Cross-references point back to the conceptual articles—<em>The Three Lives of Data</em> for the state model, <em>The End of the Perimeter</em> for the model, <em>In Practice</em> for enforcement points and sequencing—so that this article can stay focused on mechanism.
+                </p>
+
+                <!-- BLOCK: Callout — framing -->
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The reframing worth carrying through:</strong> cryptography does not create trust. It converts a large, unverifiable trust assumption into a smaller, checkable one. Every mechanism below is a device for shrinking what you have to trust.</p>
+                </div>
+
+                <!-- BLOCK: Section 1 -->
+                <h2 id="primitives">1. The Primitives</h2>
+
+                <h3 id="symmetric">1a. Symmetric cryptography</h3>
+                <p>
+                    Symmetric encryption uses <strong>one key, shared by both parties</strong>, to both encrypt and decrypt. The modern standard is <strong>authenticated encryption with associated data</strong> (AEAD): a single construction that provides confidentiality <em>and</em> integrity, so that tampering with the ciphertext is detected rather than silently decrypted into garbage. The two workhorse algorithms are AES in Galois/Counter Mode and ChaCha20-Poly1305.
+                </p>
+                <p>
+                    Its defining virtue is <strong>speed</strong>. Symmetric ciphers are orders of magnitude faster than asymmetric ones and, on modern processors, run at rates where encryption is effectively free relative to the I/O around it. This is why symmetric encryption carries all of the actual data in every protocol discussed in this article.
+                </p>
+                <p>
+                    Its defining problem is <strong>key distribution</strong>. If two parties need to share a key, and there are <em>n</em> parties, the number of pairwise keys grows quadratically. The problem is not cryptographic—it is organizational, and it is the reason the next primitive exists.
+                </p>
+
+                <h3 id="asymmetric">1b. Asymmetric cryptography</h3>
+                <p>
+                    Asymmetric cryptography uses a <strong>key pair</strong>: a public key that can be distributed freely, and a private key that never leaves its holder. Two distinct operations use the pair, and conflating them is a frequent source of design error:
+                </p>
+                <ul>
+                    <li><strong>Key agreement</strong> — both parties combine their own private key with the other's public key to derive a shared secret. Ephemeral elliptic-curve Diffie-Hellman (ECDHE) is the modern form. The private keys are discarded after the exchange, which is what produces <strong>forward secrecy</strong>: a later compromise of the long-term key cannot decrypt sessions captured earlier.</li>
+                    <li><strong>Signing</strong> — the holder of the private key produces a value that anyone with the public key can verify. This is covered in the next subsection.</li>
+                </ul>
+                <p>
+                    The algorithms differ in character. RSA is older, simple to reason about, and expensive—large keys, slow operations. Elliptic-curve cryptography is the modern default: X25519 for key agreement, Ed25519 or ECDSA for signatures, both with small keys and fast operations.
+                </p>
+                <p>
+                    Asymmetric cryptography solves the key-distribution problem by making one half of the key public. Its cost is performance, which is why it is used to <strong>bootstrap</strong> a symmetric session rather than to carry data. Every practical protocol in this article follows that pattern.
+                </p>
+
+                <h3 id="signatures">1c. Digital signatures</h3>
+                <p>
+                    A digital signature is produced by hashing a message and then applying the signer's private key to the hash. Anyone holding the corresponding public key can verify it. Three properties follow, and they are frequently confused with one another:
+                </p>
+                <ul>
+                    <li><strong>Authenticity</strong> — only the holder of the private key could have produced the signature.</li>
+                    <li><strong>Integrity</strong> — any modification to the message invalidates the signature, so the verifier learns that the payload is exactly what was signed.</li>
+                    <li><strong>Non-repudiation</strong> — the signer cannot later claim they did not sign it, because producing the signature required their private key.</li>
+                </ul>
+                <p>
+                    The distinction that matters most in practice is between <strong>authentication and signing</strong>. Authentication answers <em>who are you, right now, at connection time</em>. A signature answers <em>what did you send, and can you deny it later</em>. The first is a property of a session; the second is a property of a payload that survives the session. This is why a signed request body is valuable even inside an already-encrypted channel—the channel may terminate at a gateway, but the signature travels with the payload.
+                </p>
+                <p>
+                    Signatures appear in more places than most engineers realize: the <code>CertificateVerify</code> message in a TLS handshake, signed request bodies between services, signed policy bundles in physical access control, signed container images and build artifacts, signed tokens issued by an identity provider, and signed firmware in hardware roots of trust.
+                </p>
+
+                <h3 id="non-repudiation">The non-repudiation caveat</h3>
+                <p>
+                    Non-repudiation is the property most often overstated, and the overstatement is dangerous because it is legal as well as technical.
+                </p>
+                <p>
+                    A signature proves that <strong>the private key signed</strong>. It does not, by itself, prove that the named human did. If the private key was copied, extracted from memory, committed to a repository, or used by malware running as the legitimate process, then anyone holding that copy could have produced the signature—and the cryptography cannot tell the difference. The signature is mathematically valid and evidentially weak at the same time.
+                </p>
+                <p>
+                    This is why key custody is not an operational detail but a load-bearing assumption. Hardware-backed key storage, short-lived credentials, and audited issuance are what make the non-repudiation claim survive contact with an adversary. Without them, "the signature proves it was them" is a statement about mathematics being used to support a conclusion about people, and the gap between the two is exactly where incidents happen.
+                </p>
+
+                <!-- BLOCK: Section 2 -->
+                <h2 id="composition">2. Composition: One Request, Three Primitives</h2>
+                <p>
+                    The primitives above are never used in isolation. The clearest way to see how they compose is to follow a single service-to-service request from connection to authorization, noting which primitive does which job at each step.
+                </p>
+
+                <h3 id="handshake">The handshake</h3>
+                <p>
+                    A modern TLS 1.3 handshake completes in one round trip and uses all three primitives in a fixed order.
+                </p>
+                <ol>
+                    <li><strong>ClientHello</strong> — the client sends a random value, a list of supported cipher suites, and an ephemeral public key share.</li>
+                    <li><strong>ServerHello</strong> — the server selects a cipher suite, sends its own random value and its own ephemeral key share.</li>
+                    <li><strong>Shared secret</strong> — both sides derive the same secret from the two ephemeral keys (ECDHE), then expand it into symmetric session keys through a key-derivation function. The ephemeral private keys are now discarded. <strong>Forward secrecy comes from this step.</strong></li>
+                    <li><strong>Server authentication</strong> — the server sends its certificate chain, plus a <code>CertificateVerify</code> message: a signature over the entire handshake transcript, produced with the server's long-term private key. The client verifies the chain to a trusted root and verifies the signature.</li>
+                    <li><strong>Client Finished</strong> — the client sends a message authentication code over the transcript, proving it derived the same session keys.</li>
+                    <li><strong>Records</strong> — all subsequent traffic is encrypted and authenticated with the symmetric AEAD cipher, using the session keys from step 3.</li>
+                </ol>
+                <p>
+                    The pattern is worth naming explicitly: <strong>asymmetric cryptography is used only to agree on a key and to authenticate the parties; symmetric cryptography carries every byte of actual data.</strong> This is not an implementation quirk—it is the only arrangement that is both secure and fast enough to be universal.
+                </p>
+                <p>
+                    One detail that changes behavior across versions: TLS 1.3 makes forward secrecy mandatory by removing static RSA key exchange entirely. In TLS 1.2 it was optional, and a great deal of deployed infrastructure still negotiated non-forward-secret ciphers for years after 1.3 existed. When someone says "we use TLS," the useful follow-up is which version, and whether ephemeral key exchange was actually negotiated.
+                </p>
+
+                <h3 id="signed-request">The signed request</h3>
+                <p>
+                    The handshake authenticates the <em>connection</em>. It says nothing about the <em>payload</em>, and nothing at all once the connection terminates. A gateway or proxy is a legitimate endpoint of the transport layer; it decrypts, inspects, and often forwards the payload over a new connection. Anything that happened at the TLS layer stops at that boundary.
+                </p>
+                <p>
+                    A signed request closes that gap. The client canonicalizes the request body, signs it with its private key, and transmits the signature alongside the request—inside the encrypted channel, but as a separate artifact. A verifier further down the path, or the ultimate service, can check the signature against the client's public key without needing to have observed the original connection.
+                </p>
+                <p>
+                    Two requirements make this work in practice. First, the <strong>canonicalization must be unambiguous</strong>—both sides must serialize the body identically, byte for byte, or verification fails on semantically identical content. Second, the <strong>signature must cover the fields that matter</strong>: method, path, body, and a timestamp or nonce. A signature over the body alone leaves the path and method open to substitution, and a signature with no freshness marker can be replayed indefinitely.
+                </p>
+
+                <h3 id="what-each-proves">What each layer proves</h3>
+                <p>
+                    The composition only makes sense if you can state precisely what each layer contributes. This table is the one worth keeping next to an architecture review.
+                </p>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Layer</th>
+                                <th style="padding: 12px;">Proves</th>
+                                <th style="padding: 12px;">Does not prove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Session key</td>
+                                <td style="padding: 12px;">Confidentiality and integrity on the wire</td>
+                                <td style="padding: 12px;">Anything about intent or authorization</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Certificate + CertificateVerify</td>
+                                <td style="padding: 12px;">The peer holds the private key for the presented identity</td>
+                                <td style="padding: 12px;">That the identity should be allowed to do anything</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Request signature</td>
+                                <td style="padding: 12px;">This exact payload was produced by the key holder</td>
+                                <td style="padding: 12px;">That the key was not copied, or that the action is authorized</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Authorization decision</td>
+                                <td style="padding: 12px;">This principal may perform this action on this resource now</td>
+                                <td style="padding: 12px;">That the action is safe, correct, or free of side effects</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Each row is a separate question, and no row substitutes for another. A system that authenticates strongly and authorizes loosely has solved the first row and failed the fourth. A system that signs payloads but never verifies them has implemented a ritual.
+                </p>
+
+                <!-- BLOCK: Section 3 -->
+                <h2 id="transport">3. Transport Mechanisms</h2>
+
+                <h3 id="mtls">Mutual authentication</h3>
+                <p>
+                    Standard TLS authenticates the server to the client. The client is authenticated at the application layer, usually by a token or a password sent after the channel is established. <strong>Mutual TLS (mTLS)</strong> moves client authentication into the handshake: both sides present certificates and both verify the other's chain.
+                </p>
+                <p>
+                    For service-to-service traffic this is a significant structural improvement. A workload that presents a certificate has proven possession of a private key at connection time, before a single byte of application data is sent. The alternative—a bearer token in a header—proves only that the caller possesses a string, which is exactly the property an attacker who has compromised a configuration file also holds.
+                </p>
+                <p>
+                    The operational cost is real, and it is the reason mTLS is often adopted late. Certificates must be issued, rotated, and revoked. The rotation problem drove the industry toward <strong>short-lived certificates</strong>—hours rather than months—because a certificate that expires before a revocation list could be distributed makes revocation lists largely unnecessary. This is also why mTLS pairs so naturally with workload identity, discussed below: the platform can issue a credential tied to the workload's identity, scoped to the workload's context, and expiring quickly enough that copying it out is a poor attack.
+                </p>
+                <p>
+                    What mTLS does not do is authorize. A valid certificate says <em>this is service A</em>. It says nothing about whether service A may read a particular table, call a particular endpoint, or act on a particular record. Those are policy decisions, and conflating them with authentication is one of the more common gaps in service mesh deployments—strong mutual authentication, no authorization policy, and therefore a network of mutually authenticated services that can all reach each other.
+                </p>
+
+                <h3 id="e2ee-vs-p2p">End-to-end versus point-to-point</h3>
+                <p>
+                    The distinction between these two models is the clearest illustration of where a trust boundary actually sits.
+                </p>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Dimension</th>
+                                <th style="padding: 12px;">Point-to-point (TLS)</th>
+                                <th style="padding: 12px;">End-to-end</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Who can read plaintext</td>
+                                <td style="padding: 12px;">Both endpoints, plus any terminator on the path</td>
+                                <td style="padding: 12px;">The endpoints only</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Intermediary role</td>
+                                <td style="padding: 12px;">Trusted intermediary: decrypts to process</td>
+                                <td style="padding: 12px;">Blind relay: forwards ciphertext it cannot read</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Key custody</td>
+                                <td style="padding: 12px;">Server holds session keys</td>
+                                <td style="padding: 12px;">Clients hold keys; the server never does</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Operational cost</td>
+                                <td style="padding: 12px;">Low and mature</td>
+                                <td style="padding: 12px;">High: key distribution, multi-device, recovery, metadata leakage</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px; font-weight: bold;">Appropriate when</td>
+                                <td style="padding: 12px;">The server must process the data</td>
+                                <td style="padding: 12px;">The server must relay, not read</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    The honest complication with end-to-end encryption in a <strong>web application</strong> is that the server delivers the code that performs the encryption. A client-side key is only as trustworthy as the JavaScript that handles it, and the party serving that JavaScript could, in principle, serve a different version. Native applications mitigate this with signed binaries and reproducible builds; browsers offer weaker guarantees. This is not an argument against end-to-end encryption on the web—it is an argument for being precise about what it protects against. It reliably excludes the relay, the storage layer, and the operator. It does not exclude the code-delivery path unless that path is independently verified.
+                </p>
+
+                <h3 id="termination">TLS termination and the invisible boundary</h3>
+                <p>
+                    One practical detail is worth calling out because it invalidates a great deal of assumed protection. In most deployments, TLS terminates at a load balancer or reverse proxy, not at the application. Beyond that point the traffic is frequently plaintext on an internal network.
+                </p>
+                <p>
+                    This means the trust boundary is not "the network" but "the load balancer"—which is a specific machine, running specific software, with its own vulnerabilities and its own privileged position. Two mitigations are standard. Either the load balancer sits genuinely inside the trust boundary and is treated as such (hardened, monitored, and minimal), or the connection is re-encrypted between the balancer and the backend, so that no single point sees plaintext for the entire path. The second is cheap and frequently skipped; the first is cheaper and frequently assumed.
+                </p>
+
+                <!-- BLOCK: Section 4 -->
+                <h2 id="runtime">4. Runtime Mechanisms</h2>
+
+                <h3 id="tees">Isolated execution and attestation</h3>
+                <p>
+                    A <strong>trusted execution environment</strong> (TEE) is a hardware-isolated region of memory and execution. The three current families differ in granularity: Intel Software Guard Extensions isolates individual enclaves within a process; AMD Secure Encrypted Virtualization with Secure Nested Paging isolates entire virtual machines; Arm Confidential Compute Architecture defines isolated "realms." All three share the same defining property: <strong>the host operating system, the hypervisor, and the platform operator cannot read the contents</strong>.
+                </p>
+                <p>
+                    Isolation alone is not sufficient, because isolation without verification is just a claim. The mechanism that closes the loop is <strong>remote attestation</strong>. The TEE produces a measurement—a cryptographic hash of the code and configuration it is running—and signs it with a key rooted in hardware. A relying party verifies that signature against the hardware vendor's root of trust and decides whether the measurement is one it trusts. Only then does it release secrets into the environment.
+                </p>
+                <p>
+                    The composition matters: <strong>attestation is the gate, and key release is what passes through it</strong>. A confidential computing deployment where secrets are provisioned without verifying attestation is encrypted memory with no trust argument behind it.
+                </p>
+                <p>
+                    What this proves is narrow and valuable: <em>this exact code is running in a genuine TEE on this platform</em>. What it does not prove is that the code is correct. A vulnerability inside the attested environment leaks data exactly as effectively as a vulnerability outside it, and the isolation is intact while the data escapes. The guarantees are also only as strong as the vendor's implementation, which has been the subject of repeated academic scrutiny—a fact worth stating plainly rather than treating as an objection.
+                </p>
+
+                <h3 id="memory-encryption">Memory encryption and cache isolation</h3>
+                <p>
+                    Hardware memory encryption—AMD Secure Memory Encryption, Intel Total Memory Encryption—encrypts the contents of main memory with a key held in the memory controller. It is transparent to software and defends against a specific class of attack: reading memory directly, whether through a cold-boot procedure, a physical bus attack, or a hypervisor that has been compromised at the memory layer.
+                </p>
+                <p>
+                    It does <strong>not</strong> defend against a process reading its own memory, or against a privileged process reading another's. The key is in hardware, but the operating system still maps memory into processes, and anything with sufficient privilege can read it. Memory encryption raises the cost of certain attacks; it does not remove plaintext from the machine.
+                </p>
+                <p>
+                    Cache isolation and mitigations for speculative-execution leakage address a different exposure. Spectre-class attacks exploit the fact that a processor speculates ahead and leaves traces in cache state that reveal data it was not permitted to read. The countermeasures—cache partitioning, speculation barriers, and in some designs dedicated hardware—reduce the leakage rather than eliminating it. The general lesson for architecture is that <strong>timing and cache state are a side channel</strong>, and any design that assumes plaintext is safe inside a process must account for the fact that the processor leaks information about what it is working on.
+                </p>
+
+                <h3 id="runtime-enforcement">Runtime policy enforcement</h3>
+                <p>
+                    Signature-based detection and patching share a structural weakness: they respond to what is already known. An attacker exploiting an unpatched or unknown vulnerability generates no signature and triggers no patch, because neither exists yet. Runtime enforcement addresses this by acting on <strong>behavior during execution</strong> rather than on artifacts.
+                </p>
+                <p>
+                    The mechanisms are well established. Seccomp restricts the system calls a process may make. Linux Security Modules—SELinux, AppArmor—enforce mandatory access control over files, sockets, and capabilities. eBPF allows programs to run in the kernel, observing system calls, network connections, and file access, with the ability to block rather than merely log. Behavioral tooling built on these primitives can detect and stop a process spawning an unexpected shell, opening a connection to an unapproved address, or reading a file it has never read before.
+                </p>
+                <p>
+                    The distinguishing property is that enforcement is <strong>synchronous</strong>. A policy violation is stopped at the moment of the system call, not investigated after the fact. This is the only category of control discussed in this series that can respond to a vulnerability no one has seen before, and it is therefore the natural complement to everything else here.
+                </p>
+                <p>
+                    Its limits are equally important. Behavioral policy requires a baseline, and baselines must be maintained as workloads change or the control produces false positives that eventually get disabled. Kernel-level tooling is itself a privileged attack surface. And enforcement that is deployed only in audit mode is observability wearing a control's clothing.
+                </p>
+
+                <h3 id="workload-identity">Workload identity</h3>
+                <p>
+                    Workload identity answers a question that neither user identity nor network location can: <em>which specific running process is making this request</em>. The mechanism is consistent across implementations. The platform observes properties it can verify—which process, in which container, on which node, with which service account—and issues a short-lived credential bound to that observation.
+                </p>
+                <p>
+                    The standards-based form is SPIFFE: the platform issues a <strong>SPIFFE Verifiable Identity Document</strong> (SVID), typically an X.509 certificate or a JWT, with a lifetime measured in minutes or hours. Cloud platforms implement the same pattern in their own vocabularies—an identity provider federating a cluster's service accounts to a cloud role, or a workload identity binding that lets a pod obtain a platform credential without a stored secret. Kubernetes itself issues bound service account tokens that are audience-scoped, time-limited, and projected into the pod at runtime.
+                </p>
+                <p>
+                    The improvement over static secrets is structural rather than incremental. A static credential authenticates <em>whoever holds it</em>, from anywhere, until someone notices. A workload identity authenticates <em>a specific workload in a specific context</em>, expires quickly, and cannot be usefully exported. The remaining assumption is the platform's own integrity: if the node is compromised, the attestation is compromised with it. Workload identity moves trust from a string in a configuration file to the platform's ability to observe what is running—a smaller and more auditable assumption, but not a zero one.
+                </p>
+
+                <!-- BLOCK: Section 5 -->
+                <h2 id="selection">5. Selection: Which Mechanism for Which Question</h2>
+                <p>
+                    The mechanisms above compose into a chain, and each link assumes the one before it. This is the practical value of the reference layer: not choosing the strongest mechanism, but choosing the right one for the question being asked, and knowing what each one assumes.
+                </p>
+                <div class="table-container" style="overflow-x: auto; margin: 24px 0;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--navbar-border); color: var(--accent-gold);">
+                                <th style="padding: 12px;">Question</th>
+                                <th style="padding: 12px;">Mechanism</th>
+                                <th style="padding: 12px;">Assumes</th>
+                                <th style="padding: 12px;">See also</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">Is this workload what it claims to be?</td>
+                                <td style="padding: 12px; font-weight: bold;">Workload identity</td>
+                                <td style="padding: 12px;">Platform integrity</td>
+                                <td style="padding: 12px;">In Practice §1</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">Do both ends prove identity per connection?</td>
+                                <td style="padding: 12px; font-weight: bold;">mTLS</td>
+                                <td style="padding: 12px;">Certificate issuance and rotation</td>
+                                <td style="padding: 12px;">In Practice §2</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">Is the payload protected after termination?</td>
+                                <td style="padding: 12px; font-weight: bold;">Digital signature</td>
+                                <td style="padding: 12px;">Private key custody</td>
+                                <td style="padding: 12px;">End of the Perimeter §4</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">Can the intermediary read the data?</td>
+                                <td style="padding: 12px; font-weight: bold;">End-to-end encryption</td>
+                                <td style="padding: 12px;">Endpoint code integrity</td>
+                                <td style="padding: 12px;">Three Lives §2</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">Can the platform operator read plaintext?</td>
+                                <td style="padding: 12px; font-weight: bold;">TEE + attestation</td>
+                                <td style="padding: 12px;">Hardware implementation</td>
+                                <td style="padding: 12px;">Three Lives §3</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">How long does plaintext exist in memory?</td>
+                                <td style="padding: 12px; font-weight: bold;">Memory encryption, cache isolation</td>
+                                <td style="padding: 12px;">Processor mitigations</td>
+                                <td style="padding: 12px;">Three Lives §2b</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--navbar-border);">
+                                <td style="padding: 12px;">What happens on an unknown attack?</td>
+                                <td style="padding: 12px; font-weight: bold;">Runtime enforcement</td>
+                                <td style="padding: 12px;">A maintained behavioral baseline</td>
+                                <td style="padding: 12px;">Three Lives §3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>
+                    Read as a chain, a complete request looks like this: workload identity establishes the principal, mTLS proves it per connection, the handshake derives a symmetric session key that protects the wire, a signature protects the payload beyond termination, the authorization decision determines whether the action is permitted, isolated execution with attestation protects the plaintext during processing, and runtime enforcement limits what the process may do with it. Each link is necessary, none is sufficient, and the chain is as strong as the weakest one—which is usually the one nobody instrumented.
+                </p>
+
+                <!-- BLOCK: Callout — the honest limits -->
+                <div style="border-left: 3px solid var(--accent-gold); padding: 4px 0 4px 20px; margin: 24px 0;">
+                    <p style="margin: 0;"><strong>The limits worth stating plainly:</strong> non-repudiation depends on key custody; end-to-end encryption depends on endpoint integrity; isolated execution depends on code correctness; runtime enforcement depends on a maintained baseline; workload identity depends on platform integrity. Every mechanism here is a smaller trust assumption, not the elimination of trust.</p>
+                </div>
+
+                <!-- BLOCK: Summary -->
+                <h2 id="summary">Summary: What Each Mechanism Assumes</h2>
+                <p>
+                    The conceptual articles in this series describe what to protect and how to decide. This one describes what the decisions are made of—and the recurring lesson is that <strong>each mechanism is a conversion, not an absolute</strong>. Symmetric cryptography converts a distribution problem into a key-custody problem. Asymmetric cryptography converts key custody into identity verification. Signatures convert identity into attributable action. TEEs convert platform trust into code-measurement trust. Runtime enforcement converts known-signature defense into behavioral defense.
+                </p>
+                <p>
+                    Three questions are worth asking of any mechanism in a design review:
+                </p>
+                <ul>
+                    <li><strong>What does it prove?</strong> State it in one sentence, and make sure the sentence does not smuggle in authorization.</li>
+                    <li><strong>What does it assume?</strong> Every mechanism rests on something outside its own mathematics—key custody, endpoint integrity, hardware correctness, or platform trust. If the assumption is unstated, it is unmanaged.</li>
+                    <li><strong>What composes with it?</strong> A mechanism used alone is rarely the right answer. The interesting failures happen at the seams, where one mechanism's guarantee ends and the next one's assumption begins—TLS terminating at a gateway, a signature with no freshness marker, a TEE releasing secrets before attestation completes.</li>
+                </ul>
+                <p>
+                    The series as a whole can be summarized in one line: <strong>the model decides who gets access, the practice decides where the decision is enforced, and the mechanisms are what make either of those statements checkable.</strong> Everything else is implementation detail—which is to say, everything else is where the incidents happen.
+                </p>
+
+                <!-- BLOCK: Acronyms (glossary) -->
+                <h2 id="acronyms">Acronyms</h2>
+                <ul class="glossary-list">
+                    <li><strong>AEAD</strong> — Authenticated Encryption with Associated Data</li>
+                    <li><strong>AES</strong> — Advanced Encryption Standard</li>
+                    <li><strong>API</strong> — Application Programming Interface</li>
+                    <li><strong>CCA</strong> — Confidential Compute Architecture (Arm)</li>
+                    <li><strong>ECDHE</strong> — Elliptic-Curve Diffie-Hellman Ephemeral</li>
+                    <li><strong>ECDSA</strong> — Elliptic Curve Digital Signature Algorithm</li>
+                    <li><strong>eBPF</strong> — extended Berkeley Packet Filter</li>
+                    <li><strong>E2EE</strong> — End-to-End Encryption</li>
+                    <li><strong>HSM</strong> — Hardware Security Module</li>
+                    <li><strong>JWT</strong> — JSON Web Token</li>
+                    <li><strong>LSM</strong> — Linux Security Module</li>
+                    <li><strong>mTLS</strong> — Mutual Transport Layer Security</li>
+                    <li><strong>NIST</strong> — National Institute of Standards and Technology</li>
+                    <li><strong>RSA</strong> — Rivest–Shamir–Adleman (public-key cryptosystem)</li>
+                    <li><strong>SEV-SNP</strong> — Secure Encrypted Virtualization – Secure Nested Paging (AMD)</li>
+                    <li><strong>SGX</strong> — Software Guard Extensions (Intel)</li>
+                    <li><strong>SPIFFE</strong> — Secure Production Identity Framework for Everyone</li>
+                    <li><strong>SVID</strong> — SPIFFE Verifiable Identity Document</li>
+                    <li><strong>TEE</strong> — Trusted Execution Environment</li>
+                    <li><strong>TLS</strong> — Transport Layer Security</li>
+                    <li><strong>X.509</strong> — Standard format for public-key certificates</li>
+                </ul>
+
+            </div>
+
+        </article>
+    </main>
+
+    <script src="../components/header.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>

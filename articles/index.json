@@ -1,18 +1,35 @@
 [{
+    "slug": "Mechanisms-of-Trust",
+    "title": "Mechanisms of Trust",
+    "date": "2026-1-11",
+    "reading_time": "13 min",
+    "summary": "The reference layer beneath the series. Primitives, composition, transport, and runtime—what each mechanism proves, what it assumes, and how they chain together on a single request.",
+    "tags": ["cryptography","protocols","confidential-computing","zero-trust","reference"]
+  },{
+    "slug": "Zero-Trust-In-Practice",
+    "title": "Zero Trust in Practice",
+    "date": "2026-1-11",
+    "reading_time": "11 min",
+    "summary": "The model is easy to state and hard to sequence. A practical account of where access decisions actually get made, what segments should follow, and the order of adoption that avoids rebuilding twice.",
+    "tags": ["zero-trust","identity","segmentation","cloud-architecture","adoption"]
+  },
+  {
     "slug": "Zero-Trust-The-End-of-the-Perimeter",
     "title": "Zero Trust: The End of the Perimeter",
     "date": "2026-10-31",
     "reading_time": "10 min",
     "summary": "The firewall never failed—the assumption behind it did. A theory-level explanation of what zero trust actually claims, what it removes, and why the term is both precisely defined and routinely diluted.",
     "tags": ["zero-trust","architecture","identity","security-model","foundations"]
-  },{
+  },
+  {
     "slug": "The-Three-Lives-of-Data",
     "title": "The Three Lives of Data",
     "date": "2026-10-31",
     "reading_time": "10 min",
     "summary": "A single file can be perfectly protected one moment and completely exposed the next—without the file itself changing. A theory-level guide to the three data states, the threats that define each one, and the classes of control that actually match them.",
     "tags": ["data-security","encryption","zero-trust","data-protection","cloud-security","foundation"]
-  },{
+  },
+  {
     "slug": "cloud-vs-on-premise-for-data-security-1",
     "title": "Cloud vs On-Premise: Security, GDPR and Health Data",
     "date": "2026-10-24",
@@ -35,7 +52,8 @@
     "reading_time": "11 min",
     "summary": "The data factory is more than a helper class. It is a <strong>design commitment</strong> — a promise that test data creation will be centralised, isolated, and readable.",
     "tags": ["SoftwareEngineering","APEX-Code","Design-Patterns","Data-Factory"]
-  },{
+  },
+  {
     "slug": "visit-job-execution",
     "title": "Visit Job Execution: Consumer Goods Cloud vs. Field Service",
     "date": "2026-10-10",
