@@ -1,4 +1,11 @@
 [{
+    "slug": "When-the-Fridge-Boils",
+    "title": "When the Fridge Boils: Cybersecurity as Safety Engineering",
+    "date": "2026-5-11",
+    "reading_time": "10 min",
+    "summary": "Recent attacks on commercial refrigeration systems in Greece and across Europe prove a hard truth: once software controls physical equipment, a cyber incident is a safety incident. Here is why connected systems demand a safety-first security mindset.",
+    "tags": ["cybersecurity","cyber-physical-systems","iot-security","safety-engineering","critical-infrastructure"]
+  },{
     "slug": "Mechanisms-of-Trust",
     "title": "Mechanisms of Trust",
     "date": "2026-1-11",
